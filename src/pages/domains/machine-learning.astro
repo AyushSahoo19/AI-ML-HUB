@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+---
+
+<BaseLayout title="Machine Learning - AI/ML Hub">
+  <div style="max-width: 1000px; margin: 0 auto; padding-bottom: 5rem;">
+    
+    <!-- Hero Block -->
+    <header class="neo-border neo-shadow bg-green" style="padding: 2.5rem 1.5rem; margin-bottom: 3rem; text-align: center; border-width: 3.5px; background-color: #bbf7d0;">
+      <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🤖</span>
+      <h1 style="font-size: 2.75rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: -1px; line-height: 1;">Machine Learning</h1>
+      <p style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin: 0;">
+        From simple statistical correlations to powerful ensemble predictors and classification boundaries.
+      </p>
+    </header>
+
+    <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+      
+      <!-- Paradigm Overview -->
+      <section class="neo-border" style="background-color: #fff; padding: 2rem; border-width: 3px; box-shadow: 6px 6px 0px #000;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          The Three Paradigms of Learning
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          <div style="background: #fef08a; padding: 1.25rem; border: 2px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-weight: 900; margin-top: 0;">Supervised</h3>
+            <p style="font-size: 0.9rem; font-weight: bold; color: #374151; line-height: 1.4; margin: 0;">
+              Learning from labeled dataset inputs. The model predicts a continuous value (Regression) or discrete category (Classification) and compares it with the true ground truth label to calculate error and adjust parameters.
+            </p>
+          </div>
+          <div style="background: #a8d5ff; padding: 1.25rem; border: 2px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-weight: 900; margin-top: 0;">Unsupervised</h3>
+            <p style="font-size: 0.9rem; font-weight: bold; color: #374151; line-height: 1.4; margin: 0;">
+              Discovering hidden patterns and structures in unlabeled data. Grouping similar samples together (Clustering like K-Means) or mapping data to lower dimensions while preserving properties (Dimensionality Reduction like PCA).
+            </p>
+          </div>
+          <div style="background: #e9d5ff; padding: 1.25rem; border: 2px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-weight: 900; margin-top: 0;">Reinforcement</h3>
+            <p style="font-size: 0.9rem; font-weight: bold; color: #374151; line-height: 1.4; margin: 0;">
+              Learning through environmental feedback. An autonomous agent performs actions in an environment and receives rewards or penalties, adjusting its decision-making policy to maximize cumulative rewards over time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Classical Algorithms Card -->
+      <NeoCard color="#fef08a" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Supervised Algorithms & Mechanics
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          These algorithms form the mathematical backbone of modern prediction engines. Here is how they carve decision boundaries.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Linear & Logistic Regression</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.75rem 0;">
+              <strong>Linear Regression:</strong> Models the output as a linear combination of inputs: <code>y = w·x + b</code>. It minimizes Mean Squared Error (MSE), which represents the squared distance between predicted values and actual coordinates.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Logistic Regression:</strong> Predicts probability categories by passing the linear output through the <strong>Sigmoid Activation Function</strong>: <code>σ(z) = 1 / (1 + e⁻ᶻ)</code>. This squashes all values into a <code>[0, 1]</code> range, and is trained by minimizing Cross-Entropy loss.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Decision Trees & Random Forests</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.75rem 0;">
+              <strong>Decision Trees:</strong> Split data recursively by choosing splits that maximize <strong>Information Gain</strong>. This is determined by calculating the reduction in impurity metrics, such as <strong>Entropy</strong> (measuring randomness) or <strong>Gini Impurity</strong>.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Random Forests:</strong> An ensemble algorithm that counteracts overfitting. It draws multiple bootstrap samples from data, builds independent decision trees for each, and aggregates their predictions (voting/averaging). This technique is known as <strong>Bagging</strong> (Bootstrap Aggregating).
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Support Vector Machines (SVM) & The Kernel Trick</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              SVMs construct an optimal decision hyperplane that separates classes with the maximum possible margin. 
+              If classes are not linearly separable in the current dimension, SVM uses the <strong>Kernel Trick</strong>: it implicitly projects data into a higher-dimensional space where class points can be cleanly sliced by a flat hyperplane, without explicitly performing expensive high-dimensional coordinates transformation!
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Bias Variance Card -->
+      <NeoCard color="#e9d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Generalization & Regularization
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Building an ML model is a delicate balancing act. Here is how we ensure models generalize to unseen test data.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">The Bias-Variance Tradeoff</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.75rem 0;">
+              <strong>Bias (Underfitting):</strong> Erroneous assumptions made by the model. High bias leads to over-simplified models that fail to capture patterns in both training and test data (e.g. fitting a straight line to quadratic data).
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Variance (Overfitting):</strong> High sensitivity to tiny fluctuations in training data. The model memorizes training noise rather than general patterns, performing exceptionally on training data but failing on unseen testing inputs.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Regularization: Penalizing Complexity</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.75rem 0;">
+              To prevent overfitting, we add a mathematical penalty to our loss function that discourages weights from becoming too large:
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.5rem 0;">
+              <strong>L1 Regularization (Lasso):</strong> Adds the absolute values of weights to the loss. This drives redundant feature weights to precisely zero, acting as an automatic **feature selection** mechanism!
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>L2 Regularization (Ridge):</strong> Adds the squared values of weights to the loss. This penalizes large weights heavily, forcing them to distribute smoothly without creating extreme individual dependencies.
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Roadmap Back Home -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        <a href="/domains/mathematics" class="neo-border bg-yellow neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; box-shadow: 4px 4px 0 #000;">
+          &larr; Mathematics
+        </a>
+        <a href="/domains/deep-learning" class="neo-border bg-violet neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; background-color: #e9d5ff; box-shadow: 4px 4px 0 #000;">
+          Deep Learning &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

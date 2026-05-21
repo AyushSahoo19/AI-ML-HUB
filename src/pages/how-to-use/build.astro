@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+---
+
+<BaseLayout title="Projects Catalog - AI/ML Hub">
+  <div style="max-width: 1000px; margin: 0 auto; padding-bottom: 5rem;">
+    
+    <!-- Hero Block -->
+    <header class="neo-border neo-shadow bg-blue" style="padding: 2.5rem 1.5rem; margin-bottom: 3rem; text-align: center; border-width: 3.5px; background-color: #a8d5ff;">
+      <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🛠️🚀</span>
+      <h1 style="font-size: 2.75rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: -1px; line-height: 1;">Projects Laboratory</h1>
+      <p style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin: 0;">
+        Hands-on portfolio projects spanning classical ML, deep neural nets, and Generative AI pipelines.
+      </p>
+    </header>
+
+    <div style="display: flex; flex-direction: column; gap: 3rem;">
+      
+      <!-- Intro Section -->
+      <section class="neo-border" style="background-color: #fff; padding: 2rem; border-width: 3px; box-shadow: 6px 6px 0px #000;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Theory is Useless Without Implementation
+        </h2>
+        <p style="font-size: 1rem; font-weight: bold; color: #374151; line-height: 1.6; margin: 0;">
+          The best way to understand an algorithm is to build it, debug it, and deploy it. 
+          This catalog outlines the essential portfolio-building projects that target crucial concepts. 
+          Each project is equipped with its tech stack, difficulty tier, and a step-by-step roadmap so you can build them independently.
+        </p>
+      </section>
+
+      <!-- Category 1: Machine Learning Projects -->
+      <div>
+        <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 4px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Category A: Classical Machine Learning
+        </h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          
+          <!-- ML Project 1 -->
+          <div style="background: #fff; padding: 1.5rem; border: 3px solid #000; box-shadow: 5px 5px 0 #000;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin: 0; color: #000;">1. End-to-End Real Estate Valuation Engine</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #bbf7d0;">EASY</span>
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fff;">NUMPY / SCIKIT-LEARN</span>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin-bottom: 1rem;">
+              <strong>Objective:</strong> Predict house prices using multi-variable regression, feature engineering, and regularization.
+            </p>
+            <h4 style="font-weight: 900; margin: 0 0 0.5rem 0;">Implementation Roadmap:</h4>
+            <ol style="font-size: 0.9rem; font-weight: bold; color: #374151; padding-left: 1.25rem; line-height: 1.5;">
+              <li>Acquire Ames Housing or Boston dataset. Perform EDA (Exploratory Data Analysis).</li>
+              <li>Impute missing categories and encode categorical labels (One-Hot / Target encoding).</li>
+              <li>Scale continuous features using StandardScaler to ensure gradient convergence.</li>
+              <li>Train Linear Regression, Ridge, and Lasso. Tweak regularization penalty (alpha).</li>
+              <li>Evaluate using R² Score and Mean Absolute Error (MAE). Plot residuals.</li>
+            </ol>
+          </div>
+
+          <!-- ML Project 2 -->
+          <div style="background: #fff; padding: 1.5rem; border: 3px solid #000; box-shadow: 5px 5px 0 #000;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin: 0; color: #000;">2. Telecom Customer Churn Predictor</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fef08a;">MEDIUM</span>
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fff;">XGBOOST / RANDOM FOREST</span>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin-bottom: 1rem;">
+              <strong>Objective:</strong> Predict which customers will churn using imbalanced classification models.
+            </p>
+            <h4 style="font-weight: 900; margin: 0 0 0.5rem 0;">Implementation Roadmap:</h4>
+            <ol style="font-size: 0.9rem; font-weight: bold; color: #374151; padding-left: 1.25rem; line-height: 1.5;">
+              <li>Perform class imbalance adjustments using SMOTE (Synthetic Minority Over-sampling Technique).</li>
+              <li>Train Random Forests and XGBoost gradient boosters.</li>
+              <li>Perform hyperparameter tuning using Grid Search and Cross Validation.</li>
+              <li>Plot Confusion Matrices and ROC-AUC curve. Focus on Precision/Recall metrics.</li>
+            </ol>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Category 2: Deep Learning Projects -->
+      <div>
+        <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 4px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Category B: Deep Representation Learning
+        </h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          
+          <!-- DL Project 1 -->
+          <div style="background: #fff; padding: 1.5rem; border: 3px solid #000; box-shadow: 5px 5px 0 #000;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin: 0; color: #000;">1. MNIST / CIFAR-10 Image Classifier</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #bbf7d0;">EASY</span>
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fff;">PYTORCH / CNN</span>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin-bottom: 1rem;">
+              <strong>Objective:</strong> Build a custom Convolutional Neural Network from scratch in PyTorch to classify images.
+            </p>
+            <h4 style="font-weight: 900; margin: 0 0 0.5rem 0;">Implementation Roadmap:</h4>
+            <ol style="font-size: 0.9rem; font-weight: bold; color: #374151; padding-left: 1.25rem; line-height: 1.5;">
+              <li>Load MNIST or CIFAR-10 dataset using torchvision. Apply tensor translations.</li>
+              <li>Define custom class subclassing <code>nn.Module</code> with conv2d, relu, and max-pooling steps.</li>
+              <li>Set up Cross-Entropy loss criterion and Adam optimizer.</li>
+              <li>Write a training loop: forward pass, zero gradients, backward propagation, optimizer step.</li>
+              <li>Verify accuracy improvements on testing partition.</li>
+            </ol>
+          </div>
+
+          <!-- DL Project 2 -->
+          <div style="background: #fff; padding: 1.5rem; border: 3px solid #000; box-shadow: 5px 5px 0 #000;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin: 0; color: #000;">2. Sequential LSTM Sentiment Analyzer</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fef08a;">MEDIUM</span>
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fff;">LSTMS / NLP</span>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin-bottom: 1rem;">
+              <strong>Objective:</strong> Train a sequential recurrent neural network to classify movie review sentiments.
+            </p>
+            <h4 style="font-weight: 900; margin: 0 0 0.5rem 0;">Implementation Roadmap:</h4>
+            <ol style="font-size: 0.9rem; font-weight: bold; color: #374151; padding-left: 1.25rem; line-height: 1.5;">
+              <li>Tokenize IMDB textual dataset. Build dictionary index mapping.</li>
+              <li>Construct an Embedding layer to project tokens into high-dimensional context space.</li>
+              <li>Feed embeddings into stacked LSTM layers to capture sequential dependencies.</li>
+              <li>Pass hidden state vectors to dense layers for binary classification.</li>
+            </ol>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Category 3: Generative AI Projects -->
+      <div>
+        <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 4px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Category C: Generative AI & Systems
+        </h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          
+          <!-- GenAI Project 1 -->
+          <div style="background: #fff; padding: 1.5rem; border: 3px solid #000; box-shadow: 5px 5px 0 #000;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin: 0; color: #000;">1. Custom PDF Knowledge-Base RAG Chatbot</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fca5a5;">HARD</span>
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fff;">RAG / FAISS / LLMS</span>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin-bottom: 1rem;">
+              <strong>Objective:</strong> Create a chatbot that answers questions grounded strictly in your custom loaded documents.
+            </p>
+            <h4 style="font-weight: 900; margin: 0 0 0.5rem 0;">Implementation Roadmap:</h4>
+            <ol style="font-size: 0.9rem; font-weight: bold; color: #374151; padding-left: 1.25rem; line-height: 1.5;">
+              <li>Ingest and chunk PDF textbooks or guides using recursive text splitters.</li>
+              <li>Calculate chunk embeddings (e.g. using Sentence-Transformers).</li>
+              <li>Index embeddings inside FAISS or ChromaDB vector store.</li>
+              <li>Set up retrieval query: when a user asks a question, retrieve top-K matching chunks.</li>
+              <li>Construct prompt context containing matched chunks, and pass it to an LLM (such as Llama-3) to synthesize a grounded, hallucination-free response.</li>
+            </ol>
+          </div>
+
+          <!-- GenAI Project 2 -->
+          <div style="background: #fff; padding: 1.5rem; border: 3px solid #000; box-shadow: 5px 5px 0 #000;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin: 0; color: #000;">2. LoRA Fine-Tuner for Domain LLMs</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fca5a5;">HARD</span>
+                <span style="font-size: 0.7rem; font-weight: 900; border: 2px solid #000; padding: 0.15rem 0.5rem; background-color: #fff;">HUGGING FACE / PEFT / LORA</span>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin-bottom: 1rem;">
+              <strong>Objective:</strong> Fine-tune an open-source foundational model (like Mistral-7B) on a specific domain using parameter-efficient adapters.
+            </p>
+            <h4 style="font-weight: 900; margin: 0 0 0.5rem 0;">Implementation Roadmap:</h4>
+            <ol style="font-size: 0.9rem; font-weight: bold; color: #374151; padding-left: 1.25rem; line-height: 1.5;">
+              <li>Load base foundation weights in 4-bit quantization (QLoRA) using Hugging Face transformers.</li>
+              <li>Configure PeftConfig specifying LoRA rank (r=8 or 16) and target linear layers (q_proj, v_proj).</li>
+              <li>Train adapters using Supervised Fine-Tuning trainer.</li>
+              <li>Merge adapter parameters back into the base model and save weights for inference.</li>
+            </ol>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        <a href="/how-to-use/code" class="neo-border bg-violet neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; background-color: #e9d5ff; box-shadow: 4px 4px 0 #000;">
+          &larr; 02. Code Guide
+        </a>
+        <a href="/" class="neo-border bg-white neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; box-shadow: 4px 4px 0 #000;">
+          Back Home &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

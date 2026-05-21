@@ -1,0 +1,170 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+---
+
+<BaseLayout title="Generative AI - AI/ML Hub">
+  <div style="max-width: 1000px; margin: 0 auto; padding-bottom: 5rem;">
+    
+    <!-- Hero Block -->
+    <header class="neo-border neo-shadow bg-yellow" style="padding: 2.5rem 1.5rem; margin-bottom: 3rem; text-align: center; border-width: 3.5px; background-color: #fef08a;">
+      <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🤖✨</span>
+      <h1 style="font-size: 2.75rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: -1px; line-height: 1;">Generative AI</h1>
+      <p style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin: 0;">
+        Modeling high-dimensional probability distributions to synthesize new data, text, and images.
+      </p>
+    </header>
+
+    <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+      
+      <!-- Core GenAI Paradigm -->
+      <section class="neo-border" style="background-color: #fff; padding: 2rem; border-width: 3px; box-shadow: 6px 6px 0px #000;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Discriminative vs. Generative Models
+        </h2>
+        <p style="font-size: 1rem; font-weight: bold; color: #374151; line-height: 1.6; margin: 0 0 1.5rem 0;">
+          In machine learning, we distinguish models by what probability distributions they seek to understand:
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+          <div style="background: #e9d5ff; padding: 1.25rem; border: 2px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-weight: 900; margin-top: 0;">Discriminative Models</h3>
+            <p style="font-size: 0.9rem; font-weight: bold; color: #374151; line-height: 1.4; margin: 0;">
+              Learn decision boundaries to compute the conditional probability <code>P(y|x)</code> (probability of class label y given input features x). 
+              Examples include logistic regression, support vector machines, and standard image classifiers.
+            </p>
+          </div>
+          <div style="background: #bbf7d0; padding: 1.25rem; border: 2px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-weight: 900; margin-top: 0;">Generative Models</h3>
+            <p style="font-size: 0.9rem; font-weight: bold; color: #374151; line-height: 1.4; margin: 0;">
+              Learn the joint probability distribution <code>P(x, y)</code> or simple raw data distribution <code>P(x)</code>. 
+              By modeling how data points are distributed in high-dimensional space, they can draw new, unique samples that look identical to the training data.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- The Transformer Card -->
+      <NeoCard color="#a8d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          1. The Transformer & Self-Attention
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Introduced in 2017 ("Attention is All You Need"), the Transformer architecture completely replaced sequential RNNs with parallelizable self-attention mechanics.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">The Self-Attention Mechanism</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 1rem 0;">
+              Self-attention calculates relations between all words in a sentence simultaneously. Each input token embedding is mapped to three vectors: 
+              <strong>Query (Q)</strong>, <strong>Key (K)</strong>, and <strong>Value (V)</strong>.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 1rem 0;">
+              The attention scores represent dot products between Queries and Keys, divided by scaling factors and normalized using Softmax:
+            </p>
+            <p style="font-family: monospace; font-size: 1rem; font-weight: 900; background: #f3f4f6; padding: 0.75rem; border: 2px solid #000; margin: 0 0 1rem 0; text-align: center;">
+              Attention(Q, K, V) = softmax( (Q · Kᵀ) / √d_k ) · V
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              This creates a dynamic weighting, forcing each token to incorporate context from every other relevant token in the sequence.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Multi-Head Attention & Positional Encoding</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.75rem 0;">
+              <strong>Multi-Head Attention:</strong> Runs the attention mechanism multiple times in parallel with separate projection matrices, allowing the model to focus on different semantic relationships simultaneously (e.g. subject-verb agreement and pronoun reference).
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Positional Encoding:</strong> Since Transformers process all tokens in parallel, they have no built-in notion of sequence order. 
+              We inject fixed mathematical sine and cosine wave coordinates into input embeddings to supply positional reference!
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- LLMs Card -->
+      <NeoCard color="#e9d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          2. LLMs: Pre-training, Fine-tuning, & Alignment
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Building state-of-the-art Large Language Models requires a highly structured multi-stage training pipeline.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Stage 1: Self-Supervised Pre-training</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              The model digests massive corpora of raw text. By predicting the next token in a sequence recursively, the model implicitly acquires syntax, world facts, simple reasoning capabilities, and basic language structures. This stage is extremely computationally expensive, training base foundation models (e.g., Llama, Mistral).
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Stage 2: Supervised Fine-Tuning & Alignment (RLHF)</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.75rem 0;">
+              <strong>SFT (Supervised Fine-Tuning):</strong> Trains the raw model on curated conversational instruction-response pairs, transforming the next-token predictor into an interactive chatbot.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>RLHF (Reinforcement Learning from Human Feedback):</strong> Aligns the model with human preferences for safety, truthfulness, and helpfulness. 
+              A reward model scores outputs, and a reinforcement algorithm (like PPO or DPO) optimizes the model weights to maximize positive human feedback ratings.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">PEFT & LoRA (Parameter-Efficient Fine-Tuning)</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              Fine-tuning models with billions of parameters is highly resource-intensive. 
+              <strong>LoRA (Low-Rank Adaptation)</strong> freezes the pre-trained weights and decomposes weight update matrices (<code>ΔW</code>) into two lower-rank matrices: 
+              <code>A</code> and <code>B</code>. 
+              By training only these small rank matrices, we reduce trainable parameter counts by 99% while maintaining standard model performance!
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Diffusion Card -->
+      <NeoCard color="#bbf7d0" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          3. Diffusion Models & RAG Systems
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Synthesizing spectacular graphics and building reliable, hallucination-free search tools.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Diffusion Image Generation Mechanics</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              Diffusion models learn to synthesize images by reversing a destruction process. 
+              In the <strong>Forward Process</strong>, we progressively add Gaussian noise to a clear training image until it becomes pure static. 
+              In the <strong>Reverse Process</strong>, a neural network (typically a U-Net architecture) is trained to estimate and subtract that noise step-by-step. 
+              Starting from a canvas of pure random static, the network subtracts noise repeatedly, gradually coalescing the pixels into a brand-new, high-fidelity image!
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">RAG (Retrieval-Augmented Generation)</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              LLMs suffer from knowledge cutoff dates and factual hallucinations. 
+              <strong>RAG</strong> solves this by connecting LLMs to external databases. 
+              When a user submits a query, we calculate its embedding, search a **Vector Database** for the most semantically relevant document chunks, and supply those chunks into the prompt context. 
+              The LLM then synthesizes an answer grounded entirely in the retrieved evidence, completely resolving hallucinations!
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Roadmap Back Home -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        <a href="/domains/deep-learning" class="neo-border bg-violet neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; background-color: #e9d5ff; box-shadow: 4px 4px 0 #000;">
+          &larr; Deep Learning
+        </a>
+        <a href="/" class="neo-border bg-white neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; box-shadow: 4px 4px 0 #000;">
+          Back Home &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

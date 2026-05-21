@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+---
+
+<BaseLayout title="Code Guides - AI/ML Hub">
+  <div style="max-width: 1000px; margin: 0 auto; padding-bottom: 5rem;">
+    
+    <!-- Hero Block -->
+    <header class="neo-border neo-shadow bg-violet" style="padding: 2.5rem 1.5rem; margin-bottom: 3rem; text-align: center; border-width: 3.5px; background-color: #e9d5ff;">
+      <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">💻🐍</span>
+      <h1 style="font-size: 2.75rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: -1px; line-height: 1;">Code & Guides Lab</h1>
+      <p style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin: 0;">
+        From-scratch Python algorithms, neural architectures, training loops, and critical evaluation metrics.
+      </p>
+    </header>
+
+    <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+      
+      <!-- The 80/20 Rule Card -->
+      <section class="neo-border" style="background-color: #fff; padding: 2rem; border-width: 3px; box-shadow: 6px 6px 0px #000;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          The 80/20 Programming Rule
+        </h2>
+        <p style="font-size: 1rem; font-weight: bold; color: #374151; line-height: 1.6; margin: 0;">
+          Approximately 80% of practical machine learning engineering revolves around data acquisition, preprocessing, normalization, pipeline alignment, and evaluations, rather than tweaking model topologies. 
+          To succeed, you must master the mechanics of data transformations (e.g. mean scaling, imputing missing categories, fit vs. fit_transform concepts) and holdouts validation splits to prevent testing data leakage.
+        </p>
+      </section>
+
+      <!-- 1. From-Scratch NumPy Code -->
+      <NeoCard color="#fef08a" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          1. NumPy from Scratch Implementations
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          To understand mathematical models, you must code them without framework wrappers. Below are exact, complete Python/NumPy implementations.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          
+          <!-- Linear Regression -->
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Linear Regression with Gradient Descent</h3>
+            <pre style="background: #1e293b; color: #f8fafc; padding: 1rem; border: 2px solid #000; border-radius: 0; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 0.75rem 0;"><code>import numpy as np
+
+class LinearRegression:
+    def __init__(self, lr=0.01, epochs=1000):
+        self.lr = lr
+        self.epochs = epochs
+        self.weights = None
+        self.bias = None
+
+    def fit(self, X, y):
+        # X: array of shape (n_samples, n_features)
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(n_features)
+        self.bias = 0.0
+
+        for _ in range(self.epochs):
+            # 1. Forward prediction: y_pred = X·w + b
+            y_predicted = np.dot(X, self.weights) + self.bias
+            
+            # 2. Compute gradients
+            dw = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
+            db = (1 / n_samples) * np.sum(y_predicted - y)
+
+            # 3. Update weights and bias
+            self.weights -= self.lr * dw
+            self.bias -= self.lr * db
+
+    def predict(self, X):
+        return np.dot(X, self.weights) + self.bias</code></pre>
+          </div>
+
+          <!-- Logistic Regression -->
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Logistic Regression (Sigmoid + Cross Entropy)</h3>
+            <pre style="background: #1e293b; color: #f8fafc; padding: 1rem; border: 2px solid #000; border-radius: 0; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 0.75rem 0;"><code>import numpy as np
+
+class LogisticRegression:
+    def __init__(self, lr=0.01, epochs=1000):
+        self.lr = lr
+        self.epochs = epochs
+        self.weights = None
+        self.bias = None
+
+    def _sigmoid(self, z):
+        return 1 / (1 + np.exp(-z))
+
+    def fit(self, X, y):
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(n_features)
+        self.bias = 0.0
+
+        for _ in range(self.epochs):
+            # Linear model output z = X·w + b passed to Sigmoid
+            linear_model = np.dot(X, self.weights) + self.bias
+            y_predicted = self._sigmoid(linear_model)
+
+            # Compute cross-entropy gradient vectors
+            dw = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
+            db = (1 / n_samples) * np.sum(y_predicted - y)
+
+            # Update rules
+            self.weights -= self.lr * dw
+            self.bias -= self.lr * db
+
+    def predict(self, X):
+        linear_model = np.dot(X, self.weights) + self.bias
+        y_predicted = self._sigmoid(linear_model)
+        # Class thresholding boundary
+        return np.array([1 if i > 0.5 else 0 for i in y_predicted])</code></pre>
+          </div>
+
+          <!-- Single NN Layer -->
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Dense Neural Layer (Matrix Math + ReLU Activation)</h3>
+            <pre style="background: #1e293b; color: #f8fafc; padding: 1rem; border: 2px solid #000; border-radius: 0; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 0.75rem 0;"><code>import numpy as np
+
+class DenseLayer:
+    def __init__(self, input_dim, output_dim):
+        # He/Kaiming Initialization for ReLU layers
+        self.weights = np.random.randn(input_dim, output_dim) * np.sqrt(2.0 / input_dim)
+        self.bias = np.zeros((1, output_dim))
+        
+    def relu(self, Z):
+        return np.max(0, Z)
+
+    def forward(self, A_prev):
+        # A_prev: input dimensions matrix of shape (batch_size, input_dim)
+        self.Z = np.dot(A_prev, self.weights) + self.bias
+        self.A = np.maximum(0, self.Z)  # Apply element-wise ReLU
+        return self.A</code></pre>
+          </div>
+
+        </div>
+      </NeoCard>
+
+      <!-- 2. PyTorch Card -->
+      <NeoCard color="#a8d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          2. Industrial Frameworks: PyTorch ConvNet Layouts
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          When scaling up to complex neural network layers, we use deep framework abstractions to automatically track and backpropagate gradients.
+        </p>
+
+        <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+          <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Custom PyTorch Classifier CNN Template</h3>
+          <pre style="background: #1e293b; color: #f8fafc; padding: 1rem; border: 2px solid #000; border-radius: 0; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 0.75rem 0;"><code>import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class ConvClassifier(nn.Module):
+    def __init__(self, num_classes=10):
+        super(ConvClassifier, self).__init__()
+        # Input image: (batch, 1, 28, 28) -> Grayscale MNIST
+        self.feature_extractor = nn.Sequential(
+            nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2), # Output: (batch, 32, 14, 14)
+            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)  # Output: (batch, 64, 7, 7)
+        )
+        self.classifier = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(64 * 7 * 7, 128),
+            nn.ReLU(),
+            nn.Linear(128, num_classes) # Raw class score outputs (Logits)
+        )
+
+    def forward(self, x):
+        features = self.feature_extractor(x)
+        logits = self.classifier(features)
+        return logits
+
+# Initialize Model, Loss Function, and Gradient Optimizer
+model = ConvClassifier(num_classes=10)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)</code></pre>
+        </div>
+      </NeoCard>
+
+      <!-- 3. Metrics Card -->
+      <NeoCard color="#bbf7d0" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          3. Classification Performance Metrics
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Accuracy is often a misleading metric, especially with imbalanced datasets. You must evaluate models using precision and recall dimensions.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">Accuracy</h4>
+            <p style="font-family: monospace; font-size: 0.9rem; font-weight: 900; background: #f3f4f6; padding: 0.4rem; border: 1.5px solid #000; text-align: center; margin-bottom: 0.5rem;">
+              (TP + TN) / Total
+            </p>
+            <p style="font-size: 0.8rem; font-weight: bold; color: #4b5563; margin: 0;">
+              The fraction of total predictions the model got correct. Highly misleading on imbalanced sets (e.g. if 99% of images are healthy, a dummy model predicting healthy all the time yields 99% accuracy).
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">Precision</h4>
+            <p style="font-family: monospace; font-size: 0.9rem; font-weight: 900; background: #f3f4f6; padding: 0.4rem; border: 1.5px solid #000; text-align: center; margin-bottom: 0.5rem;">
+              TP / (TP + FP)
+            </p>
+            <p style="font-size: 0.8rem; font-weight: bold; color: #4b5563; margin: 0;">
+              Out of all positive predictions, how many were actually correct? Crucial when False Positives are expensive (e.g. email spam filters—you do not want a legitimate email classified as spam).
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">Recall (Sensitivity)</h4>
+            <p style="font-family: monospace; font-size: 0.9rem; font-weight: 900; background: #f3f4f6; padding: 0.4rem; border: 1.5px solid #000; text-align: center; margin-bottom: 0.5rem;">
+              TP / (TP + FN)
+            </p>
+            <p style="font-size: 0.8rem; font-weight: bold; color: #4b5563; margin: 0;">
+              Out of all actual positive cases, how many did the model identify? Crucial when False Negatives are catastrophic (e.g., cancer screening—missing a tumor is extremely dangerous).
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">F1 Score</h4>
+            <p style="font-family: monospace; font-size: 0.9rem; font-weight: 900; background: #f3f4f6; padding: 0.4rem; border: 1.5px solid #000; text-align: center; margin-bottom: 0.5rem;">
+              2 · (P · R) / (P + R)
+            </p>
+            <p style="font-size: 0.8rem; font-weight: bold; color: #4b5563; margin: 0;">
+              The harmonic mean of Precision and Recall. Balancing both dimensions, it provides a single consolidated performance index that works robustly on highly skewed class distributions.
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Navigation -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        <a href="/how-to-use/learn" class="neo-border bg-yellow neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; background-color: #fef08a; box-shadow: 4px 4px 0 #000;">
+          &larr; 01. Learning Guide
+        </a>
+        <a href="/how-to-use/build" class="neo-border bg-green neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; background-color: #bbf7d0; box-shadow: 4px 4px 0 #000;">
+          03. Build Projects &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

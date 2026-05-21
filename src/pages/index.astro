@@ -17,10 +17,10 @@ const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0,
       From basic linear algebra to deploying massive Generative AI models. This is a fully open-source, brutalist learning ecosystem designed to track progress and consolidate knowledge.
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <span class="neo-border bg-yellow" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; box-shadow: 2px 2px 0px #000;"># Mathematics</span>
-      <span class="neo-border bg-green" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; color: #000; background-color: #bbf7d0; box-shadow: 2px 2px 0px #000;"># Machine Learning</span>
-      <span class="neo-border bg-violet" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; color: #000; background-color: #e9d5ff; box-shadow: 2px 2px 0px #000;"># Deep Learning</span>
-      <span class="neo-border bg-yellow" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; background-color: #fef08a; box-shadow: 2px 2px 0px #000;"># Generative AI</span>
+      <a href="/domains/mathematics" class="neo-border bg-yellow neo-hover-raise" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; text-decoration: none; color: #000; box-shadow: 2px 2px 0px #000; display: inline-block;"># Mathematics &rarr;</a>
+      <a href="/domains/machine-learning" class="neo-border bg-green neo-hover-raise" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; text-decoration: none; color: #000; background-color: #bbf7d0; box-shadow: 2px 2px 0px #000; display: inline-block;"># Machine Learning &rarr;</a>
+      <a href="/domains/deep-learning" class="neo-border bg-violet neo-hover-raise" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; text-decoration: none; color: #000; background-color: #e9d5ff; box-shadow: 2px 2px 0px #000; display: inline-block;"># Deep Learning &rarr;</a>
+      <a href="/domains/generative-ai" class="neo-border bg-yellow neo-hover-raise" style="padding: 0.5rem 1rem; font-weight: 900; font-size: 0.9rem; text-decoration: none; color: #000; background-color: #fef08a; box-shadow: 2px 2px 0px #000; display: inline-block;"># Generative AI &rarr;</a>
     </div>
   </section>
 
@@ -28,18 +28,24 @@ const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0,
   <section id="guidance" style="margin-bottom: 4rem;">
     <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 4px solid #000; padding-bottom: 0.5rem;">How to Use This Hub</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-      <NeoCard color="#fef08a" class="neo-hover-raise" style="border-width: 3px;">
-        <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">01. Learn</h3>
-        <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Follow the chronological syllabus. Read the detailed notes, study the diagrams, and master the theory step-by-step.</p>
-      </NeoCard>
-      <NeoCard color="#e9d5ff" class="neo-hover-raise" style="border-width: 3px;">
-        <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">02. Code</h3>
-        <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Copy the embedded Python snippets into your local Jupyter Notebooks and run the models to truly understand the math.</p>
-      </NeoCard>
-      <NeoCard color="#a8d5ff" class="neo-hover-raise" style="border-width: 3px;">
-        <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">03. Build</h3>
-        <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Check the Projects Lab to see how theory is applied to real-world, open-source repositories.</p>
-      </NeoCard>
+      <a href="/how-to-use/learn" style="text-decoration: none; color: inherit; display: block;">
+        <NeoCard color="#fef08a" class="neo-hover-raise" style="border-width: 3px; height: 100%;">
+          <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">01. Learn &rarr;</h3>
+          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Follow the chronological syllabus. Read the detailed notes, study the diagrams, and master the theory step-by-step.</p>
+        </NeoCard>
+      </a>
+      <a href="/how-to-use/code" style="text-decoration: none; color: inherit; display: block;">
+        <NeoCard color="#e9d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%;">
+          <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">02. Code &rarr;</h3>
+          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Copy the embedded Python snippets into your local Jupyter Notebooks and run the models to truly understand the math.</p>
+        </NeoCard>
+      </a>
+      <a href="/how-to-use/build" style="text-decoration: none; color: inherit; display: block;">
+        <NeoCard color="#a8d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%;">
+          <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">03. Build &rarr;</h3>
+          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Check the Projects Lab to see how theory is applied to real-world, open-source repositories.</p>
+        </NeoCard>
+      </a>
     </div>
   </section>
 

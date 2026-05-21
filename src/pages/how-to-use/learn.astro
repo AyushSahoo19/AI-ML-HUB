@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+---
+
+<BaseLayout title="Learning Roadmap - AI/ML Hub">
+  <div style="max-width: 1000px; margin: 0 auto; padding-bottom: 5rem;">
+    
+    <!-- Hero Block -->
+    <header class="neo-border neo-shadow bg-yellow" style="padding: 2.5rem 1.5rem; margin-bottom: 3rem; text-align: center; border-width: 3.5px; background-color: #fef08a;">
+      <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🗺️🧭</span>
+      <h1 style="font-size: 2.75rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: -1px; line-height: 1;">Chronological Learning Guide</h1>
+      <p style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin: 0;">
+        Where to start, what to learn, why it matters, and how to conquer high-dimensional modeling.
+      </p>
+    </header>
+
+    <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+      
+      <!-- Software 1.0 vs Software 2.0 -->
+      <section class="neo-border" style="background-color: #fff; padding: 2rem; border-width: 3px; box-shadow: 6px 6px 0px #000;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          The Paradigm Shift: Software 1.0 vs. Software 2.0
+        </h2>
+        <p style="font-size: 1rem; font-weight: bold; color: #374151; line-height: 1.6; margin: 0 0 1.5rem 0;">
+          Learning AI and machine learning is not just about adding another library to your toolbelt. It is an entirely different philosophy of programming:
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+          <div style="background: #fca5a5; padding: 1.25rem; border: 2px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-weight: 900; margin-top: 0;">Software 1.0 (Rule-Based Code)</h3>
+            <p style="font-size: 0.9rem; font-weight: bold; color: #374151; line-height: 1.4; margin: 0;">
+              Traditional programming. The software engineer writes explicit rules (if/else blocks, loops, functions) to process inputs and output results. 
+              This fails entirely for complex tasks like vision or speech, where rules are impossible to write explicitly.
+            </p>
+          </div>
+
+          <div style="background: #bbf7d0; padding: 1.25rem; border: 2px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-weight: 900; margin-top: 0;">Software 2.0 (Data-Driven Code)</h3>
+            <p style="font-size: 0.9rem; font-weight: bold; color: #374151; line-height: 1.4; margin: 0;">
+              Machine learning programming. Instead of writing the rules, we feed inputs and labeled outputs (data) into a mathematical model. 
+              The optimizer *discovers* the weights and parameter connections that represent the rules. We program by curation!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- The Core Roadmap -->
+      <NeoCard color="#a8d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          The Sequential Roadmap: Step-by-Step
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Do not skip ahead. A weak mathematical foundation will make advanced architectures impossible to debug. Follow this sequence:
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #a855f7;">Phase 1: Mathematical Foundations</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.5rem 0;">
+              <strong>What to Learn:</strong> Linear algebra (matrices, eigenvalues, SVD), multivariate calculus (partial derivatives, gradients), probability (Bayes' Theorem, Gaussian distributions).
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Why:</strong> This establishes the spatial intuition of vectors and parameters, and explains how error optimization scales mathematically.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #22c55e;">Phase 2: Classical Machine Learning</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.5rem 0;">
+              <strong>What to Learn:</strong> Scikit-Learn libraries, supervised regression/classification (Linear/Logistic, SVMs, Random Forests), clustering (K-Means), and core generalizability metrics (Bias-Variance tradeoff, Precision-Recall).
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Why:</strong> Classical models teach you parameter alignment, data preprocessing, model validation boundaries, and baseline benchmark establishment.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #3b82f6;">Phase 3: Deep Representation Learning</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.5rem 0;">
+              <strong>What to Learn:</strong> Multi-layer perceptrons, non-linear activations (ReLU), forward/backpropagation math, PyTorch/TensorFlow frameworks, CNNs for vision, and RNNs/LSTMs for sequences.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Why:</strong> Deep neural networks learn spatial representations automatically, building complex hierarchical feature extractors.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #eab308;">Phase 4: Generative AI & MLOps</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 0.5rem 0;">
+              <strong>What to Learn:</strong> Transformer architecture (attention mechanisms), Large Language Models (LLMs), fine-tuning (LoRA), diffusion models, RAG database pipelines, and containerized deployment (Docker, MLflow).
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>Why:</strong> Brings your theoretical knowledge to state-of-the-art interactive scale, teaching you to deploy robust, production-grade applications.
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Real World Applications -->
+      <NeoCard color="#e9d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Where is this applied in the Real World?
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Your academic knowledge translates directly into industrial pipelines:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+          <div style="background: #fff; padding: 1rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">Autonomous Vehicles</h4>
+            <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0;">
+              CNNs detect lane lines and traffic lights, while reinforcement policies plan driving trajectories in complex dynamic environments.
+            </p>
+          </div>
+          <div style="background: #fff; padding: 1rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">Clinical Diagnosis</h4>
+            <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0;">
+              Computer vision networks segment MRI scans with super-human accuracy, detecting anomalies, tumors, and internal injuries instantly.
+            </p>
+          </div>
+          <div style="background: #fff; padding: 1rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">Quantitative Trading</h4>
+            <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0;">
+              Time-series models digest thousands of microsecond stock prices, modeling high-frequency variance boundaries to trade assets profitably.
+            </p>
+          </div>
+          <div style="background: #fff; padding: 1rem; border: 2px solid #000; box-shadow: 2px 2px 0 #000;">
+            <h4 style="font-weight: 900; margin-top: 0; color: #000;">Generative Search</h4>
+            <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0;">
+              Transformers paired with vector search engines power the next generation of query answering systems (like ChatGPT, Perplexity).
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Navigation -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        <a href="/" class="neo-border bg-white neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; box-shadow: 4px 4px 0 #000;">
+          &larr; Back Home
+        </a>
+        <a href="/how-to-use/code" class="neo-border bg-violet neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; background-color: #e9d5ff; box-shadow: 4px 4px 0 #000;">
+          02. Code Guide &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+---
+
+<BaseLayout title="Mathematics for Machine Learning - AI/ML Hub">
+  <div style="max-width: 1000px; margin: 0 auto; padding-bottom: 5rem;">
+    
+    <!-- Hero Block -->
+    <header class="neo-border neo-shadow bg-yellow" style="padding: 2.5rem 1.5rem; margin-bottom: 3rem; text-align: center; border-width: 3.5px;">
+      <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🧮</span>
+      <h1 style="font-size: 2.75rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0; letter-spacing: -1px; line-height: 1;">Mathematics Foundations</h1>
+      <p style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin: 0;">
+        The hidden engines powering every weight update, gradient descent step, and representation bottleneck.
+      </p>
+    </header>
+
+    <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+      
+      <!-- Intro Section -->
+      <section class="neo-border" style="background-color: #fff; padding: 2rem; border-width: 3px; box-shadow: 6px 6px 0px #000;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          Why Mathematics in AI/ML?
+        </h2>
+        <p style="font-size: 1rem; font-weight: bold; color: #374151; line-height: 1.6; margin: 0;">
+          At its core, a machine learning model is simply a parameterized mathematical function. 
+          Training a model is the process of adjusting these parameters so the function maps inputs to outputs as accurately as possible. 
+          Without mathematics, AI is a black box. Linear algebra structures our high-dimensional data; multivariate calculus enables us to find parameter paths that minimize loss; and probability theory lets us quantify uncertainty and model statistical regularities.
+        </p>
+      </section>
+
+      <!-- 1. Linear Algebra Card -->
+      <NeoCard color="#a8d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          1. Linear Algebra: High-Dimensional Containers
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Linear algebra is the language of machine learning. It allows us to bundle data, operations, and parameters into clean algebraic objects called vectors and matrices.
+        </p>
+        
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Vector Spaces & Transformations</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              Every data sample (e.g., an image of 28x28 pixels) is a vector in a high-dimensional space (e.g., a 784-dimensional space). 
+              A matrix acts as a <strong>linear transformation</strong>—when we multiply a vector by a weight matrix (W), we rotate, stretch, or compress the space itself. 
+              This is how neural layers transform input data features into a representation space where classification becomes linearly separable.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Eigenvalues & Eigenvectors</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 1rem 0;">
+              For a square matrix <strong>A</strong>, if there is a non-zero vector <strong>v</strong> such that 
+              <code>A·v = λ·v</code> (where λ is a scalar), then <strong>v</strong> is an eigenvector and λ is its eigenvalue. 
+              Eigenvectors represent the directions along which the transformation only scales the vector, without changing its direction.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              <strong>PCA (Principal Component Analysis) Intuition:</strong> PCA projects high-dimensional data onto eigenvectors of the data's covariance matrix. 
+              The eigenvectors with the largest eigenvalues correspond to the axes containing the highest variance. 
+              By discarding components with small eigenvalues, we compress data dimensionality while preserving maximum information!
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- 2. Calculus Card -->
+      <NeoCard color="#e9d5ff" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          2. Multivariate Calculus: Navigating Loss Landscapes
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          If linear algebra describes the spaces we operate in, calculus describes how to move through them to optimize performance.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Partial Derivatives & The Gradient Vector</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 1rem 0;">
+              In machine learning, our loss function <code>L(w₁, w₂, ..., wₙ)</code> depends on millions of weights. 
+              A partial derivative <code>∂L / ∂wᵢ</code> tells us how the loss changes when we tweak only the parameter <code>wᵢ</code>.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              The <strong>Gradient Vector</strong> (written as <code>∇L</code>) is a vector containing all these partial derivatives. 
+              Crucially, <code>∇L</code> points in the direction of the steepest *increase* in loss. 
+              Therefore, by moving in the opposite direction (<code>-∇L</code>), we perform <strong>Gradient Descent</strong> to slide down the landscape towards the minimum.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">The Chain Rule (Backpropagation Backpressure)</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              Deep networks represent nested mathematical composite functions: <code>f(g(h(x)))</code>. 
+              To calculate how the final loss changes with respect to a weight in the first layer, we use the <strong>Chain Rule</strong>: 
+              <code>dy/dx = (dy/du) · (du/dx)</code>. 
+              This product chain of local derivatives allows gradients to flow backwards through layers, establishing the backbone of **Backpropagation**.
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- 3. Probability Card -->
+      <NeoCard color="#bbf7d0" style="border-width: 3.5px; box-shadow: 6px 6px 0px #000; padding: 2rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-top: 0; border-bottom: 3px solid #000; padding-bottom: 0.5rem; color: #000;">
+          3. Probability & Statistics: Reasoning Under Uncertainty
+        </h2>
+        <p style="font-weight: bold; line-height: 1.5; margin-bottom: 1.5rem; color: #1f2937;">
+          Real-world data is noisy, incomplete, and uncertain. Probability theory provides a rigorous mathematical framework to model this randomness.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">Bayes' Theorem & Classification</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0 0 1rem 0;">
+              Bayes' Theorem tells us how to update our belief in a hypothesis (H) given new evidence (E):
+              <code>P(H|E) = [P(E|H) · P(H)] / P(E)</code>.
+            </p>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              In classification, Bayes' Theorem maps input features to class probabilities: 
+              <code>P(Class | Features) = [P(Features | Class) · P(Class)] / P(Features)</code>. 
+              This is the direct foundation of classifiers like Naive Bayes and establishes the theoretical baseline known as the <strong>Bayes Optimal Classifier</strong>.
+            </p>
+          </div>
+
+          <div style="background: #fff; padding: 1.25rem; border: 2.5px solid #000; box-shadow: 3px 3px 0 #000;">
+            <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0; color: #000;">MLE (Maximum Likelihood Estimation)</h3>
+            <p style="font-size: 0.95rem; font-weight: bold; line-height: 1.5; color: #4b5563; margin: 0;">
+              How do we fit parameters to a statistical distribution? <strong>MLE</strong> assumes our training samples are independent and identically distributed (i.i.d.). 
+              We calculate the likelihood function representing the probability of observing our dataset given parameter <code>θ</code>. 
+              We then maximize this likelihood (or more easily, maximize the log-likelihood). 
+              Crucially, minimizing Mean Squared Error under a Gaussian assumption, or minimizing Binary Cross-Entropy loss under a Bernoulli assumption, is mathematically equivalent to Maximum Likelihood Estimation!
+            </p>
+          </div>
+        </div>
+      </NeoCard>
+
+      <!-- Roadmap Back Home -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        <a href="/" class="neo-border bg-white neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; box-shadow: 4px 4px 0 #000;">
+          &larr; Back to Ultimate Brain
+        </a>
+        <a href="/domains/machine-learning" class="neo-border bg-green neo-hover-raise" style="padding: 0.75rem 1.5rem; font-weight: 900; color: #000; text-decoration: none; border-width: 3px; box-shadow: 4px 4px 0 #000;">
+          Machine Learning &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
