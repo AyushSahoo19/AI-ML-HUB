@@ -16,7 +16,7 @@ import NeoCard from '../../components/NeoCard.astro';
     </div>
 
     <!-- Workspace Grid -->
-    <div style="display: grid; grid-template-columns: 2.5fr 1fr; gap: 2rem; align-items: start;">
+    <div class="responsive-grid-2-1" style="align-items: start;">
       
       <!-- LEFT: Canvas Visualizer -->
       <div>
@@ -466,8 +466,10 @@ import NeoCard from '../../components/NeoCard.astro';
   canvas?.addEventListener('click', (e) => {
     stopAnimation();
     const rect = canvas.getBoundingClientRect();
-    const px = e.clientX - rect.left;
-    const py = e.clientY - rect.top;
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const px = (e.clientX - rect.left) * scaleX;
+    const py = (e.clientY - rect.top) * scaleY;
     
     const coord = toCoords(px, py);
     const l = landscapes[state.lossType];

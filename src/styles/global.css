@@ -43,3 +43,70 @@ body {
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0px var(--neo-border-color);
 }
+
+/* Responsive Grid Utilities */
+.responsive-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.responsive-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.responsive-grid-1-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid-1-2 {
+    grid-template-columns: 1.8fr 1.2fr;
+  }
+}
+
+.responsive-grid-2-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid-2-1 {
+    grid-template-columns: 2.5fr 1fr;
+  }
+}
+
+.responsive-grid-3-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid-3-1 {
+    grid-template-columns: 3fr 1fr;
+  }
+}
+
+/* Responsive Typography Modifier */
+.responsive-title {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .responsive-title {
+    font-size: 2.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-title {
+    font-size: 3.5rem;
+  }
+}

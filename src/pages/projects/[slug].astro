@@ -76,7 +76,7 @@ const files = project.data.files || [];
     </div>
 
     <!-- Active Tab Window View -->
-    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 2rem;" id="main-content-layout">
+    <div class="responsive-grid-3-1" id="main-content-layout">
       
       <!-- LEFT CONTAINER (Main repository views) -->
       <div>
@@ -415,7 +415,7 @@ const files = project.data.files || [];
       // Hide sidebar unless on code tab
       const codeTabActive = btn.getAttribute('data-tab') === 'code';
       if (codeTabActive) {
-        mainContentLayout.style.gridTemplateColumns = '3fr 1fr';
+        mainContentLayout.style.gridTemplateColumns = '';
         mainContentLayout.children[1].style.display = 'block';
       } else {
         mainContentLayout.style.gridTemplateColumns = '1fr';

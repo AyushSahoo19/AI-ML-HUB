@@ -6,15 +6,15 @@ import NeoCard from '../components/NeoCard.astro';
 <BaseLayout title="Curriculum Syllabus - AI/ML Hub">
   <div style="max-width: 900px; margin: 0 auto;">
     <header style="margin-bottom: 2rem;">
-      <h1 style="font-size: 2.25rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.25rem; text-align: center;">Master Syllabus</h1>
+      <h1 class="responsive-title" style="font-weight: 900; text-transform: uppercase; margin-bottom: 0.25rem; text-align: center;">Master Syllabus</h1>
       <p style="text-align: center; font-size: 1rem; font-weight: bold; color: #4b5563;">From Basic Mathematics to Advanced MLOps (2024-2025)</p>
     </header>
 
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       
       <!-- Phase 1 -->
-      <section style="display: grid; grid-template-columns: 1fr 3fr; gap: 1.5rem; align-items: start; border-bottom: 2px solid #a8d5ff; padding-bottom: 1.5rem;">
-        <div style="position: sticky; top: 1.5rem;">
+      <section class="syllabus-section" style="border-bottom: 2px solid #a8d5ff; padding-bottom: 1.5rem;">
+        <div class="sticky-header">
           <h2 style="font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0;">Phase 1: Foundations</h2>
           <div style="width: 40px; height: 6px; background-color: #a8d5ff; border: 1px solid #000;"></div>
         </div>
@@ -41,8 +41,8 @@ import NeoCard from '../components/NeoCard.astro';
       </section>
 
       <!-- Phase 2 -->
-      <section style="display: grid; grid-template-columns: 1fr 3fr; gap: 1.5rem; align-items: start; border-bottom: 2px solid #bbf7d0; padding-bottom: 1.5rem;">
-        <div style="position: sticky; top: 1.5rem;">
+      <section class="syllabus-section" style="border-bottom: 2px solid #bbf7d0; padding-bottom: 1.5rem;">
+        <div class="sticky-header">
           <h2 style="font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0;">Phase 2: Machine Learning</h2>
           <div style="width: 40px; height: 6px; background-color: #bbf7d0; border: 1px solid #000;"></div>
         </div>
@@ -69,8 +69,8 @@ import NeoCard from '../components/NeoCard.astro';
       </section>
 
       <!-- Phase 3 -->
-      <section style="display: grid; grid-template-columns: 1fr 3fr; gap: 1.5rem; align-items: start; border-bottom: 2px solid #e9d5ff; padding-bottom: 1.5rem;">
-        <div style="position: sticky; top: 1.5rem;">
+      <section class="syllabus-section" style="border-bottom: 2px solid #e9d5ff; padding-bottom: 1.5rem;">
+        <div class="sticky-header">
           <h2 style="font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0;">Phase 3: Deep Learning</h2>
           <div style="width: 40px; height: 6px; background-color: #e9d5ff; border: 1px solid #000;"></div>
         </div>
@@ -96,8 +96,8 @@ import NeoCard from '../components/NeoCard.astro';
       </section>
 
       <!-- Phase 4 -->
-      <section style="display: grid; grid-template-columns: 1fr 3fr; gap: 1.5rem; align-items: start; border-bottom: 2px solid #fef08a; padding-bottom: 1.5rem;">
-        <div style="position: sticky; top: 1.5rem;">
+      <section class="syllabus-section" style="border-bottom: 2px solid #fef08a; padding-bottom: 1.5rem;">
+        <div class="sticky-header">
           <h2 style="font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin: 0 0 0.5rem 0;">Phase 4: GenAI & MLOps</h2>
           <div style="width: 40px; height: 6px; background-color: #fef08a; border: 1px solid #000;"></div>
         </div>
@@ -126,3 +126,24 @@ import NeoCard from '../components/NeoCard.astro';
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .syllabus-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .sticky-header {
+    position: static;
+  }
+  @media (min-width: 768px) {
+    .syllabus-section {
+      grid-template-columns: 1fr 3fr;
+    }
+    .sticky-header {
+      position: sticky;
+      top: 1.5rem;
+    }
+  }
+</style>
