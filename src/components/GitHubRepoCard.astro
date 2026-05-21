@@ -1,0 +1,135 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  language: string;
+  stars: number;
+  url?: string;
+}
+
+const { title, description, language, stars, url = '#' } = Astro.props;
+
+const langColors: Record<string, string> = {
+  JavaScript: '#f1e05a',
+  TypeScript: '#3178c6',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  Astro: '#ff5a03',
+  Python: '#3572A5',
+  Rust: '#dea584',
+  Go: '#00ADD8'
+};
+const langColor = langColors[language] || '#8b949e';
+---
+
+<div class="github-repo-card neo-card">
+  <div class="repo-header">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" class="repo-icon">
+      <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+    </svg>
+    <a href={url} class="repo-title">{title}</a>
+  </div>
+  <p class="repo-description">{description}</p>
+  <div class="repo-stats">
+    <span class="language">
+      <span class="lang-color" style={`background-color: ${langColor};`}></span>
+      {language}
+    </span>
+    <a href={`${url}/stargazers`} class="stars">
+      <svg aria-label="star" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" class="star-icon">
+        <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
+      </svg>
+      {stars}
+    </a>
+  </div>
+</div>
+
+<style>
+  .github-repo-card {
+    border: 3px solid #000;
+    padding: 16px;
+    border-radius: 0; /* brutalist touch */
+    background: #fff;
+    box-shadow: 6px 6px 0px #000;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .github-repo-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px #000;
+  }
+
+  .repo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .repo-icon {
+    fill: #57606a;
+  }
+
+  .repo-title {
+    font-weight: 600;
+    color: #0969da;
+    text-decoration: none;
+    font-size: 1.1rem;
+    word-break: break-all;
+  }
+
+  .repo-title:hover {
+    text-decoration: underline;
+  }
+
+  .repo-description {
+    font-size: 0.85rem;
+    color: #57606a;
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .repo-stats {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.75rem;
+    color: #57606a;
+    margin-top: 8px;
+  }
+
+  .language {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: bold;
+  }
+
+  .lang-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid #000; /* brutalist touch */
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .stars:hover {
+    color: #0969da;
+  }
+
+  .star-icon {
+    fill: currentColor;
+  }
+</style>

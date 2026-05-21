@@ -1,0 +1,45 @@
+:root {
+  --neo-violet: #8B5CF6;
+  --neo-yellow: #FDE047;
+  --neo-green: #22C55E;
+  --neo-border-color: #000;
+  --neo-bg-color: #fff;
+  --neo-text-color: #000;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--neo-bg-color);
+  color: var(--neo-text-color);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.neo-border {
+  border: 3px solid var(--neo-border-color);
+}
+
+.neo-shadow {
+  box-shadow: 4px 4px 0px var(--neo-border-color);
+}
+
+.neo-card {
+  background-color: var(--neo-bg-color);
+  border: 3px solid var(--neo-border-color);
+  box-shadow: 4px 4px 0px var(--neo-border-color);
+  padding: 1.5rem;
+}
+
+.bg-violet { background-color: var(--neo-violet); }
+.bg-yellow { background-color: var(--neo-yellow); }
+.bg-green { background-color: var(--neo-green); }
+
+/* Interactive utilities */
+.neo-hover-raise {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+.neo-hover-raise:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--neo-border-color);
+}

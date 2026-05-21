@@ -1,0 +1,98 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+
+export async function getStaticPaths() {
+  const lectures = await getCollection('lectures');
+  return lectures.map(lecture => ({
+    params: { slug: lecture.id },
+    props: { lecture },
+  }));
+}
+
+const { lecture } = Astro.props;
+const { Content } = await render(lecture);
+
+// Navigation Logic
+const allLectures = await getCollection('lectures');
+const sortedLectures = allLectures.sort((a, b) => a.data.day - b.data.day);
+const currentIndex = sortedLectures.findIndex(l => l.id === lecture.id);
+const prevLecture = currentIndex > 0 ? sortedLectures[currentIndex - 1] : null;
+const nextLecture = currentIndex < sortedLectures.length - 1 ? sortedLectures[currentIndex + 1] : null;
+---
+
+<BaseLayout title={lecture.data.title}>
+  <div style="margin-bottom: 1.5rem;">
+    <a href="/#notes" class="neo-border bg-yellow neo-hover-raise" style="text-decoration: none; color: inherit; font-weight: bold; padding: 0.4rem 0.8rem; font-size: 0.9rem;">&larr; Back to Modules</a>
+  </div>
+  <NeoCard color="#fff">
+    <article style="max-width: 800px; margin: 0 auto; line-height: 1.6;">
+      <header style="margin-bottom: 2rem; border-bottom: 3px solid #000; padding-bottom: 1rem;">
+        <h1 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem;">{lecture.data.title}</h1>
+        <div style="display: flex; gap: 1rem; font-weight: bold; font-size: 0.9rem;">
+          <span class="neo-border" style="background-color: #e3a8ff; padding: 0.2rem 0.5rem;">Day {lecture.data.day}</span>
+          <span class="neo-border" style="background-color: #a8d5ff; padding: 0.2rem 0.5rem;">{lecture.data.date}</span>
+          {lecture.data.module && <span class="neo-border" style="background-color: #fde047; padding: 0.2rem 0.5rem;">{lecture.data.module}</span>}
+        </div>
+      </header>
+      
+      <div class="content" style="font-size: 1rem;">
+        <Content />
+      </div>
+
+      <nav style="margin-top: 3rem; padding-top: 1.5rem; border-top: 3px solid #000; display: flex; justify-content: space-between; align-items: center;">
+        {prevLecture ? (
+          <a href={`/lectures/${prevLecture.id}`} class="neo-border bg-green neo-hover-raise" style="text-decoration: none; color: inherit; font-weight: bold; padding: 0.5rem 1rem; font-size: 0.9rem;">
+            &larr; Day {prevLecture.data.day}
+          </a>
+        ) : <div></div>}
+        
+        {nextLecture ? (
+          <a href={`/lectures/${nextLecture.id}`} class="neo-border bg-violet neo-hover-raise" style="text-decoration: none; color: inherit; font-weight: bold; padding: 0.5rem 1rem; font-size: 0.9rem; background-color: #e3a8ff;">
+            Day {nextLecture.data.day} &rarr;
+          </a>
+        ) : <div></div>}
+      </nav>
+    </article>
+  </NeoCard>
+</BaseLayout>
+
+<style is:global>
+  .content h1, .content h2, .content h3 {
+    font-weight: 900;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .content h1 { font-size: 1.75rem; }
+  .content h2 { font-size: 1.5rem; }
+  .content h3 { font-size: 1.25rem; }
+  .content p {
+    margin-bottom: 1rem;
+  }
+  .content pre {
+    background-color: #000 !important;
+    color: #fff !important;
+    padding: 1rem;
+    border: 3px solid #000;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 0.9rem;
+    box-shadow: 4px 4px 0px #8b5cf6;
+    margin-bottom: 1.5rem;
+  }
+  .content code {
+    background-color: #f3f4f6;
+    color: #000;
+    padding: 0.15rem 0.3rem;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .content pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    font-weight: normal;
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GitHubRepoCard from '../../components/GitHubRepoCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+---
+
+<BaseLayout title="Projects Lab - AI/ML IIT Mandi">
+  <div style="max-width: 1000px; margin: 0 auto;">
+    
+    <!-- Header banner -->
+    <section class="neo-border neo-shadow bg-violet" style="padding: 2.5rem 2rem; margin-bottom: 3rem; background-color: #e3a8ff; color: #000;">
+      <h1 style="font-size: 2.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem;">Projects Lab</h1>
+      <p style="font-size: 1.1rem; font-weight: bold; margin: 0; color: #1f2937;">
+        Hands-on codebase repositories built from scratch during the AI, Machine Learning, and Deep Learning course modules.
+      </p>
+    </section>
+
+    <!-- Grid Layout of GitHub Projects -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+      {projects.map((project) => (
+        <div style="background-color: #fff; display: flex; flex-direction: column; justify-content: space-between;" class="neo-border neo-shadow">
+          <div style="padding: 1.5rem;">
+            <!-- Repo Header Mimic -->
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+              <svg aria-hidden="true" height="18" viewBox="0 0 16 16" version="1.1" width="18" style="fill: #000;">
+                <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+              </svg>
+              <a href={`/projects/${project.id}`} style="font-size: 1.4rem; font-weight: 900; text-decoration: none; color: #0969da; line-height: 1;">
+                {project.data.title}
+              </a>
+              <span style="font-size: 0.7rem; font-weight: bold; border: 2px solid #000; padding: 0.1rem 0.4rem; background-color: #f3f4f6; text-transform: uppercase;">Public</span>
+            </div>
+
+            <!-- Description -->
+            <p style="font-size: 0.95rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin: 0 0 1.5rem 0;">
+              {project.data.description}
+            </p>
+
+            <!-- Language stats bar -->
+            <div style="width: 100%; height: 8px; border: 2px solid #000; background-color: #e5e7eb; display: flex; overflow: hidden; margin-bottom: 1.5rem;">
+              {project.data.language === 'Python' ? (
+                <>
+                  <div style="width: 90%; background-color: #3572A5;" title="Python 90%"></div>
+                  <div style="width: 10%; background-color: #f1e05a;" title="Other 10%"></div>
+                </>
+              ) : (
+                <>
+                  <div style="width: 80%; background-color: #da5b0b;" title="Jupyter Notebook 80%"></div>
+                  <div style="width: 20%; background-color: #3572A5;" title="Python 20%"></div>
+                </>
+              )}
+            </div>
+
+            <!-- Tech badges -->
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+              {project.data.language === 'Python' ? (
+                <>
+                  <span style="font-size: 0.75rem; font-weight: bold; background-color: #f3f4f6; border: 1px solid #000; padding: 0.2rem 0.5rem;">#numpy</span>
+                  <span style="font-size: 0.75rem; font-weight: bold; background-color: #f3f4f6; border: 1px solid #000; padding: 0.2rem 0.5rem;">#linear-regression</span>
+                  <span style="font-size: 0.75rem; font-weight: bold; background-color: #f3f4f6; border: 1px solid #000; padding: 0.2rem 0.5rem;">#perceptron</span>
+                </>
+              ) : (
+                <>
+                  <span style="font-size: 0.75rem; font-weight: bold; background-color: #f3f4f6; border: 1px solid #000; padding: 0.2rem 0.5rem;">#matplotlib</span>
+                  <span style="font-size: 0.75rem; font-weight: bold; background-color: #f3f4f6; border: 1px solid #000; padding: 0.2rem 0.5rem;">#pandas</span>
+                  <span style="font-size: 0.75rem; font-weight: bold; background-color: #f3f4f6; border: 1px solid #000; padding: 0.2rem 0.5rem;">#exploratory-analysis</span>
+                </>
+              )}
+            </div>
+          </div>
+
+          <!-- Bottom bar stats and CTA -->
+          <div style="border-top: 3px solid #000; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; background-color: #fafafa;">
+            <div style="display: flex; gap: 1rem; font-size: 0.8rem; font-weight: bold; color: #4b5563;">
+              <span style="display: flex; align-items: center; gap: 0.25rem;">
+                <span style={`width: 10px; height: 10px; border-radius: 50%; display: inline-block; background-color: ${project.data.language === 'Python' ? '#3572A5' : '#da5b0b'}; border: 1px solid #000;`}></span>
+                {project.data.language}
+              </span>
+              <span style="display: flex; align-items: center; gap: 0.25rem;">
+                ★ {project.data.stars}
+              </span>
+              <span style="display: flex; align-items: center; gap: 0.25rem;">
+                ⌥ {project.data.forks}
+              </span>
+            </div>
+            
+            <a href={`/projects/${project.id}`} class="neo-border" style="background-color: #fff; text-decoration: none; color: #000; padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 900; box-shadow: 2px 2px 0px #000; transition: all 0.1s;" onmouseover="this.style.transform='translate(-1px,-1px)'; this.style.boxShadow='3px 3px 0px #000';" onmouseout="this.style.transform='none'; this.style.boxShadow='2px 2px 0px #000';">
+              Explore Codebase &rarr;
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

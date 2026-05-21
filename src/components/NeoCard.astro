@@ -1,0 +1,12 @@
+---
+export interface Props {
+  color?: string;
+  class?: string;
+}
+
+const { color = '#ffffff', class: className = '' } = Astro.props;
+---
+
+<div class={`neo-card ${className}`} style={`background-color: ${color};`}>
+  <slot />
+</div>

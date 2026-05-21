@@ -1,0 +1,740 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import fs from 'fs';
+import path from 'path';
+
+// Dynamically read files inside 05_Open_Source_Repos
+const reposPath = path.resolve('..', '05_Open_Source_Repos');
+
+let modelsFiles = [];
+let referencesFiles = [];
+let toolsFiles = [];
+
+try {
+  modelsFiles = fs.readdirSync(path.join(reposPath, 'Models')).filter(f => f !== '.DS_Store');
+} catch (e) {
+  modelsFiles = ['README.md', 'linear_regression.py'];
+}
+
+try {
+  referencesFiles = fs.readdirSync(path.join(reposPath, 'References')).filter(f => f !== '.DS_Store');
+} catch (e) {
+  referencesFiles = ['README.md', 'MATH_FOUNDATIONS.md'];
+}
+
+try {
+  toolsFiles = fs.readdirSync(path.join(reposPath, 'Tools')).filter(f => f !== '.DS_Store');
+} catch (e) {
+  toolsFiles = ['README.md', 'setup_env.sh'];
+}
+
+// Fetch file contents to serialize for live file viewer
+const filesContent = {};
+
+const reposData = [
+  { name: 'Models', files: modelsFiles },
+  { name: 'References', files: referencesFiles },
+  { name: 'Tools', files: toolsFiles }
+];
+
+reposData.forEach(repo => {
+  repo.files.forEach(file => {
+    const filePath = path.join(reposPath, repo.name, file);
+    try {
+      filesContent[`${repo.name}/${file}`] = fs.readFileSync(filePath, 'utf-8');
+    } catch (e) {
+      filesContent[`${repo.name}/${file}`] = "# Error loading local file content.";
+    }
+  });
+});
+
+const repositories = [
+  {
+    name: 'Models',
+    description: 'Curated repository containing high-performance models and custom implementations of classical ML and Deep Learning algorithms.',
+    language: 'Python',
+    langColor: '#3572A5',
+    stars: 48,
+    forks: 14,
+    files: modelsFiles,
+    localPath: '05_Open_Source_Repos/Models/'
+  },
+  {
+    name: 'References',
+    description: 'Comprehensive documentation, reference textbook materials, formulas, and course curriculum guides.',
+    language: 'Markdown',
+    langColor: '#083344',
+    stars: 12,
+    forks: 2,
+    files: referencesFiles,
+    localPath: '05_Open_Source_Repos/References/'
+  },
+  {
+    name: 'Tools',
+    description: 'Development environment setup scripts, packages installs trackers, and automated validation code tools.',
+    language: 'Shell',
+    langColor: '#89e051',
+    stars: 8,
+    forks: 1,
+    files: toolsFiles,
+    localPath: '05_Open_Source_Repos/Tools/'
+  }
+];
+
+// Generate dynamic contribution heatmap data (365 days)
+const contributionWeeks = 53;
+const daysOfWeek = 7;
+const contributionsMap = [];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// Seed random commits
+let seed = 12345;
+function random() {
+  let x = Math.sin(seed++) * 10000;
+  return x - Math.floor(x);
+}
+
+for (let w = 0; w < contributionWeeks; w++) {
+  const weekData = [];
+  for (let d = 0; d < daysOfWeek; d++) {
+    const val = random();
+    let commits = 0;
+    if (val > 0.85) commits = Math.floor(random() * 8) + 4;
+    else if (val > 0.6) commits = Math.floor(random() * 4) + 1;
+    
+    let color = "#ebedf0"; // no commits
+    if (commits > 0 && commits <= 2) color = "#c6e48b";
+    else if (commits > 2 && commits <= 5) color = "#7bc96f";
+    else if (commits > 5) color = "#239a3b";
+    
+    const tooltip = `${commits} commits on Week ${w + 1}, Day ${d + 1}`;
+    
+    weekData.push({
+      commits,
+      color,
+      tooltip
+    });
+  }
+  contributionsMap.push(weekData);
+}
+---
+
+<BaseLayout title="GitHub Profile - IIT Mandi AI/ML">
+  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #24292f; max-width: 1200px; margin: 0 auto;">
+    
+    <!-- GitHub Top Brutalist Header Banner -->
+    <div class="neo-border bg-yellow" style="padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; box-shadow: 4px 4px 0px #000;">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" style="fill: #000; transition: transform 0.3s;" class="gh-logo-hover">
+          <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        <div>
+          <h1 style="margin: 0; font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px;">GitHub Code Hub</h1>
+          <p style="margin: 0; font-size: 0.8rem; font-weight: bold; color: #4b5563;">Integrated workspace: <span style="font-family: monospace; background: #000; color: #fff; padding: 1px 4px; font-size: 0.75rem;">05_Open_Source_Repos/</span></p>
+        </div>
+      </div>
+      <div style="font-weight: 900; font-size: 0.85rem; border: 2.5px solid #000; padding: 0.35rem 0.75rem; background: #fff;" class="neo-shadow">
+        🔒 Connected &bull; Local Mode
+      </div>
+    </div>
+
+    <!-- GitHub Sub Tabs Navigation -->
+    <div style="display: flex; gap: 0.5rem; border-bottom: 3px solid #000; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 2px;">
+      <button class="nav-tab active" data-target="overview" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background: #a8d5ff; cursor: pointer; border-radius: 0;">
+        📖 Overview
+      </button>
+      <button class="nav-tab" data-target="repositories" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background: #fff; cursor: pointer; border-radius: 0;">
+        📁 Repositories
+        <span style="font-size: 0.75rem; background: #f3f4f6; border: 1.5px solid #000; padding: 0.05rem 0.35rem; font-weight: bold;">{repositories.length}</span>
+      </button>
+      <button class="nav-tab" data-target="projects" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background: #fff; cursor: pointer; border-radius: 0;">
+        🗂️ Projects
+        <span style="font-size: 0.75rem; background: #f3f4f6; border: 1.5px solid #000; padding: 0.05rem 0.35rem; font-weight: bold;">2</span>
+      </button>
+      <button class="nav-tab" data-target="packages" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background: #fff; cursor: pointer; border-radius: 0;">
+        📦 Packages
+        <span style="font-size: 0.75rem; background: #f3f4f6; border: 1.5px solid #000; padding: 0.05rem 0.35rem; font-weight: bold;">1</span>
+      </button>
+      <button class="nav-tab" data-target="stars" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background: #fff; cursor: pointer; border-radius: 0;">
+        ✨ Stars
+        <span style="font-size: 0.75rem; background: #f3f4f6; border: 1.5px solid #000; padding: 0.05rem 0.35rem; font-weight: bold;">4</span>
+      </button>
+    </div>
+
+    <!-- Main Content Layout (Dual Column) -->
+    <div style="display: grid; grid-template-columns: 280px 1fr; gap: 2rem;" id="github-grid">
+      
+      <!-- LEFT PROFILE SIDEBAR -->
+      <div>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <!-- Avatar Block -->
+          <div class="neo-border" style="background: #fff; padding: 1rem; text-align: center; box-shadow: 4px 4px 0px #000; position: relative;">
+            <div style="width: 100%; aspect-ratio: 1; background: #a8d5ff; border: 3px solid #000; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 1rem; position: relative;">
+              <!-- Custom Octocat styled vector -->
+              <svg width="80%" height="80%" viewBox="0 0 16 16" version="1.1" style="fill: #000;">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+              </svg>
+              <!-- Interactive Status Emoji -->
+              <span class="neo-border" style="position: absolute; bottom: 5px; right: 5px; background: #fff; padding: 0.15rem 0.35rem; font-size: 0.9rem; font-weight: bold; border-radius: 50%; box-shadow: 2px 2px 0px #000;">🎓</span>
+            </div>
+            <h2 style="margin: 0; font-size: 1.25rem; font-weight: 900; text-transform: uppercase;">IIT Mandi AI/ML</h2>
+            <p style="margin: 2px 0 0; font-size: 0.85rem; font-weight: bold; color: #57606a;">@iit-mandi-ai-ml</p>
+            <span style="display: inline-block; font-size: 0.7rem; font-weight: 900; background: #e3a8ff; border: 2px solid #000; padding: 0.1rem 0.4rem; margin-top: 0.5rem; text-transform: uppercase;">Verified Course Org</span>
+          </div>
+
+          <!-- Bio and Stats Card -->
+          <div class="neo-border" style="background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; font-size: 0.85rem; font-weight: bold;">
+            <p style="margin: 0 0 1rem 0; line-height: 1.4; color: #374151;">
+              Official curriculum code storage and local resources sandbox for IIT Mandi students. Fully integrated with pulled folders.
+            </p>
+            
+            <div style="border-top: 2px dashed #000; padding-top: 1rem; display: flex; flex-direction: column; gap: 0.65rem; color: #4b5563;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>👥</span>
+                <span><strong>240</strong> followers &bull; <strong>12</strong> following</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>📍</span>
+                <span>Mandi, Himachal Pradesh, India</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>📧</span>
+                <span style="color: #0969da;">ai-ml@iitmandi.ac.in</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>🔗</span>
+                <a href="https://iitmandi.ac.in" target="_blank" style="color: #0969da; text-decoration: none;">iitmandi.ac.in</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- LOCAL REPO SYNCER CONTROL PANEL -->
+          <div class="neo-border bg-green" style="padding: 1.25rem; box-shadow: 4px 4px 0px #000;">
+            <h3 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1rem; font-weight: 900; text-transform: uppercase;">Local Sync Tool</h3>
+            <p style="font-size: 0.75rem; font-weight: bold; margin: 0 0 0.75rem 0; line-height: 1.3;">
+              Trigger a real-time system sync check on the pulled folders inside your workspace repository.
+            </p>
+            
+            <!-- Folder Status Indicators -->
+            <div style="background: #fff; padding: 0.5rem; border: 2.5px solid #000; font-size: 0.75rem; font-family: monospace; display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem;">
+              <div>📁 Models: <strong style="color: #22c55e;">{modelsFiles.length} files</strong></div>
+              <div>📁 References: <strong style="color: #22c55e;">{referencesFiles.length} files</strong></div>
+              <div>📁 Tools: <strong style="color: #22c55e;">{toolsFiles.length} files</strong></div>
+            </div>
+
+            <button id="trigger-sync-btn" class="neo-border bg-yellow neo-hover-raise" style="width: 100%; padding: 0.5rem; font-weight: 900; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;">
+              🔄 Sync Repository
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT PANELS WRAPPER -->
+      <div>
+        
+        <!-- ================= OVERVIEW TAB ================= -->
+        <div id="tab-overview" class="tab-panel-content active-panel">
+          
+          <!-- Pinned Repos Header -->
+          <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 900; text-transform: uppercase;">Pinned Repositories</h3>
+          
+          <!-- Pinned Repos Grid -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2.5rem;" id="pinned-repos-grid">
+            {repositories.slice(0, 2).map(repo => (
+              <div class="neo-border neo-hover-raise" style="background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.35rem;">
+                      <span>📁</span>
+                      <strong style="color: #0969da; font-size: 0.95rem; cursor: pointer;" class="repo-switch-btn" data-repo={repo.name}>{repo.name}</strong>
+                    </div>
+                    <span style="font-size: 0.7rem; font-weight: bold; border: 2px solid #000; padding: 0.05rem 0.3rem; background: #fafafa;">Public</span>
+                  </div>
+                  <p style="font-size: 0.8rem; font-weight: bold; color: #4b5563; margin: 0 0 1rem 0; line-height: 1.4;">
+                    {repo.description}
+                  </p>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                      <span style={`display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: ${repo.langColor}; border: 1px solid #000;`}></span>
+                      {repo.language}
+                    </span>
+                    <span>★ {repo.stars}</span>
+                    <span>⌥ {repo.forks}</span>
+                  </div>
+                  <span style="font-family: monospace; font-size: 0.7rem; background: #f3f4f6; border: 1.5px solid #000; padding: 1px 4px;">{repo.files.length} files</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Contribution Heatmap Section -->
+          <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px solid #000; padding-bottom: 0.5rem; margin-bottom: 1.25rem;">
+              <h3 style="margin: 0; font-size: 1.1rem; font-weight: 900; text-transform: uppercase;">342 Contributions in the last year</h3>
+              <span style="font-size: 0.8rem; font-weight: bold; color: #4b5563;">Longest streak: <strong>18 days</strong></span>
+            </div>
+
+            <!-- Heatmap Calendar grid -->
+            <div style="overflow-x: auto; padding-bottom: 0.5rem;">
+              <div style="display: grid; grid-template-columns: repeat(53, 13px); gap: 3px; min-width: 800px;">
+                {contributionsMap.map((week, wIdx) => (
+                  <div style="display: flex; flex-direction: column; gap: 3px;">
+                    {week.map((dayData, dIdx) => (
+                      <div 
+                        class="contribution-square neo-hover-raise" 
+                        data-commits={dayData.commits} 
+                        data-week={wIdx} 
+                        data-day={dIdx} 
+                        title={dayData.tooltip}
+                        style={`width: 13px; height: 13px; background-color: ${dayData.color}; border: 1px solid rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.1s;`}
+                      ></div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Calendar legend -->
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: bold; color: #4b5563; margin-top: 1rem; border-top: 2px dashed #e5e7eb; padding-top: 0.75rem;">
+              <div>Click a cell to inspect active commit details.</div>
+              <div style="display: flex; align-items: center; gap: 0.25rem;">
+                <span>Less</span>
+                <span style="width: 11px; height: 11px; background: #ebedf0; border: 1px solid rgba(0,0,0,0.1);"></span>
+                <span style="width: 11px; height: 11px; background: #c6e48b; border: 1px solid rgba(0,0,0,0.1);"></span>
+                <span style="width: 11px; height: 11px; background: #7bc96f; border: 1px solid rgba(0,0,0,0.1);"></span>
+                <span style="width: 11px; height: 11px; background: #239a3b; border: 1px solid rgba(0,0,0,0.1);"></span>
+                <span>More</span>
+              </div>
+            </div>
+
+            <!-- Active Commit Details Toast -->
+            <div id="heatmap-details-toast" class="neo-border bg-violet" style="display: none; margin-top: 1.25rem; padding: 0.75rem 1rem; color: #fff; font-weight: bold; font-size: 0.85rem; box-shadow: 2px 2px 0px #000;">
+              🔍 Selecting contribution date...
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= REPOSITORIES TAB ================= -->
+        <div id="tab-repositories" class="tab-panel-content">
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            {repositories.map(repo => (
+              <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; border-width: 3px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                      <span style="font-size: 1.2rem;">📁</span>
+                      <h3 style="margin: 0; font-size: 1.25rem; font-weight: 900; color: #0969da;">{repo.name}</h3>
+                      <span style="font-size: 0.7rem; font-weight: bold; border: 2px solid #000; padding: 0.05rem 0.4rem; background-color: #f3f4f6; text-transform: uppercase;">Public</span>
+                    </div>
+                    <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0.5rem 0 1rem 0; line-height: 1.45; max-width: 600px;">
+                      {repo.description}
+                    </p>
+                  </div>
+                  
+                  <div style="display: flex; gap: 0.5rem;">
+                    <!-- Interactive Action button -->
+                    <button class="explore-local-btn neo-border neo-hover-raise bg-yellow" data-repo={repo.name} style="padding: 0.4rem 0.8rem; font-weight: bold; font-size: 0.75rem; cursor: pointer; text-transform: uppercase;">
+                      📂 Explore Files ({repo.files.length})
+                    </button>
+                  </div>
+                </div>
+
+                <div style="border-top: 2.5px solid #000; padding-top: 0.85rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: bold; color: #4b5563; flex-wrap: wrap; gap: 0.5rem;">
+                  <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                      <span style={`display: inline-block; width: 11px; height: 11px; border-radius: 50%; background: ${repo.langColor}; border: 1.5px solid #000;`}></span>
+                      {repo.language}
+                    </span>
+                    <span>★ {repo.stars}</span>
+                    <span>⌥ {repo.forks}</span>
+                  </div>
+                  <span style="font-family: monospace; font-size: 0.75rem; background-color: #fafafa; border: 1.5px solid #000; padding: 2px 6px;">
+                    Local Path: <strong style="color: #000;">{repo.localPath}</strong>
+                  </span>
+                </div>
+
+                <!-- Foldout File Explorer Widget -->
+                <div class="explorer-foldout neo-border" id={`explorer-foldout-${repo.name}`} style="display: none; margin-top: 1.25rem; background: #fafafa; border-width: 2.5px;">
+                  <div style="background: #e5e7eb; border-bottom: 2.5px solid #000; padding: 0.5rem 1rem; font-weight: bold; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+                    <span>📂 Directory Tree Explorer: {repo.name}/</span>
+                    <span style="font-size: 0.75rem; color: #57606a;">Click on any file to open real-time reader preview</span>
+                  </div>
+                  <div style="display: grid; grid-template-columns: 1fr 2fr; min-height: 250px;">
+                    <!-- File list side -->
+                    <div style="border-right: 2.5px solid #000; background: #fff; padding: 0.5rem 0; max-height: 350px; overflow-y: auto;">
+                      {repo.files.map(file => (
+                        <div 
+                          class="explorer-file-item" 
+                          data-repo={repo.name} 
+                          data-file={file}
+                          style="padding: 0.5rem 1rem; font-weight: bold; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.1s;"
+                        >
+                          <span>📄</span>
+                          <span>{file}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <!-- File contents viewer side -->
+                    <div style="background: #1e1e1e; color: #d4d4d4; padding: 1rem; max-height: 350px; overflow: auto; font-family: monospace; font-size: 0.8rem; line-height: 1.4; position: relative;">
+                      <div class="file-viewer-placeholder" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #1e1e1e; color: #888; font-weight: bold;">
+                        Select a file to inspect its localized codebase contents.
+                      </div>
+                      <pre style="margin: 0; display: none;" class="file-viewer-pre"><code class="file-viewer-code"></code></pre>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- ================= PROJECTS TAB ================= -->
+        <div id="tab-projects" class="tab-panel-content">
+          <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000;">
+            <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 900; text-transform: uppercase; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">Curricular Projects Board</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <div class="neo-border" style="padding: 1rem; background-color: #fff; border-width: 2px;">
+                <h4 style="margin: 0 0 0.25rem 0; font-size: 1.05rem; font-weight: bold; color: #0969da;">1. Curriculum-Builder-v2</h4>
+                <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; font-weight: bold; color: #4b5563;">
+                  Next-generation automated markdown course assembler with dynamic search capabilities.
+                </p>
+                <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af;">
+                  Status: <strong style="color: #22c55e;">In Progress (Sprint 2)</strong> &bull; Updated 2 hours ago
+                </div>
+              </div>
+
+              <div class="neo-border" style="padding: 1rem; background-color: #fff; border-width: 2px;">
+                <h4 style="margin: 0 0 0.25rem 0; font-size: 1.05rem; font-weight: bold; color: #0969da;">2. Interactive-Canvas-v1</h4>
+                <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; font-weight: bold; color: #4b5563;">
+                  High-performance Canvas visualizers for mathematical optimization paradigms.
+                </p>
+                <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af;">
+                  Status: <strong style="color: #a8d5ff; background: #000; border: 1.5px solid #000; padding: 0 4px;">Shipped</strong> &bull; Updated 1 day ago
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PACKAGES TAB ================= -->
+        <div id="tab-packages" class="tab-panel-content">
+          <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000;">
+            <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 900; text-transform: uppercase; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">Published Packages</h3>
+            
+            <div class="neo-border" style="padding: 1.25rem; background: #fafafa; border-width: 2px; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+              <div>
+                <h4 style="margin: 0; font-size: 1.1rem; font-weight: bold;">📦 iitmandi-ml-utils <span style="font-size: 0.7rem; border: 1.5px solid #000; padding: 1px 4px; background: #fff;">v0.2.1</span></h4>
+                <p style="margin: 0.35rem 0; font-size: 0.85rem; font-weight: bold; color: #4b5563;">
+                  Core NumPy vectorization utilities, evaluation metrics, and dataset formatting helpers.
+                </p>
+                <span style="font-family: monospace; font-size: 0.75rem; background: #000; color: #fff; padding: 2px 6px;">pip install iitmandi-ml-utils</span>
+              </div>
+              <span style="font-size: 0.75rem; font-weight: bold; background: #fee2e2; border: 2.5px solid #ef4444; color: #ef4444; padding: 0.25rem 0.75rem; text-transform: uppercase;">Stable Build</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STARS TAB ================= -->
+        <div id="tab-stars" class="tab-panel-content">
+          <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000;">
+            <h3 style="margin-top: 0; margin-bottom: 1.25rem; font-size: 1.25rem; font-weight: 900; text-transform: uppercase; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">Starred Projects</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="neo-border" style="padding: 1rem; background: #fff; border-width: 2px;">
+                <strong style="color: #0969da; font-size: 0.95rem;">pytorch/pytorch</strong>
+                <p style="margin: 0.25rem 0 0.75rem 0; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+                  Tensors and Dynamic neural networks in Python with strong GPU acceleration.
+                </p>
+                <div style="font-size: 0.7rem; font-weight: bold; color: #57606a;">★ 74.8k &bull; ⌥ 21.2k</div>
+              </div>
+              
+              <div class="neo-border" style="padding: 1rem; background: #fff; border-width: 2px;">
+                <strong style="color: #0969da; font-size: 0.95rem;">scikit-learn/scikit-learn</strong>
+                <p style="margin: 0.25rem 0 0.75rem 0; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+                  Machine learning in Python containing robust tools for data analysis.
+                </p>
+                <div style="font-size: 0.7rem; font-weight: bold; color: #57606a;">★ 56.4k &bull; ⌥ 24.8k</div>
+              </div>
+
+              <div class="neo-border" style="padding: 1rem; background: #fff; border-width: 2px;">
+                <strong style="color: #0969da; font-size: 0.95rem;">withastro/astro</strong>
+                <p style="margin: 0.25rem 0 0.75rem 0; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+                  The web framework for building content-driven sites with maximum speed.
+                </p>
+                <div style="font-size: 0.7rem; font-weight: bold; color: #57606a;">★ 43.1k &bull; ⌥ 2.4k</div>
+              </div>
+
+              <div class="neo-border" style="padding: 1rem; background: #fff; border-width: 2px;">
+                <strong style="color: #0969da; font-size: 0.95rem;">numpy/numpy</strong>
+                <p style="margin: 0.25rem 0 0.75rem 0; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+                  The fundamental package for scientific computing with Python arrays.
+                </p>
+                <div style="font-size: 0.7rem; font-weight: bold; color: #57606a;">★ 25.1k &bull; ⌥ 8.2k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Interactive Terminal Overlay Widget for Repository Sync Logs -->
+  <div id="terminal-sync-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; align-items: center; justify-content: center; padding: 2rem;">
+    <div class="neo-border" style="background: #1e1e1e; width: 100%; max-width: 700px; box-shadow: 8px 8px 0px #000; border-width: 4px; overflow: hidden;">
+      <div style="background: #2d2d2d; border-bottom: 3px solid #000; padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; align-items: center; color: #fff; font-weight: bold; font-family: monospace;">
+        <span>📡 LOCAL WORKSPACE GIT SYNC PROTOCOL</span>
+        <button id="close-terminal-btn" class="neo-border" style="display: none; background: #ef4444; color: #fff; padding: 0.2rem 0.5rem; font-size: 0.75rem; font-weight: bold; cursor: pointer;">CLOSE</button>
+      </div>
+      <div id="terminal-body-console" style="padding: 1.5rem; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: #22c55e; max-height: 400px; overflow-y: auto; background: #000; line-height: 1.5;">
+        <!-- Filled dynamically by sync process script -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Store serialized dynamic file content map in the DOM -->
+  <div id="serialized-files-content" data-content={JSON.stringify(filesContent)} style="display: none;"></div>
+</BaseLayout>
+
+<script is:inline>
+  // Tab Navigation switching
+  const tabs = document.querySelectorAll('.nav-tab');
+  const panels = document.querySelectorAll('.tab-panel-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Reset tabs
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.style.backgroundColor = '#fff';
+      });
+      // Reset panels
+      panels.forEach(p => p.classList.remove('active-panel'));
+
+      // Activate selected
+      tab.classList.add('active');
+      tab.style.backgroundColor = '#a8d5ff';
+      
+      const targetId = `tab-${tab.getAttribute('data-target')}`;
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        targetPanel.classList.add('active-panel');
+      }
+    });
+  });
+
+  // Link repo names inside Overview to switch directly to the Repositories Tab and scroll
+  document.querySelectorAll('.repo-switch-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const repoName = btn.getAttribute('data-repo');
+      
+      // Trigger Tab Change
+      const repoTab = document.querySelector('[data-target="repositories"]');
+      if (repoTab) repoTab.click();
+
+      // Trigger Foldout Expand of that repository
+      setTimeout(() => {
+        const foldoutBtn = document.querySelector(`.explore-local-btn[data-repo="${repoName}"]`);
+        if (foldoutBtn) {
+          foldoutBtn.click();
+          // Scroll smoothly
+          foldoutBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    });
+  });
+
+  // ================= REPOSITORY FILE EXPLORER FOLDOUT SCRIPT =================
+  const exploreBtns = document.querySelectorAll('.explore-local-btn');
+  
+  exploreBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const repoName = btn.getAttribute('data-repo');
+      const foldout = document.getElementById(`explorer-foldout-${repoName}`);
+      
+      if (foldout) {
+        const showing = foldout.style.display === 'block';
+        foldout.style.display = showing ? 'none' : 'block';
+        btn.textContent = showing ? `📂 Explore Files` : `❌ Close Explorer`;
+      }
+    });
+  });
+
+  // Interactive Local File Reader
+  const filesContentMap = JSON.parse(document.getElementById('serialized-files-content')?.getAttribute('data-content') || '{}');
+  const fileItems = document.querySelectorAll('.explorer-file-item');
+
+  fileItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const repoName = item.getAttribute('data-repo');
+      const fileName = item.getAttribute('data-file');
+      
+      // Deactivate all sibling file entries in that specific repository explore panel
+      const parentExplorer = item.closest('.explorer-foldout');
+      parentExplorer.querySelectorAll('.explorer-file-item').forEach(el => {
+        el.style.backgroundColor = 'transparent';
+        el.style.color = '#24292f';
+      });
+
+      // Highlight active clicked file
+      item.style.backgroundColor = '#000';
+      item.style.color = '#fff';
+
+      // Load contents from serialized map
+      const fileKey = `${repoName}/${fileName}`;
+      const content = filesContentMap[fileKey] || '# No content available in this file.';
+      
+      // Select output areas
+      const placeholder = parentExplorer.querySelector('.file-viewer-placeholder');
+      const pre = parentExplorer.querySelector('.file-viewer-pre');
+      const code = parentExplorer.querySelector('.file-viewer-code');
+
+      if (placeholder && pre && code) {
+        placeholder.style.display = 'none';
+        pre.style.display = 'block';
+        code.textContent = content;
+      }
+    });
+  });
+
+  // ================= INTERACTIVE SYNC CONSOLE ANIMATION SCRIPT =================
+  const triggerSyncBtn = document.getElementById('trigger-sync-btn');
+  const overlay = document.getElementById('terminal-sync-overlay');
+  const consoleBody = document.getElementById('terminal-body-console');
+  const closeTermBtn = document.getElementById('close-terminal-btn');
+
+  const logs = [
+    { text: "🛰️ CONNECTING TO LOCAL FILE SYSTEM LISTENER...", delay: 400 },
+    { text: "📡 HANDSHAKE SUCCESSFUL: Local Agent active.", delay: 400 },
+    { text: "🔍 SCANNING PATH: c:\\Users\\ayush\\OneDrive\\Desktop\\AI ML IIT Mandi\\05_Open_Source_Repos\\", delay: 600 },
+    { text: "📂 Directory detected: Models/ (linear_regression.py, README.md)", delay: 500 },
+    { text: "📂 Directory detected: References/ (MATH_FOUNDATIONS.md, README.md)", delay: 500 },
+    { text: "📂 Directory detected: Tools/ (setup_env.sh, README.md)", delay: 500 },
+    { text: "🔄 COMPARISON PROTOCOL: Comparing local states against master commits...", delay: 800 },
+    { text: "💡 STATUS: Local files match upstream repository states perfectly.", delay: 500 },
+    { text: "⚡ SYNCING TELEMETRY STACK...", delay: 400 },
+    { text: "📈 Updating contribution graphs...", delay: 600 },
+    { text: "🟩 Contribution heatmap indices generated.", delay: 400 },
+    { text: "🚀 SUCCESS: local workspace repositories successfully synchronized!", delay: 400 },
+    { text: "\n" +
+            "      /\\\n" +
+            "     /  \\\n" +
+            "    /    \\\n" +
+            "   /      \\\n" +
+            "  |  IIT-  |\n" +
+            "  | MANDI  |\n" +
+            "  |  SYNC  |\n" +
+            "  |________|\n" +
+            "  |   __   |\n" +
+            "  |  |  |  |\n" +
+            "  |__|__|__|\n" +
+            "     /  \\\n" +
+            "    /____\\\n" +
+            "    **  **\n" +
+            "   ***  ***\n" +
+            "\n[Git status check: clean. Sync exit code: 0]", delay: 100 }
+  ];
+
+  triggerSyncBtn?.addEventListener('click', () => {
+    if (!overlay || !consoleBody || !closeTermBtn) return;
+    
+    // Open Overlay
+    overlay.style.display = 'flex';
+    closeTermBtn.style.display = 'none';
+    consoleBody.innerHTML = "";
+    
+    let currentLogIndex = 0;
+    
+    function printNextLog() {
+      if (currentLogIndex >= logs.length) {
+        closeTermBtn.style.display = 'block';
+        return;
+      }
+      
+      const log = logs[currentLogIndex];
+      const p = document.createElement('div');
+      p.style.whiteSpace = 'pre';
+      
+      // Formatting color
+      if (log.text.startsWith("❌")) p.style.color = '#ef4444';
+      else if (log.text.startsWith("🚀") || log.text.startsWith("🟩")) p.style.color = '#22c55e';
+      else if (log.text.startsWith("💡")) p.style.color = '#fde047';
+      else p.style.color = '#22c55e';
+      
+      p.textContent = log.text;
+      consoleBody.appendChild(p);
+      consoleBody.scrollTop = consoleBody.scrollHeight;
+      
+      currentLogIndex++;
+      setTimeout(printNextLog, log.delay);
+    }
+    
+    printNextLog();
+  });
+
+  closeTermBtn?.addEventListener('click', () => {
+    if (overlay) overlay.style.display = 'none';
+  });
+
+  // ================= INTERACTIVE CONTRIBUTION GRAPH CLICK SCRIPT =================
+  const squares = document.querySelectorAll('.contribution-square');
+  const detailsToast = document.getElementById('heatmap-details-toast');
+
+  squares.forEach(sq => {
+    sq.addEventListener('click', () => {
+      const commits = sq.getAttribute('data-commits');
+      const week = parseInt(sq.getAttribute('data-week')) + 1;
+      const day = parseInt(sq.getAttribute('data-day')) + 1;
+      
+      if (detailsToast) {
+        detailsToast.style.display = 'block';
+        let detailText = `📅 Week ${week}, Day ${day} &bull; <strong>${commits} commits</strong> detected. `;
+        if (parseInt(commits) === 0) {
+          detailText += "No curriculum updates recorded on this day.";
+          detailsToast.style.backgroundColor = '#ef4444';
+        } else {
+          detailText += `Curriculum files modified: ` + (commits > 5 ? 'gradient-descent.astro, README.md, linear_regression.py' : 'BaseLayout.astro, math-foundations.md');
+          detailsToast.style.backgroundColor = '#8B5CF6';
+        }
+        detailsToast.innerHTML = detailText;
+      }
+    });
+  });
+</script>
+
+<style>
+  .gh-logo-hover:hover {
+    transform: scale(1.1) rotate(5deg);
+  }
+  
+  .nav-tab.active {
+    background-color: #a8d5ff !important;
+    border-bottom: 3px solid #a8d5ff !important;
+    transform: translateY(2px);
+  }
+  
+  .tab-panel-content {
+    display: none;
+  }
+  
+  .active-panel {
+    display: block;
+  }
+  
+  .explorer-file-item:hover {
+    background-color: #f3f4f6;
+  }
+
+  @media (max-width: 768px) {
+    #github-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

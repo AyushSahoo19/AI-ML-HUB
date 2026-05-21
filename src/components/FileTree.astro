@@ -1,0 +1,92 @@
+---
+export interface FileNode {
+  name: string;
+  type: 'file' | 'folder';
+  children?: FileNode[];
+}
+
+export interface Props {
+  files?: FileNode[];
+}
+
+const { files = [] } = Astro.props;
+---
+
+<ul class="file-tree">
+  {
+    files.map((file) => (
+      <li>
+        {file.type === 'folder' ? (
+          <details open>
+            <summary class="folder">
+              <span class="icon">📁</span> {file.name}
+            </summary>
+            {file.children && file.children.length > 0 && (
+              <Astro.self files={file.children} />
+            )}
+          </details>
+        ) : (
+          <div class="file">
+            <span class="icon">📄</span> {file.name}
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .file-tree {
+    list-style: none;
+    margin: 0;
+    padding-left: 1.5rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  /* First ul (root) has no padding */
+  :global(.file-tree-root) {
+    padding-left: 0 !important;
+  }
+
+  li {
+    margin: 0.25rem 0;
+  }
+
+  details > summary {
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+  }
+
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .file {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .icon {
+    font-size: 1.1em;
+  }
+  
+  .folder, .file {
+    padding: 0.2rem 0.5rem;
+    border-radius: 0; /* brutalist */
+    border: 1px solid transparent;
+  }
+
+  .folder:hover, .file:hover {
+    background-color: #f0f0f0;
+    border: 1px solid #000;
+  }
+</style>

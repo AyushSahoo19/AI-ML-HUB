@@ -1,0 +1,672 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const files = project.data.files || [];
+---
+
+<BaseLayout title={`${project.data.title} - Projects Lab`}>
+  <div style="max-width: 1200px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
+    
+    <!-- GitHub Top bar branding & Title -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+        <!-- Repo icon -->
+        <svg aria-hidden="true" height="20" viewBox="0 0 16 16" version="1.1" width="20" style="fill: #57606a;">
+          <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+        </svg>
+        <span style="font-size: 1.25rem; font-weight: 600; color: #0969da;">
+          <a href="/projects" style="text-decoration: none; color: inherit;">projects</a>
+        </span>
+        <span style="font-size: 1.25rem; color: #57606a;">/</span>
+        <span style="font-size: 1.25rem; font-weight: bold; color: #000;">
+          <a href={`/projects/${project.id}`} style="text-decoration: none; color: inherit;">{project.data.title}</a>
+        </span>
+        <span style="font-size: 0.7rem; font-weight: bold; border: 2px solid #000; padding: 0.1rem 0.4rem; background-color: #f3f4f6; text-transform: uppercase;">Public</span>
+      </div>
+
+      <!-- Action badges (Stars/Forks count) -->
+      <div style="display: flex; gap: 0.5rem; font-weight: bold; font-size: 0.8rem;">
+        <span class="github-badge">
+          <span style="border-right: 2px solid #000; padding: 0.25rem 0.5rem; background: #f3f4f6; display: flex; align-items: center; gap: 0.25rem;">
+            ★ Star
+          </span>
+          <span style="padding: 0.25rem 0.5rem; background: #fff; color: #000;">
+            {project.data.stars}
+          </span>
+        </span>
+        <span class="github-badge">
+          <span style="border-right: 2px solid #000; padding: 0.25rem 0.5rem; background: #f3f4f6; display: flex; align-items: center; gap: 0.25rem;">
+            ⌥ Fork
+          </span>
+          <span style="padding: 0.25rem 0.5rem; background: #fff; color: #000;">
+            {project.data.forks}
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Repository Navigation Tabs -->
+    <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid #000; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 2px;">
+      <button class="tab-btn active" data-tab="code" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 2px solid #000; border-bottom: none; background-color: #fde047; cursor: pointer; border-radius: 0;">
+        🖥️ Code
+      </button>
+      <button class="tab-btn" data-tab="issues" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 2px solid #000; border-bottom: none; background-color: #fff; cursor: pointer; border-radius: 0;">
+        ⚠️ Issues
+        <span style="font-size: 0.75rem; background-color: #e5e7eb; border: 1.5px solid #000; padding: 0.05rem 0.3rem;">3</span>
+      </button>
+      <button class="tab-btn" data-tab="prs" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 2px solid #000; border-bottom: none; background-color: #fff; cursor: pointer; border-radius: 0;">
+        ⌥ Pull Requests
+        <span style="font-size: 0.75rem; background-color: #e5e7eb; border: 1.5px solid #000; padding: 0.05rem 0.3rem;">1</span>
+      </button>
+      <button class="tab-btn" data-tab="actions" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 2px solid #000; border-bottom: none; background-color: #fff; cursor: pointer; border-radius: 0;">
+        ⚙️ Actions
+      </button>
+    </div>
+
+    <!-- Active Tab Window View -->
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 2rem;" id="main-content-layout">
+      
+      <!-- LEFT CONTAINER (Main repository views) -->
+      <div>
+        
+        <!-- ============= CODE TAB VIEW ============= -->
+        <div id="tab-code-view" class="tab-content-panel active-panel">
+          <!-- Branch Selector & Top actions -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <!-- Branch select button -->
+              <div style="position: relative; display: inline-block;">
+                <button id="branch-select-btn" class="neo-border" style="background: #f3f4f6; padding: 0.4rem 0.8rem; font-weight: 900; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 0.25rem;">
+                  🔀 branch: <strong id="current-branch-name">main</strong> ▼
+                </button>
+                <div id="branch-dropdown" class="neo-border" style="display: none; position: absolute; z-index: 10; top: 100%; left: 0; background: white; min-width: 150px; box-shadow: 4px 4px 0px #000; margin-top: 2px;">
+                  <button class="branch-option" data-branch="main" style="display:block; width:100%; text-align:left; padding: 0.5rem; font-weight:bold; border:none; background:none; cursor:pointer;">main</button>
+                  <button class="branch-option" data-branch="development" style="display:block; width:100%; text-align:left; padding: 0.5rem; font-weight:bold; border:none; border-top:1px solid #000; background:none; cursor:pointer;">development</button>
+                  <button class="branch-option" data-branch="refactor/numpy" style="display:block; width:100%; text-align:left; padding: 0.5rem; font-weight:bold; border:none; border-top:1px solid #000; background:none; cursor:pointer;">refactor/numpy</button>
+                </div>
+              </div>
+              <span style="font-size: 0.85rem; font-weight: bold; color: #4b5563;">
+                Updated {project.data.lastUpdated}
+              </span>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; font-size: 0.8rem; font-weight: bold;">
+              <span class="neo-border" style="padding: 0.4rem 0.8rem; background-color: #fafafa;">📂 <strong>4</strong> directories</span>
+              <span class="neo-border" style="padding: 0.4rem 0.8rem; background-color: #fafafa;">📄 <strong>{files.length}</strong> files</span>
+            </div>
+          </div>
+
+          <!-- Fully Interactive Code Explorer Widget -->
+          <div class="neo-border" style="background-color: #fff; margin-bottom: 2rem; box-shadow: 4px 4px 0px #000;">
+            <!-- Explorer Top Nav / Breadcrumbs -->
+            <div style="background-color: #fafafa; border-bottom: 3px solid #000; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: bold; font-size: 0.9rem;">
+                <span style="color: #0969da; cursor: pointer;" id="root-breadcrumb">{project.data.title}</span>
+                <span id="breadcrumb-divider" style="display: none; color: #57606a;">/</span>
+                <span style="color: #000;" id="active-folder-breadcrumb"></span>
+              </div>
+              <button id="explorer-back-btn" class="neo-border" style="display: none; font-size: 0.75rem; font-weight: 900; background: #fff; padding: 0.2rem 0.5rem; cursor: pointer;">
+                ↑ Up one level
+              </button>
+            </div>
+
+            <!-- Explorer Content Table -->
+            <div style="max-height: 450px; overflow-y: auto;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+                <thead>
+                  <tr style="border-bottom: 2px solid #000; background-color: #f3f4f6; font-weight: bold;">
+                    <th style="padding: 0.6rem 1rem; width: 40%;">Name</th>
+                    <th style="padding: 0.6rem 1rem; width: 40%;">Last Commit Message</th>
+                    <th style="padding: 0.6rem 1rem; width: 20%; text-align: right;">Updated</th>
+                  </tr>
+                </thead>
+                <tbody id="explorer-tbody">
+                  <!-- Generated dynamically via script -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Code Preview Frame (hidden by default, shown when code is clicked) -->
+          <div id="code-preview-panel" class="neo-border" style="display: none; background-color: #1e1e1e; color: #d4d4d4; margin-bottom: 2.5rem; box-shadow: 4px 4px 0px #000; border-width: 3px;">
+            <div style="background-color: #2d2d2d; border-bottom: 3px solid #000; padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; color: #fff;">
+              <span id="preview-filename" style="font-family: monospace; font-weight: bold; font-size: 0.85rem;"></span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button id="copy-code-btn" class="neo-border" style="background-color: #fff; color: #000; border-width: 2px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: bold; cursor: pointer;">Copy</button>
+                <button id="close-preview-btn" class="neo-border" style="background-color: #ef4444; color: #fff; border-width: 2px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: bold; cursor: pointer;">Close</button>
+              </div>
+            </div>
+            <pre style="margin: 0; padding: 1.25rem; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; line-height: 1.5; max-height: 400px; overflow-y: auto;"><code id="preview-code-block"></code></pre>
+          </div>
+
+          <!-- Compiled README Section -->
+          <div class="neo-border" style="background: #fff; padding: 2rem; box-shadow: 4px 4px 0px #000; margin-bottom: 2rem;">
+            <div style="border-bottom: 2px dashed #000; padding-bottom: 0.75rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>📖</span>
+              <h2 style="font-size: 1.25rem; font-weight: 900; text-transform: uppercase; margin: 0;">README.md</h2>
+            </div>
+            <article class="markdown-body">
+              <Content />
+            </article>
+          </div>
+        </div>
+
+        <!-- ============= ISSUES TAB VIEW ============= -->
+        <div id="tab-issues-view" class="tab-content-panel">
+          <div class="neo-border" style="background: white; box-shadow: 4px 4px 0px #000; padding: 1.5rem; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 1rem; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">Active Repository Issues</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <!-- Issue 1 -->
+              <div class="neo-border" style="padding: 1rem; background-color: #fff; border-width: 2.5px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
+                  <h3 style="font-size: 1.1rem; font-weight: bold; margin: 0; color: #000;">
+                    🔴 #3 Vanishing gradients in deep neural layers
+                  </h3>
+                  <span style="font-size: 0.7rem; font-weight: bold; background: #fee2e2; border: 2px solid #ef4444; color: #ef4444; padding: 0.1rem 0.4rem; text-transform: uppercase;">Bug</span>
+                </div>
+                <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0.5rem 0;">
+                  When expanding the layers size to 5+ hidden layers, gradients vanish near the input layer. Changing activations from Sigmoid to ReLU might fix the issue.
+                </p>
+                <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af; display: flex; gap: 1rem; margin-top: 0.5rem;">
+                  <span>Opened 2 days ago by 👤 ayush-developer</span>
+                  <span style="color: #0969da; cursor: pointer;" onclick="toggleComments('comments-issue-1')">💬 2 Comments</span>
+                </div>
+                
+                <!-- Comment Thread -->
+                <div id="comments-issue-1" style="display: none; border-top: 2px dashed #000; margin-top: 0.75rem; padding-top: 0.75rem; font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="background-color: #fafafa; padding: 0.5rem; border-left: 3px solid #000;">
+                    <strong>👤 iit-mandi-ml-bot:</strong> Sigmoid derivative caps at 0.25, leading to exponential decay. Relu activation is highly recommended!
+                  </div>
+                  <div style="background-color: #fafafa; padding: 0.5rem; border-left: 3px solid #000;">
+                    <strong>👤 ayush-developer:</strong> Perfect, let me test the ReLU gradient updates today.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Issue 2 -->
+              <div class="neo-border" style="padding: 1rem; background-color: #fff; border-width: 2.5px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
+                  <h3 style="font-size: 1.1rem; font-weight: bold; margin: 0; color: #000;">
+                    🟢 #2 Add support for Adam / Momentum optimizers
+                  </h3>
+                  <span style="font-size: 0.7rem; font-weight: bold; background: #dbeafe; border: 2px solid #3b82f6; color: #3b82f6; padding: 0.1rem 0.4rem; text-transform: uppercase;">Enhancement</span>
+                </div>
+                <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0.5rem 0;">
+                  Vanilla Gradient Descent converges slowly on high curvature valleys. Implementing momentum, RMSprop, or Adam optimization will enhance training speeds.
+                </p>
+                <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af; display: flex; gap: 1rem; margin-top: 0.5rem;">
+                  <span>Opened 4 days ago by 👤 iit-mandi-ml-bot</span>
+                </div>
+              </div>
+
+              <!-- Issue 3 -->
+              <div class="neo-border" style="padding: 1rem; background-color: #fff; border-width: 2.5px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
+                  <h3 style="font-size: 1.1rem; font-weight: bold; margin: 0; color: #000;">
+                    🟢 #1 Feature: Automated unit testing for gradients
+                  </h3>
+                  <span style="font-size: 0.7rem; font-weight: bold; background: #fef08a; border: 2px solid #eab308; color: #ca8a04; padding: 0.1rem 0.4rem; text-transform: uppercase;">Good First Issue</span>
+                </div>
+                <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0.5rem 0;">
+                  Write a numerical checker comparing analytical derivatives against computed gradients to confirm correctness of self-derived weights.
+                </p>
+                <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af; display: flex; gap: 1rem; margin-top: 0.5rem;">
+                  <span>Opened 1 week ago by 👤 instructor-iit</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============= PRs TAB VIEW ============= -->
+        <div id="tab-prs-view" class="tab-content-panel">
+          <div class="neo-border" style="background: white; box-shadow: 4px 4px 0px #000; padding: 1.5rem; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 1rem; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">Open Pull Requests</h2>
+            
+            <div class="neo-border" style="padding: 1.25rem; background-color: #fff; border-width: 2.5px; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+              <div>
+                <h3 style="font-size: 1.1rem; font-weight: bold; margin: 0;">
+                  ⌥ #4 Feature: Adam Optimizer Implementation
+                </h3>
+                <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0.25rem 0;">
+                  Adds `Adam` class inside `src/optimizers/gd.py` tracking exponential moving averages of gradients and squared gradients.
+                </p>
+                <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af; display: flex; gap: 1rem; margin-top: 0.5rem;">
+                  <span>branch: `feature/adam` &rarr; `main`</span>
+                  <span>Created 1 day ago by 👤 ayush-developer</span>
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; font-weight: 900; border: 2px solid #22c55e; color: #22c55e; background-color: #f0fdf4; padding: 0.25rem 0.75rem; text-transform: uppercase;">Build Passing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============= ACTIONS TAB VIEW ============= -->
+        <div id="tab-actions-view" class="tab-content-panel">
+          <div class="neo-border" style="background: white; box-shadow: 4px 4px 0px #000; padding: 1.5rem; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 1rem; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">CI/CD Build Workflows</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <!-- Action run 1 -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #fafafa; border: 2px solid #000; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 1.5rem; color: #22c55e;">✅</span>
+                  <div>
+                    <h3 style="font-size: 0.95rem; font-weight: bold; margin: 0;">Linter and Unit Testing suite</h3>
+                    <p style="font-size: 0.75rem; font-weight: bold; color: #4b5563; margin: 0.1rem 0;">Commit `e92b8d1` - Add evaluation accuracy metrics</p>
+                  </div>
+                </div>
+                <div style="text-align: right; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+                  <div>Workflow: `python-test.yml`</div>
+                  <div>Success in 45s &bull; 2 hours ago</div>
+                </div>
+              </div>
+
+              <!-- Action run 2 -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #fafafa; border: 2px solid #000; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 1.5rem; color: #22c55e;">✅</span>
+                  <div>
+                    <h3 style="font-size: 0.95rem; font-weight: bold; margin: 0;">Linter and Unit Testing suite</h3>
+                    <p style="font-size: 0.75rem; font-weight: bold; color: #4b5563; margin: 0.1rem 0;">Commit `8a12d42` - Add mini-batch updater gd</p>
+                  </div>
+                </div>
+                <div style="text-align: right; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+                  <div>Workflow: `python-test.yml`</div>
+                  <div>Success in 41s &bull; 5 hours ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT CONTAINER (GitHub-style Sidebar) -->
+      <div>
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          
+          <!-- About -->
+          <div>
+            <h3 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 0.25rem; margin-top: 0; margin-bottom: 0.75rem;">About</h3>
+            <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin: 0;">
+              {project.data.description}
+            </p>
+            <div style="margin-top: 1rem; font-size: 0.85rem; font-weight: bold; display: flex; flex-direction: column; gap: 0.5rem;">
+              <span>⭐ {project.data.stars} Stars</span>
+              <span>🍴 {project.data.forks} Forks</span>
+            </div>
+          </div>
+
+          <!-- Languages Bar -->
+          <div>
+            <h3 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 0.25rem; margin-top: 0; margin-bottom: 0.75rem;">Languages</h3>
+            <!-- Breakdown bar -->
+            <div style="width: 100%; height: 12px; border: 2px solid #000; background-color: #e5e7eb; display: flex; overflow: hidden; margin-bottom: 1rem;">
+              {project.data.language === 'Python' ? (
+                <>
+                  <div style="width: 92%; background-color: #3572A5;" title="Python"></div>
+                  <div style="width: 8%; background-color: #f1e05a;" title="Other"></div>
+                </>
+              ) : (
+                <>
+                  <div style="width: 82%; background-color: #da5b0b;" title="Jupyter Notebook"></div>
+                  <div style="width: 18%; background-color: #3572A5;" title="Python"></div>
+                </>
+              )}
+            </div>
+            <!-- Labels -->
+            <div style="font-size: 0.8rem; font-weight: bold; display: flex; flex-direction: column; gap: 0.4rem;">
+              {project.data.language === 'Python' ? (
+                <>
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>🔵 Python</span>
+                    <span>92.4%</span>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>🟡 Shell / Setup</span>
+                    <span>7.6%</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>🟠 Jupyter Notebook</span>
+                    <span>82.1%</span>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>🔵 Python</span>
+                    <span>17.9%</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          <!-- Contributors -->
+          <div>
+            <h3 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 0.25rem; margin-top: 0; margin-bottom: 0.75rem;">Contributors</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem; font-weight: bold;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.25rem;">👤</span>
+                <div>
+                  <div style="color: #0969da;">ayush-developer</div>
+                  <div style="font-size: 0.7rem; color: #4b5563;">Main Maintainer</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.25rem;">🤖</span>
+                <div>
+                  <div style="color: #0969da;">iit-mandi-ml-bot</div>
+                  <div style="font-size: 0.7rem; color: #4b5563;">Automated Checker</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Store content serialized in DOM for client accessibility -->
+  <div id="project-files-data" data-files={JSON.stringify(files)} style="display: none;"></div>
+</BaseLayout>
+
+<script is:inline>
+  // Tab Switch logic
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-content-panel');
+  const mainContentLayout = document.getElementById('main-content-layout');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Deactivate all
+      tabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.style.backgroundColor = '#fff';
+      });
+      panels.forEach(p => p.classList.remove('active-panel'));
+
+      // Activate clicked
+      btn.classList.add('active');
+      btn.style.backgroundColor = '#fde047';
+      const targetPanel = document.getElementById(`tab-${btn.getAttribute('data-tab')}-view`);
+      if (targetPanel) {
+        targetPanel.classList.add('active-panel');
+      }
+
+      // Hide sidebar unless on code tab
+      const codeTabActive = btn.getAttribute('data-tab') === 'code';
+      if (codeTabActive) {
+        mainContentLayout.style.gridTemplateColumns = '3fr 1fr';
+        mainContentLayout.children[1].style.display = 'block';
+      } else {
+        mainContentLayout.style.gridTemplateColumns = '1fr';
+        mainContentLayout.children[1].style.display = 'none';
+      }
+    });
+  });
+
+  // Branch Selector toggle
+  const branchBtn = document.getElementById('branch-select-btn');
+  const branchDropdown = document.getElementById('branch-dropdown');
+  const currentBranchName = document.getElementById('current-branch-name');
+
+  branchBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const showing = branchDropdown.style.display === 'block';
+    branchDropdown.style.display = showing ? 'none' : 'block';
+  });
+
+  document.querySelectorAll('.branch-option').forEach(option => {
+    option.addEventListener('click', (e) => {
+      const branchSelected = option.getAttribute('data-branch') || 'main';
+      if (currentBranchName) currentBranchName.textContent = branchSelected;
+      if (branchDropdown) branchDropdown.style.display = 'none';
+    });
+  });
+
+  document.addEventListener('click', () => {
+    if (branchDropdown) branchDropdown.style.display = 'none';
+  });
+
+  // Toggle Issues comment lists
+  window.toggleComments = function(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = el.style.display === 'none' || el.style.display === '' ? 'flex' : 'none';
+    }
+  };
+
+  // ================= INTERACTIVE EXPLORER SCRIPT =================
+  const filesData = JSON.parse(document.getElementById('project-files-data')?.getAttribute('data-files') || '[]');
+  const explorerTbody = document.getElementById('explorer-tbody');
+  const rootBreadcrumb = document.getElementById('root-breadcrumb');
+  const activeFolderBreadcrumb = document.getElementById('active-folder-breadcrumb');
+  const breadcrumbDivider = document.getElementById('breadcrumb-divider');
+  const explorerBackBtn = document.getElementById('explorer-back-btn');
+  const codePreviewPanel = document.getElementById('code-preview-panel');
+  const previewFilename = document.getElementById('preview-filename');
+  const previewCodeBlock = document.getElementById('preview-code-block');
+  const closePreviewBtn = document.getElementById('close-preview-btn');
+  const copyCodeBtn = document.getElementById('copy-code-btn');
+
+  let currentPath = "";
+  let activeCodeText = "";
+
+  function getExplorerItems(currentDir) {
+    const items = new Map();
+    
+    filesData.forEach(file => {
+      const relPath = currentDir ? file.path.substring(currentDir.length + 1) : file.path;
+      const parts = relPath.split('/');
+      const firstPart = parts[0];
+      
+      if (parts.length > 1) {
+        // It's a directory
+        const dirFullPath = currentDir ? `${currentDir}/${firstPart}` : firstPart;
+        items.set(firstPart, { name: firstPart, isDir: true, fullPath: dirFullPath });
+      } else if (firstPart) {
+        // It's a file
+        items.set(firstPart, { name: firstPart, isDir: false, fullPath: file.path, fileData: file });
+      }
+    });
+    
+    return Array.from(items.values()).sort((a, b) => {
+      if (a.isDir && !b.isDir) return -1;
+      if (!a.isDir && b.isDir) return 1;
+      return a.name.localeCompare(b.name);
+    });
+  }
+
+  function renderExplorer() {
+    if (!explorerTbody) return;
+    explorerTbody.innerHTML = "";
+
+    // Render breadcrumbs
+    if (currentPath === "") {
+      if (activeFolderBreadcrumb) activeFolderBreadcrumb.textContent = "";
+      if (breadcrumbDivider) breadcrumbDivider.style.display = "none";
+      if (explorerBackBtn) explorerBackBtn.style.display = "none";
+    } else {
+      if (activeFolderBreadcrumb) activeFolderBreadcrumb.textContent = currentPath;
+      if (breadcrumbDivider) breadcrumbDivider.style.display = "inline";
+      if (explorerBackBtn) explorerBackBtn.style.display = "block";
+    }
+
+    const items = getExplorerItems(currentPath);
+
+    if (items.length === 0) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td colspan="3" style="padding: 1rem; text-align: center; font-weight: bold; color: #6b7280;">Empty Directory</td>`;
+      explorerTbody.appendChild(tr);
+      return;
+    }
+
+    items.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = "1px solid #e5e7eb";
+      tr.style.cursor = "pointer";
+      
+      // Hover highlight
+      tr.onmouseover = () => tr.style.backgroundColor = "#f9fafb";
+      tr.onmouseout = () => tr.style.backgroundColor = "transparent";
+
+      const icon = item.isDir ? "📁" : "📄";
+      const styleName = item.isDir ? "font-weight: bold; color: #0969da;" : "color: #000;";
+      
+      // Create random commits for flavor
+      let mockCommit = "Add modules implementations";
+      if (item.name.includes("regression")) mockCommit = "Implement linear regression gradients calculation";
+      if (item.name.includes("perceptron")) mockCommit = "Refactor perceptron weights update rule";
+      if (item.name.includes("metrics")) mockCommit = "Add r2_score and accuracy scoring metric helpers";
+      if (item.name.includes("gd.py")) mockCommit = "Add standard gradient descent updater";
+      if (item.name.includes("train.csv")) mockCommit = "Add standard house sales raw dataset";
+      if (item.name.includes("plotter")) mockCommit = "Implement flat contour plot decision boundaries";
+      if (item.name.includes("analyzer")) mockCommit = "Integrate IQR outliers statistical detection";
+      if (item.name.includes("samples")) mockCommit = "Add basic regression classification datasets config";
+
+      tr.innerHTML = `
+        <td style="padding: 0.75rem 1rem; ${styleName}"><span style="margin-right: 0.5rem;">${icon}</span>${item.name}</td>
+        <td style="padding: 0.75rem 1rem; color: #57606a;">${mockCommit}</td>
+        <td style="padding: 0.75rem 1rem; color: #57606a; text-align: right;">2 hours ago</td>
+      `;
+
+      tr.addEventListener('click', () => {
+        if (item.isDir) {
+          currentPath = item.fullPath;
+          renderExplorer();
+        } else {
+          // Open file code block preview
+          if (codePreviewPanel && previewFilename && previewCodeBlock && item.fileData) {
+            previewFilename.textContent = item.fullPath;
+            previewCodeBlock.textContent = item.fileData.content;
+            activeCodeText = item.fileData.content;
+            codePreviewPanel.style.display = "block";
+            codePreviewPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        }
+      });
+
+      explorerTbody.appendChild(tr);
+    });
+  }
+
+  // Bind root click
+  rootBreadcrumb?.addEventListener('click', () => {
+    currentPath = "";
+    renderExplorer();
+  });
+
+  // Up one level click
+  explorerBackBtn?.addEventListener('click', () => {
+    const parts = currentPath.split('/');
+    parts.pop();
+    currentPath = parts.join('/');
+    renderExplorer();
+  });
+
+  // Close preview panel
+  closePreviewBtn?.addEventListener('click', () => {
+    if (codePreviewPanel) codePreviewPanel.style.display = "none";
+  });
+
+  // Copy Code
+  copyCodeBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText(activeCodeText);
+    copyCodeBtn.textContent = "Copied!";
+    setTimeout(() => {
+      copyCodeBtn.textContent = "Copy";
+    }, 1500);
+  });
+
+  // Render initial folder tree explorer state
+  renderExplorer();
+</script>
+
+<style>
+  .tab-btn.active {
+    background-color: #fde047 !important;
+    border-bottom: 2px solid #fde047 !important;
+  }
+  
+  .tab-content-panel {
+    display: none;
+  }
+
+  .active-panel {
+    display: block;
+  }
+
+  .github-badge {
+    border: 2px solid #000;
+    display: inline-flex;
+    box-shadow: 2px 2px 0px #000;
+    overflow: hidden;
+  }
+
+  /* Custom markdown overrides for clean typography */
+  .markdown-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #24292f;
+  }
+  
+  .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #000;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .markdown-body p {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #374151;
+  }
+  
+  .markdown-body code {
+    background-color: #f3f4f6;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid #000;
+    font-family: monospace;
+    font-size: 0.85em;
+  }
+  
+  .markdown-body pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1rem;
+    border: 3px solid #000;
+    overflow-x: auto;
+    font-family: monospace;
+    margin-bottom: 1.5rem;
+    box-shadow: 3px 3px 0px #000;
+  }
+
+  .markdown-body ul {
+    list-style-type: square;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+    font-weight: bold;
+    color: #374151;
+  }
+</style>

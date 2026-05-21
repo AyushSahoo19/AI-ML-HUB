@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NeoCard from '../components/NeoCard.astro';
+---
+
+<BaseLayout title="Guidance System - AI/ML Hub">
+  <div style="max-width: 800px; margin: 0 auto;">
+    <section class="neo-border neo-shadow bg-yellow" style="padding: 2rem; margin-bottom: 3rem;">
+      <h1 style="font-size: 2.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem;">Welcome Note & Guidance System</h1>
+      <p style="font-size: 1.1rem; font-weight: bold; line-height: 1.6;">
+        Welcome to the AI, ML, and Deep Learning curriculum tracking hub. This ecosystem is designed to be your interactive, neo-brutalist "Brain" as you progress from foundational mathematics to advanced Generative AI and MLOps.
+      </p>
+    </section>
+
+    <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 4px solid #000; padding-bottom: 0.5rem;">How to Use This Hub</h2>
+
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <NeoCard color="#a8d5ff" class="neo-hover-raise">
+        <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">1. Follow the Syllabus</h3>
+        <p style="font-size: 1rem; line-height: 1.5;">
+          The curriculum is divided into 4 distinct phases. Check the <strong>Syllabus</strong> tab to understand where you are in your journey. You should read the notes sequentially by Day.
+        </p>
+      </NeoCard>
+
+      <NeoCard color="#e3a8ff" class="neo-hover-raise">
+        <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">2. Read the Notes</h3>
+        <p style="font-size: 1rem; line-height: 1.5;">
+          Navigate to the <strong>Notes</strong> section on the homepage. They are grouped by Module. When you open a note, you can use the "Next Day" and "Previous Day" buttons at the bottom to traverse the course without losing your place.
+        </p>
+      </NeoCard>
+
+      <NeoCard color="#22C55E" class="neo-hover-raise">
+        <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">3. Build the Projects</h3>
+        <p style="font-size: 1rem; line-height: 1.5;">
+          Theory is useless without practice. The <strong>Projects Lab</strong> on the homepage links out to the practical applications you will build alongside the lectures, mimicking a GitHub workflow.
+        </p>
+      </NeoCard>
+    </div>
+  </div>
+</BaseLayout>

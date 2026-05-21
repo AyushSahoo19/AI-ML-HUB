@@ -1,0 +1,493 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NeoCard from '../../components/NeoCard.astro';
+---
+
+<BaseLayout title="Gradient Descent Simulator - Live Experiments">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    
+    <!-- Title Section -->
+    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #000; padding-bottom: 0.5rem; margin-bottom: 2rem;">
+      <div>
+        <span style="font-size: 0.8rem; font-weight: 900; background-color: #fca5a5; padding: 0.2rem 0.5rem; border: 2px solid #000; text-transform: uppercase;">Experiment #1</span>
+        <h1 style="font-size: 2.25rem; font-weight: 900; text-transform: uppercase; margin: 0.5rem 0 0 0;">Visualizing Gradient Descent</h1>
+      </div>
+      <a href="/experiments" style="font-weight: bold; text-decoration: none; color: #0969da;">&larr; Back to Experiments</a>
+    </div>
+
+    <!-- Workspace Grid -->
+    <div style="display: grid; grid-template-columns: 2.5fr 1fr; gap: 2rem; align-items: start;">
+      
+      <!-- LEFT: Canvas Visualizer -->
+      <div>
+        <div class="neo-border" style="background-color: #fff; box-shadow: 6px 6px 0px #000; padding: 1.5rem; margin-bottom: 1.5rem; position: relative;">
+          <!-- Graph Title Info -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <span style="font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;">📈 Loss Surface Manifold & Optimization Path</span>
+            <span style="font-size: 0.75rem; font-weight: bold; color: #4b5563;">💡 Tip: Click anywhere inside the canvas to set a new starting point &theta;<sub>0</sub></span>
+          </div>
+
+          <!-- The HTML5 Canvas -->
+          <canvas id="graph-canvas" width="700" height="420" style="display: block; width: 100%; border: 3px solid #000; background-color: #fafafa; cursor: crosshair;"></canvas>
+        </div>
+
+        <!-- Visualizer Controls Panel -->
+        <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; display: flex; flex-direction: column; gap: 1.25rem; border-width: 3px;">
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+            <!-- Learning Rate Control -->
+            <div>
+              <label for="lr-slider" style="display: flex; justify-content: space-between; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 0.5rem;">
+                <span>Learning Rate (&eta;)</span>
+                <span id="lr-val" style="color: #0969da; font-family: monospace;">0.10</span>
+              </label>
+              <input type="range" id="lr-slider" min="0.01" max="1.1" step="0.01" value="0.10" style="width: 100%; height: 8px; border: 2px solid #000; background: #e5e7eb; outline: none; -webkit-appearance: none;" />
+            </div>
+
+            <!-- Loss Landscape Function Selection -->
+            <div>
+              <label for="loss-select" style="display: block; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 0.5rem;">Cost Function Landscape J(&theta;)</label>
+              <select id="loss-select" style="width: 100%; padding: 0.5rem; border: 3px solid #000; font-family: inherit; font-weight: bold; outline: none; border-radius: 0;">
+                <option value="quadratic">Quadratic Convex (j(&theta;) = 0.5 &bull; &theta;&sup2;)</option>
+                <option value="double_well">Double-Well Non-Convex (j(&theta;) = 0.1 &bull; [&theta;⁴ - 6&theta;&sup2; + 5])</option>
+                <option value="stochastic_noisy">Stochastic Noisy Parabola (j(&theta;) = Quadratic + Gaussian Noise)</option>
+              </select>
+            </div>
+
+            <!-- Animation Speed -->
+            <div>
+              <label for="speed-slider" style="display: flex; justify-content: space-between; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 0.5rem;">
+                <span>Descent Step Delay</span>
+                <span id="speed-val" style="font-family: monospace;">200ms</span>
+              </label>
+              <input type="range" id="speed-slider" min="50" max="1000" step="50" value="200" style="width: 100%; height: 8px; border: 2px solid #000; background: #e5e7eb; outline: none; -webkit-appearance: none;" />
+            </div>
+          </div>
+
+          <!-- Buttons Row -->
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; border-top: 2px dashed #000; padding-top: 1rem;">
+            <button id="play-pause-btn" class="ctrl-btn neo-border bg-green" style="background-color: #bbf7d0; padding: 0.5rem 1.25rem; font-weight: 900; cursor: pointer; border-radius: 0;">▶ Play Animation</button>
+            <button id="step-btn" class="ctrl-btn neo-border bg-yellow" style="background-color: #fde047; padding: 0.5rem 1.25rem; font-weight: 900; cursor: pointer; border-radius: 0;">⏭ Step Once</button>
+            <button id="reset-btn" class="ctrl-btn neo-border" style="background-color: #fff; padding: 0.5rem 1.25rem; font-weight: 900; cursor: pointer; border-radius: 0;">🔄 Reset Point</button>
+            <button id="random-start-btn" class="ctrl-btn neo-border" style="background-color: #e5e7eb; padding: 0.5rem 1.25rem; font-weight: 900; cursor: pointer; border-radius: 0;">🎲 Random &theta;₀</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT: Statistics & Theory -->
+      <div>
+        
+        <!-- Live Statistics Card -->
+        <NeoCard color="#e9d5ff" class="neo-border" style="margin-bottom: 1.5rem; border-width: 3px;">
+          <h3 style="font-size: 1.15rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 1rem; border-bottom: 2px solid #000; padding-bottom: 0.25rem;">Live Weights</h3>
+          <div style="font-family: monospace; font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.6rem; font-weight: bold;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Step Number (t):</span>
+              <span id="stat-step" style="color: #000;">0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Weight (&theta;):</span>
+              <span id="stat-theta" style="color: #0969da;">-2.5000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Loss J(&theta;):</span>
+              <span id="stat-loss" style="color: #dc2626;">3.1250</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Gradient (dJ/d&theta;):</span>
+              <span id="stat-grad" style="color: #d97706;">-2.5000</span>
+            </div>
+          </div>
+        </NeoCard>
+
+        <!-- Dynamic Theory explanation card -->
+        <div class="neo-border" style="background-color: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; border-width: 3px;">
+          <h3 style="font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 0.75rem; border-bottom: 2px solid #000; padding-bottom: 0.25rem;">Core Algorithm</h3>
+          <p style="font-size: 0.8rem; font-weight: bold; line-height: 1.5; color: #374151; margin: 0 0 1rem 0;">
+            Gradient Descent searches for parameter weights that minimize cost function $J(\theta)$ by stepping in the direction of steepest descent.
+          </p>
+          <div style="background-color: #f3f4f6; border: 2.5px solid #000; padding: 0.75rem; font-family: monospace; font-size: 0.8rem; font-weight: bold; text-align: center; margin-bottom: 1rem; box-shadow: 2px 2px 0px #000;">
+            &theta;<sub>t+1</sub> = &theta;<sub>t</sub> - &eta; &bull; &nabla;J(&theta;<sub>t</sub>)
+          </div>
+          
+          <h4 style="font-size: 0.85rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem;">Observed Behaviors:</h4>
+          <ul style="font-size: 0.75rem; font-weight: bold; line-height: 1.4; color: #4b5563; padding-left: 1.2rem; margin: 0; list-style-type: square;">
+            <li style="margin-bottom: 0.4rem;"><strong>Small learning rate</strong>: stable but extremely slow, crawling incrementally.</li>
+            <li style="margin-bottom: 0.4rem;"><strong>High learning rate</strong>: overshoots the minimum, oscillating wildly or exploding!</li>
+            <li style="margin-bottom: 0.4rem;"><strong>Local minima</strong>: on non-convex landscapes, we can get trapped in local wells instead of global targets!</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const canvas = document.getElementById('graph-canvas');
+  const ctx = canvas?.getContext('2d');
+
+  // Interactive controls DOM links
+  const lrSlider = document.getElementById('lr-slider');
+  const lrVal = document.getElementById('lr-val');
+  const lossSelect = document.getElementById('loss-select');
+  const speedSlider = document.getElementById('speed-slider');
+  const speedVal = document.getElementById('speed-val');
+  const playPauseBtn = document.getElementById('play-pause-btn');
+  const stepBtn = document.getElementById('step-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const randomStartBtn = document.getElementById('random-start-btn');
+
+  // Stats DOM links
+  const statStep = document.getElementById('stat-step');
+  const statTheta = document.getElementById('stat-theta');
+  const statLoss = document.getElementById('stat-loss');
+  const statGrad = document.getElementById('stat-grad');
+
+  // Math visualizer State constants
+  let state = {
+    theta: -2.5,          // current weight / theta
+    startTheta: -2.5,     // record starting theta for reset
+    lr: 0.10,             // learning rate
+    lossType: 'quadratic',// function chosen
+    history: [],          // array of {theta, loss} past points
+    isPlaying: false,     // anim check
+    stepCount: 0,
+    animationInterval: null,
+    delay: 200            // delay in ms
+  };
+
+  // Math equations and derivatives mappings
+  const landscapes = {
+    quadratic: {
+      J: (x) => 0.5 * x * x,
+      dJ: (x) => x,
+      xMin: -3.5,
+      xMax: 3.5,
+      yMin: -0.5,
+      yMax: 6.5
+    },
+    double_well: {
+      J: (x) => 0.1 * (Math.pow(x, 4) - 6 * x * x + 5),
+      dJ: (x) => 0.1 * (4 * Math.pow(x, 3) - 12 * x),
+      xMin: -3.0,
+      xMax: 3.0,
+      yMin: -1.0,
+      yMax: 5.5
+    },
+    stochastic_noisy: {
+      J: (x) => 0.5 * x * x,
+      dJ: (x) => x + (Math.random() - 0.5) * 1.5, // adds variance to gradient step
+      xMin: -3.5,
+      xMax: 3.5,
+      yMin: -0.5,
+      yMax: 6.5
+    }
+  };
+
+  // Map coordinate weights values to screen pixels
+  function toPixel(x, y) {
+    const l = landscapes[state.lossType];
+    const px = 50 + ((x - l.xMin) / (l.xMax - l.xMin)) * (canvas.width - 100);
+    const py = (canvas.height - 50) - ((y - l.yMin) / (l.yMax - l.yMin)) * (canvas.height - 100);
+    return { x: px, y: py };
+  }
+
+  // Map pixel coords to logical coordinate values (for click interaction!)
+  function toCoords(px, py) {
+    const l = landscapes[state.lossType];
+    const x = l.xMin + ((px - 50) / (canvas.width - 100)) * (l.xMax - l.xMin);
+    const y = l.yMin + (((canvas.height - 50) - py) / (canvas.height - 100)) * (l.yMax - l.yMin);
+    return { x, y };
+  }
+
+  // Redraw the canvas
+  function draw() {
+    if (!ctx || !canvas) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const l = landscapes[state.lossType];
+
+    // 1. Draw grids overlay (high contrast dashed)
+    ctx.strokeStyle = '#e5e7eb';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 5]);
+    
+    // Draw vertical gridlines
+    for (let x = Math.ceil(l.xMin); x < l.xMax; x += 1.0) {
+      const p = toPixel(x, 0);
+      ctx.beginPath();
+      ctx.moveTo(p.x, 0);
+      ctx.lineTo(p.x, canvas.height);
+      ctx.stroke();
+    }
+    // Draw horizontal gridlines
+    for (let y = Math.ceil(l.yMin); y < l.yMax; y += 1.0) {
+      const p = toPixel(0, y);
+      ctx.beginPath();
+      ctx.moveTo(0, p.y);
+      ctx.lineTo(canvas.width, p.y);
+      ctx.stroke();
+    }
+
+    ctx.setLineDash([]); // clear dash
+
+    // 2. Draw thick brutalist coordinate axes
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    
+    // Y-Axis
+    const originY = toPixel(0, 0);
+    ctx.moveTo(originY.x, 0);
+    ctx.lineTo(originY.x, canvas.height);
+    
+    // X-Axis
+    ctx.moveTo(0, originY.y);
+    ctx.lineTo(canvas.width, originY.y);
+    ctx.stroke();
+
+    // 3. Draw Loss function landscape line
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    let first = true;
+    for (let px = 0; px < canvas.width; px++) {
+      const coord = toCoords(px, 0);
+      // Clamp boundary
+      if (coord.x >= l.xMin && coord.x <= l.xMax) {
+        const pyVal = l.J(coord.x);
+        const p = toPixel(coord.x, pyVal);
+        if (first) {
+          ctx.moveTo(p.x, p.y);
+          first = false;
+        } else {
+          ctx.lineTo(p.x, p.y);
+        }
+      }
+    }
+    ctx.stroke();
+
+    // 4. Draw past descent path updates history
+    if (state.history.length > 1) {
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      const pStart = toPixel(state.history[0].theta, state.history[0].loss);
+      ctx.moveTo(pStart.x, pStart.y);
+      
+      for (let i = 1; i < state.history.length; i++) {
+        const p = toPixel(state.history[i].theta, state.history[i].loss);
+        ctx.lineTo(p.x, p.y);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]); // clear dash
+
+      // Draw past smaller step dots
+      ctx.fillStyle = '#fca5a5';
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < state.history.length - 1; i++) {
+        const p = toPixel(state.history[i].theta, state.history[i].loss);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 5, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
+
+    // 5. Draw active weight state point
+    const currentLoss = l.J(state.theta);
+    const pCurrent = toPixel(state.theta, currentLoss);
+    
+    // Draw animated halo circle if playing
+    if (state.isPlaying) {
+      const timeMs = Date.now() / 150;
+      const pulseSize = 10 + Math.sin(timeMs) * 3;
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.2)';
+      ctx.beginPath();
+      ctx.arc(pCurrent.x, pCurrent.y, pulseSize, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    // Main red dot
+    ctx.fillStyle = '#ef4444';
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    ctx.arc(pCurrent.x, pCurrent.y, 9, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+
+    // 6. Draw axis markers/labels for neatness
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 11px monospace';
+    // Minima text labels
+    if (state.lossType === 'double_well') {
+      const p1 = toPixel(-1.732, -0.6);
+      const p2 = toPixel(1.732, -0.6);
+      ctx.fillText('Global Min (-1.73)', p1.x - 50, p1.y);
+      ctx.fillText('Global Min (1.73)', p2.x - 45, p2.y);
+    } else {
+      const p = toPixel(0, -0.3);
+      ctx.fillText('Global Minimum (0.0)', p.x - 60, p.y);
+    }
+
+    // Update real-time statistics labels
+    if (statStep) statStep.textContent = state.stepCount.toString();
+    if (statTheta) statTheta.textContent = state.theta.toFixed(4);
+    if (statLoss) statLoss.textContent = currentLoss.toFixed(4);
+    
+    const activeGrad = l.dJ(state.theta);
+    if (statGrad) statGrad.textContent = activeGrad.toFixed(4);
+  }
+
+  // Perform single step of gradient descent
+  function step() {
+    const l = landscapes[state.lossType];
+    const grad = l.dJ(state.theta);
+    const loss = l.J(state.theta);
+    
+    // Record current values to history
+    state.history.push({ theta: state.theta, loss: loss });
+    
+    // Update weight parameter: w = w - lr * grad
+    state.theta = state.theta - state.lr * grad;
+    state.stepCount++;
+
+    // Prevent extreme diverging bounds overflow
+    if (Math.abs(state.theta) > 6) {
+      stopAnimation();
+      alert('⚠️ Model Diverged! The Learning Rate (η) is too large, causing step values to explode. Lower the learning rate and try again!');
+      reset();
+      return;
+    }
+
+    draw();
+  }
+
+  function reset() {
+    state.theta = state.startTheta;
+    state.stepCount = 0;
+    state.history = [];
+    draw();
+  }
+
+  function startAnimation() {
+    if (state.isPlaying) return;
+    state.isPlaying = true;
+    if (playPauseBtn) playPauseBtn.textContent = '⏸ Pause Animation';
+    if (playPauseBtn) playPauseBtn.style.backgroundColor = '#fca5a5';
+    
+    state.animationInterval = setInterval(() => {
+      step();
+    }, state.delay);
+  }
+
+  function stopAnimation() {
+    if (!state.isPlaying) return;
+    state.isPlaying = false;
+    if (playPauseBtn) playPauseBtn.textContent = '▶ Play Animation';
+    if (playPauseBtn) playPauseBtn.style.backgroundColor = '#bbf7d0';
+    if (state.animationInterval) {
+      clearInterval(state.animationInterval);
+    }
+  }
+
+  // Initialize event listeners
+  lrSlider?.addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    state.lr = val;
+    if (lrVal) lrVal.textContent = val.toFixed(2);
+  });
+
+  speedSlider?.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    state.delay = val;
+    if (speedVal) speedVal.textContent = `${val}ms`;
+    
+    // Restart animation step interval with new speed delay
+    if (state.isPlaying) {
+      stopAnimation();
+      startAnimation();
+    }
+  });
+
+  lossSelect?.addEventListener('change', (e) => {
+    state.lossType = e.target.value;
+    
+    // Set typical starting weights depending on landscape choice
+    if (state.lossType === 'double_well') {
+      state.theta = -2.5;
+      state.startTheta = -2.5;
+    } else {
+      state.theta = -3.0;
+      state.startTheta = -3.0;
+    }
+    
+    stopAnimation();
+    reset();
+  });
+
+  playPauseBtn?.addEventListener('click', () => {
+    if (state.isPlaying) {
+      stopAnimation();
+    } else {
+      startAnimation();
+    }
+  });
+
+  stepBtn?.addEventListener('click', () => {
+    stopAnimation();
+    step();
+  });
+
+  resetBtn?.addEventListener('click', () => {
+    stopAnimation();
+    reset();
+  });
+
+  randomStartBtn?.addEventListener('click', () => {
+    stopAnimation();
+    const l = landscapes[state.lossType];
+    // Pick random value between xMin + 0.5 and xMax - 0.5
+    const rand = l.xMin + 0.5 + Math.random() * (l.xMax - l.xMin - 1.0);
+    state.theta = rand;
+    state.startTheta = rand;
+    state.stepCount = 0;
+    state.history = [];
+    draw();
+  });
+
+  // Canvas Click-to-place Interaction
+  canvas?.addEventListener('click', (e) => {
+    stopAnimation();
+    const rect = canvas.getBoundingClientRect();
+    const px = e.clientX - rect.left;
+    const py = e.clientY - rect.top;
+    
+    const coord = toCoords(px, py);
+    const l = landscapes[state.lossType];
+    
+    if (coord.x >= l.xMin && coord.x <= l.xMax) {
+      state.theta = coord.x;
+      state.startTheta = coord.x;
+      state.stepCount = 0;
+      state.history = [];
+      draw();
+    }
+  });
+
+  // Halo pulse draw loop for active state point
+  setInterval(() => {
+    if (state.isPlaying) {
+      draw();
+    }
+  }, 100);
+
+  // Initial draw
+  draw();
+</script>
