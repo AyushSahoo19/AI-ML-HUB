@@ -139,7 +139,7 @@ for (let w = 0; w < contributionWeeks; w++) {
     </div>
 
     <!-- GitHub Sub Tabs Navigation -->
-    <div class="gh-tabs-nav" style="display: flex; gap: 0.5rem; border-bottom: 3px solid #000; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 2px;">
+    <div class="gh-tabs-nav" style="display: flex; gap: 0.5rem; border-bottom: 3px solid #000; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 2px; width: 100%; max-width: 100%;">
       <button class="nav-tab active" data-target="overview" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background: #a8d5ff; cursor: pointer; border-radius: 0;">
         📖 Overview
       </button>
@@ -279,7 +279,7 @@ for (let w = 0; w < contributionWeeks; w++) {
             </div>
 
             <!-- Heatmap Calendar grid -->
-            <div style="overflow-x: auto; padding-bottom: 0.5rem;">
+            <div style="overflow-x: auto; padding-bottom: 0.5rem; width: 100%; max-width: 100%; display: block;">
               <div style="display: grid; grid-template-columns: repeat(53, 13px); gap: 3px; min-width: 800px;">
                 {contributionsMap.map((week, wIdx) => (
                   <div style="display: flex; flex-direction: column; gap: 3px;">
@@ -748,6 +748,10 @@ for (let w = 0; w < contributionWeeks; w++) {
       grid-template-columns: 280px 1fr;
       gap: 2rem;
     }
+  }
+
+  .gh-content-wrapper {
+    min-width: 0;
   }
 
   .gh-banner {
