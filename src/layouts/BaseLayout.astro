@@ -12,8 +12,22 @@ const { title = 'Neo-Brutalist Site' } = Astro.props;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes" />
 		<title>{title}</title>
+		
+		<!-- PWA Meta Tags -->
+		<link rel="manifest" href="/manifest.json" />
+		<meta name="theme-color" content="#a8d5ff" />
+		
+		<!-- iOS Web App Capability -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="AI/ML Hub" />
+		<link rel="apple-touch-icon" href="/icons/icon-192.png" />
+		
+		<!-- Windows Tile Metadata -->
+		<meta name="msapplication-TileImage" content="/icons/icon-192.png" />
+		<meta name="msapplication-TileColor" content="#a8d5ff" />
 	</head>
 	<body>
 		<header class="neo-border neo-shadow bg-violet site-header">
@@ -46,6 +60,20 @@ const { title = 'Neo-Brutalist Site' } = Astro.props;
 				<a href="/guidance" style="color: inherit; text-decoration: none; border-bottom: 2px solid transparent;" onmouseover="this.style.borderBottom='2px solid #000'" onmouseout="this.style.borderBottom='2px solid transparent'">Guidance</a>
 			</div>
 		</footer>
+
+		<script is:inline>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker.register('/sw.js')
+						.then((reg) => {
+							console.log('Service Worker registered scope:', reg.scope);
+						})
+						.catch((err) => {
+							console.error('Service Worker registration failed:', err);
+						});
+				});
+			}
+		</script>
 
 		<style>
 			.site-header {
