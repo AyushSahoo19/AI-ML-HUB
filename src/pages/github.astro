@@ -272,7 +272,7 @@ for (let w = 0; w < contributionWeeks; w++) {
           </div>
 
           <!-- Contribution Heatmap Section -->
-          <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; margin-bottom: 2rem;">
+          <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; margin-bottom: 2rem; max-width: 100%; overflow: hidden;">
             <div class="gh-heatmap-header">
               <h3 style="margin: 0; font-size: 1.25rem; font-weight: 900; text-transform: uppercase;">📊 342 Contributions in the last year</h3>
               <span style="font-size: 0.8rem; font-weight: bold; color: #4b5563;">Longest streak: <strong>18 days</strong></span>
@@ -739,13 +739,13 @@ for (let w = 0; w < contributionWeeks; w++) {
 
   #github-grid {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: minmax(240px, 240px) minmax(0, 1fr);
     gap: 1.25rem;
   }
 
   @media (min-width: 992px) {
     #github-grid {
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: minmax(280px, 280px) minmax(0, 1fr);
       gap: 2rem;
     }
   }
