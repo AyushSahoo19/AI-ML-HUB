@@ -27,23 +27,23 @@ const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0,
   <!-- 2. How to Use / Guidance Index -->
   <section id="guidance" style="margin-bottom: 4rem;">
     <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 4px solid #000; padding-bottom: 0.5rem;">How to Use This Hub</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-      <a href="/how-to-use/learn" style="text-decoration: none; color: inherit; display: block;">
-        <NeoCard color="#fef08a" class="neo-hover-raise" style="border-width: 3px; height: 100%;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: stretch;">
+      <a href="/how-to-use/learn" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+        <NeoCard color="#fef08a" class="neo-hover-raise" style="border-width: 3px; height: 100%; display: flex; flex-direction: column; flex-grow: 1;">
           <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">01. Learn &rarr;</h3>
-          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Follow the chronological syllabus. Read the detailed notes, study the diagrams, and master the theory step-by-step.</p>
+          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4; margin: 0; flex-grow: 1;">Follow the chronological syllabus. Read the detailed notes, study the diagrams, and master the theory step-by-step.</p>
         </NeoCard>
       </a>
-      <a href="/how-to-use/code" style="text-decoration: none; color: inherit; display: block;">
-        <NeoCard color="#e9d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%;">
+      <a href="/how-to-use/code" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+        <NeoCard color="#e9d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%; display: flex; flex-direction: column; flex-grow: 1;">
           <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">02. Code &rarr;</h3>
-          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Copy the embedded Python snippets into your local Jupyter Notebooks and run the models to truly understand the math.</p>
+          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4; margin: 0; flex-grow: 1;">Copy the embedded Python snippets into your local Jupyter Notebooks and run the models to truly understand the math.</p>
         </NeoCard>
       </a>
-      <a href="/how-to-use/build" style="text-decoration: none; color: inherit; display: block;">
-        <NeoCard color="#a8d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%;">
+      <a href="/how-to-use/build" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+        <NeoCard color="#a8d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%; display: flex; flex-direction: column; flex-grow: 1;">
           <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">03. Build &rarr;</h3>
-          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4;">Check the Projects Lab to see how theory is applied to real-world, open-source repositories.</p>
+          <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4; margin: 0; flex-grow: 1;">Check the Projects Lab to see how theory is applied to real-world, open-source repositories.</p>
         </NeoCard>
       </a>
     </div>
