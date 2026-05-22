@@ -1,16 +1,18 @@
-# 🎓 Premium AI/ML IIT Mandi Curricular Hub & GitHub Simulator
-
 <div align="center">
 
-[![Astro](https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
-[![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
+  <img src="public/icons/icon-512.png" width="120" height="120" alt="AI/ML Curricular Hub Logo" style="border: 4px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 20px; margin-bottom: 20px;" />
 
-An ultra-premium, interactive educational hub and development simulator. Features dynamic workspaces, visual optimization sandboxes, a live searchable lecture vault, and a full-fidelity GitHub portfolio clone with local filesystem folder synchronizers.
+  # 🎓 Premium AI/ML IIT Mandi Curricular Hub & GitHub Simulator
 
-[✨ Live Sandbox](#-key-interactive-visualizers--features) • [🏛️ Architecture](#-system-architecture) • [🚀 Features](#-key-interactive-visualizers--features) • [📂 Code Structure](#-codebase-directory-tour) • [⚡ Command Suite](#-operations-manual)
+  **An ultra-premium, offline-first educational platform and workspace simulator built using Neo-Brutalist design principles.**
+
+  [![Astro](https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
+  [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
+  [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
+
+  [✨ Visual Simulators](#-key-interactive-visualizers--features) • [🏛️ Architecture](#-system-architecture) • [🚀 Core Features](#-key-interactive-visualizers--features) • [📂 Codebase Tour](#-codebase-directory-tour) • [⚡ Command Suite](#-operations-manual)
 
 </div>
 
@@ -101,6 +103,24 @@ An advanced developer hub directly reading from your local disk space:
 *   **Integrated Heatmap Calendar**: A beautiful, 12-month contribution graph that tracks and displays simulated commit logs. Hovering over a square displays counts and dates; clicking a square triggers an interactive toast detailing changed files.
 *   **Git Shell Terminal**: An interactive terminal executing mock git operations. Type operations or run sync triggers to execute fully-animated shell sequences.
 
+### 🧠 4. Dynamic Curriculum Vault & Module 00 Introductory Engine (`/lectures`)
+An advanced searchable daily lecture indexing system complete with instant filtering buttons:
+*   **Module 00: Foundations Bedrock**: Provides comprehensive notes covering the conceptual bridge from expert rule-based systems to parametric optimization (AI vs. ML, Feature Extraction, and the Curse of Dimensionality sparsity equation).
+*   **The Linear Mathematical Neuron**: Explains mathematical neurons modeled as hyperplane classifiers ($W^T X + b = 0$), discrete classification step thresholding, Data vs. Parametric (weight) dual coordinate spaces, Gradient Descent parameter optimization using partial derivatives, and One-Hot binary class vector representation.
+*   **Tactile Multi-Format CTAs**: Day cards provide clean, separated buttons to open PDF lecture notes, view code repositories, or read detailed web notes, strictly preventing nested anchor bugs.
+
+### ⚡ 5. Progressive Web App (PWA) & Offline-First Strategy
+Full smartphone installability and network resilience:
+*   **Background Caching (`sw.js`)**: Employs a dynamic *Network-First with Cache Fallback* strategy, caching successful GET requests locally in standard service worker storage.
+*   **Installability (`manifest.json`)**: Configured with sleek brutalist colors, standalone app displays, clean portrait orientations, and customized neural network launcher icons.
+*   **PWA Meta Integrations**: Injected with Apple-specific web app capability tags and status bar colors to enable native-feeling standalone execution.
+
+### 📱 6. Mobile Squeeze-Proof Layouts & Styling Tokens (`global.css`)
+Visual excellence powered by sleek Neo-Brutalist aesthetics:
+*   **Responsive Grid System**: Grid configurations stack fluidly to 100% width on viewports `< 768px`, ensuring a robust layout on screens down to 320px.
+*   **Brutal Active States**: Hovering highlights raise offset elements, tilt images, underline titles, and cast heavy solid drop shadows (`box-shadow: 4px 4px 0px #000`) for premium micro-interactive feedback.
+*   **Interactive Brand Logo & Compact Header**: Embedded with small, responsive neural icons (`14px` inside header, `18px` inside footer) displaying real-time system status indicators.
+
 ---
 
 ## 🏛️ Codebase Directory Tour
@@ -109,7 +129,10 @@ The Astro project is structured logically to maintain strict division between st
 
 ```text
 03_Website/
-├── public/                       # Favicons, vector branding, and static files
+├── public/                       # Favicons, vector branding, manifests, service worker
+│   ├── icons/                    # High-contrast neural network launcher images
+│   ├── manifest.json             # PWA app installability configurations
+│   └── sw.js                     # Dynamic Network-First service worker cache
 ├── src/
 │   ├── assets/                   # Course illustration assets and vectors
 │   ├── components/               # High-contrast Neo-Brutalist components
@@ -123,6 +146,8 @@ The Astro project is structured logically to maintain strict division between st
 │   ├── layouts/
 │   │   └── BaseLayout.astro      # Master layout (Header, Nav, Footer, Theme)
 │   ├── pages/                    # Multi-route Astro static pages
+│   │   ├── domains/              # Interactive domain-deep dive directories
+│   │   ├── how-to-use/           # Guidebooks and interactive from-scratch codebases
 │   │   ├── experiments/          # Sandbox directories
 │   │   │   ├── index.astro       # Visualizers directory
 │   │   │   └── gradient-descent.astro # Gradient descent canvas sandbox
@@ -134,7 +159,7 @@ The Astro project is structured logically to maintain strict division between st
 │   │   ├── github.astro          # Local filesystem scanner & syncer page
 │   │   └── index.astro           # Course landing page & central dashboard
 │   └── styles/
-│       └── index.css             # Global Brutalist styling tokens and variables
+│       └── global.css            # Central Brutalist styling tokens and grids
 ├── astro.config.mjs              # Astro engine configurations
 ├── package.json                  # Engine dependencies and scripts
 └── tsconfig.json                 # Strict TypeScript rule engine
@@ -156,5 +181,5 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine. All co
 ---
 
 <div align="center">
-  <p>Created with 🖤 for the IIT Mandi AI/ML Curricular Hub Initiative.</p>
+  <p>Developed and Created by <b>Ayush Kumar Sahoo</b> with 🖤 for the IIT Mandi AI/ML Curricular Hub Initiative.</p>
 </div>
