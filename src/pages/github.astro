@@ -159,6 +159,10 @@ for (let w = 0; w < contributionWeeks; w++) {
         ✨ Stars
         <span style="font-size: 0.75rem; background: #f3f4f6; border: 1.5px solid #000; padding: 0.05rem 0.35rem; font-weight: bold;">4</span>
       </button>
+      <button class="nav-tab" data-target="resources" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background: #fff; cursor: pointer; border-radius: 0;">
+        🔗 Resources
+        <span style="font-size: 0.75rem; background: #fde047; border: 1.5px solid #000; padding: 0.05rem 0.35rem; font-weight: bold;">12</span>
+      </button>
     </div>
 
     <!-- Main Content Layout (Dual Column) -->
@@ -448,6 +452,278 @@ for (let w = 0; w < contributionWeeks; w++) {
             </div>
           </div>
         </div>
+
+        <!-- ================= RESOURCES TAB ================= -->
+        <div id="tab-resources" class="tab-panel-content">
+
+          <!-- Section Header -->
+          <div class="neo-border bg-yellow" style="padding: 1.25rem 1.5rem; box-shadow: 4px 4px 0px #000; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="margin: 0 0 0.25rem 0; font-size: 1.35rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px;">🔗 Essential GitHub Repositories</h3>
+              <p style="margin: 0; font-size: 0.82rem; font-weight: bold; color: #374151;">Hand-picked, world-class open-source repositories for ML, AI, Deep Learning, and Computer Science. Click any card to open the repo directly on GitHub.</p>
+            </div>
+            <span style="font-size: 0.75rem; font-weight: 900; background: #000; color: #fff; padding: 0.3rem 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">12 Repos · Curated</span>
+          </div>
+
+          <!-- Category: Machine Learning & AI -->
+          <h4 style="font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #000; padding-left: 0.75rem; margin: 0 0 1rem 0; color: #000;">🤖 Machine Learning & AI Fundamentals</h4>
+          <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+
+            <!-- microsoft/ML-For-Beginners -->
+            <a href="https://github.com/microsoft/ML-For-Beginners" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🎓</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #a8d5ff; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Microsoft</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">ML-For-Beginners</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">25 lessons, 12 weeks of classic Machine Learning taught using Scikit-learn. Perfect structured introduction covering Regression, Classification, Clustering, NLP & Time Series.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #3572A5; border: 1px solid #000;"></span> Python</div>
+                <span>★ 72.4k &bull; ⌥ 23.8k</span>
+              </div>
+            </a>
+
+            <!-- fastai/fastbook -->
+            <a href="https://github.com/fastai/fastbook" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">📘</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #bbf7d0; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">fast.ai</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">fastbook — Deep Learning for Coders</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">The official book and Jupyter notebooks for the fast.ai "Practical Deep Learning for Coders" course. Hands-on deep learning from computer vision to NLP and tabular data.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #DA5B0B; border: 1px solid #000;"></span> Jupyter</div>
+                <span>★ 28.1k &bull; ⌥ 10.1k</span>
+              </div>
+            </a>
+
+            <!-- ageron/handson-ml3 -->
+            <a href="https://github.com/ageron/handson-ml3" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">📙</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #fde68a; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">O'Reilly</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">Hands-On ML with Scikit-Learn & TensorFlow (3rd Ed.)</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">Notebooks for the bestselling O'Reilly book. Covers the full ML pipeline — from data prep & regression to neural nets, CNNs, RNNs, and deploying with TensorFlow.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #DA5B0B; border: 1px solid #000;"></span> Jupyter</div>
+                <span>★ 30.2k &bull; ⌥ 14.5k</span>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- Category: Deep Learning -->
+          <h4 style="font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #000; padding-left: 0.75rem; margin: 0 0 1rem 0; color: #000;">🧠 Deep Learning & Neural Networks</h4>
+          <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+
+            <!-- d2l-ai/d2l-en -->
+            <a href="https://github.com/d2l-ai/d2l-en" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">📖</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #e3a8ff; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Dive into DL</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">Dive into Deep Learning (d2l-en)</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">Interactive deep learning book with code, math, and discussions. Covers linear networks, multilayer perceptrons, CNNs, RNNs, attention mechanisms & transformers.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #3572A5; border: 1px solid #000;"></span> Python</div>
+                <span>★ 24.8k &bull; ⌥ 4.3k</span>
+              </div>
+            </a>
+
+            <!-- karpathy/nn-zero-to-hero -->
+            <a href="https://github.com/karpathy/nn-zero-to-hero" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🔥</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #fca5a5; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Karpathy</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">Neural Networks: Zero to Hero</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">Andrej Karpathy's video lecture series building neural networks from scratch. From micrograd to GPT — the most intuitive bottom-up intro to backprop and LLMs.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #3572A5; border: 1px solid #000;"></span> Python</div>
+                <span>★ 26.3k &bull; ⌥ 2.9k</span>
+              </div>
+            </a>
+
+            <!-- tensorflow/tensorflow -->
+            <a href="https://github.com/tensorflow/tensorflow" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🧩</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #fde047; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Google</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">TensorFlow</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">Google's end-to-end open-source ML platform for building and deploying models. Industry-standard framework with eager execution, Keras integration, and production-ready deployment.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #e16737; border: 1px solid #000;"></span> C++/Python</div>
+                <span>★ 186k &bull; ⌥ 74.4k</span>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- Category: Generative AI & LLMs -->
+          <h4 style="font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #000; padding-left: 0.75rem; margin: 0 0 1rem 0; color: #000;">✨ Generative AI & LLMs</h4>
+          <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+
+            <!-- microsoft/generative-ai-for-beginners -->
+            <a href="https://github.com/microsoft/generative-ai-for-beginners" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🤖</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #a8d5ff; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Microsoft</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">Generative AI for Beginners (21 Lessons)</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">21 comprehensive lessons teaching Generative AI fundamentals — prompt engineering, RAG, fine-tuning, responsible AI, building LLM apps with Azure OpenAI and open-source models.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #3572A5; border: 1px solid #000;"></span> Python</div>
+                <span>★ 73.2k &bull; ⌥ 36.5k</span>
+              </div>
+            </a>
+
+            <!-- huggingface/transformers -->
+            <a href="https://github.com/huggingface/transformers" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🤗</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #fde68a; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">HuggingFace</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">🤗 Transformers</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">State-of-the-art pre-trained models for NLP, vision, audio, and multimodal tasks. Thousands of models including BERT, GPT-2, T5, ViT, Whisper. Compatible with PyTorch, TensorFlow, and JAX.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #3572A5; border: 1px solid #000;"></span> Python</div>
+                <span>★ 142k &bull; ⌥ 28.4k</span>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- Category: Data Science & Algorithms -->
+          <h4 style="font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #000; padding-left: 0.75rem; margin: 0 0 1rem 0; color: #000;">📊 Data Science & Computer Science</h4>
+          <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+
+            <!-- jakevdp/PythonDataScienceHandbook -->
+            <a href="https://github.com/jakevdp/PythonDataScienceHandbook" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🐍</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #bbf7d0; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">O'Reilly</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">Python Data Science Handbook</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">Full notebooks for Jake VanderPlas's Python Data Science Handbook — NumPy, Pandas, Matplotlib, Scikit-Learn, and IPython. The definitive reference for Python data science.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #DA5B0B; border: 1px solid #000;"></span> Jupyter</div>
+                <span>★ 43.6k &bull; ⌥ 20.8k</span>
+              </div>
+            </a>
+
+            <!-- TheAlgorithms/Python -->
+            <a href="https://github.com/TheAlgorithms/Python" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">⚡</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #fca5a5; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Algorithms</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">The Algorithms — Python</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">All algorithms implemented in Python — sorting, searching, dynamic programming, graph algorithms, ML algorithms, data structures, and cryptography. Educational reference by the community.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #3572A5; border: 1px solid #000;"></span> Python</div>
+                <span>★ 198k &bull; ⌥ 46.3k</span>
+              </div>
+            </a>
+
+            <!-- academic/awesome-datascience -->
+            <a href="https://github.com/academic/awesome-datascience" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">📚</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #e3a8ff; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Awesome</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">Awesome Data Science</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">A curated list of data science resources — courses, books, cheat sheets, tutorials, blogs, podcasts, and communities. The one-stop index for self-learning data science.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #083344; border: 1px solid #000;"></span> Markdown</div>
+                <span>★ 25.9k &bull; ⌥ 6.8k</span>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- Category: Software Engineering / Dev Tools -->
+          <h4 style="font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #000; padding-left: 0.75rem; margin: 0 0 1rem 0; color: #000;">🛠️ Software Engineering & Dev Tools</h4>
+          <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+
+            <!-- kamranahmedse/developer-roadmap -->
+            <a href="https://github.com/kamranahmedse/developer-roadmap" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🗺️</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #fde047; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Roadmap.sh</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">Developer Roadmap</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">Community-driven roadmaps, guides, and skill paths for developers. Frontend, Backend, DevOps, AI/ML, System Design — step-by-step visual career guides with curated resources.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #e34c26; border: 1px solid #000;"></span> TypeScript</div>
+                <span>★ 312k &bull; ⌥ 39.5k</span>
+              </div>
+            </a>
+
+            <!-- donnemartin/system-design-primer -->
+            <a href="https://github.com/donnemartin/system-design-primer" target="_blank" rel="noopener noreferrer" class="resource-card neo-border neo-hover-raise" style="display: flex; flex-direction: column; background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.15s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="font-size: 1.4rem;">🏗️</span>
+                  <span style="font-size: 0.7rem; font-weight: 900; background: #bbf7d0; border: 2px solid #000; padding: 0.1rem 0.4rem; text-transform: uppercase;">Systems</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: bold; background: #f3f4f6; border: 1.5px solid #000; padding: 0.1rem 0.35rem;">↗ Open</span>
+              </div>
+              <strong style="font-size: 0.95rem; color: #0969da; margin-bottom: 0.4rem; display: block;">System Design Primer</strong>
+              <p style="margin: 0 0 0.85rem 0; font-size: 0.78rem; font-weight: bold; color: #4b5563; line-height: 1.45; flex: 1;">Learn how to design large-scale systems. Prep for the system design interview. Covers load balancers, databases, caching, microservices, CAP theorem, and more with illustrations.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px dashed #000; padding-top: 0.65rem; font-size: 0.72rem; font-weight: bold; color: #57606a;">
+                <div style="display: flex; align-items: center; gap: 0.3rem;"><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #3572A5; border: 1px solid #000;"></span> Python</div>
+                <span>★ 290k &bull; ⌥ 47.5k</span>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- Footer note -->
+          <div class="neo-border" style="background: #f9fafb; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-weight: bold; color: #4b5563;">
+            <span style="font-size: 1.2rem;">💡</span>
+            <span>All repositories open in a new tab on GitHub. Stars and fork counts are approximate. Resources are hand-curated by <strong style="color: #000;">Ayush Kumar Sahoo</strong> for students of the IIT Mandi AI/ML curriculum.</span>
+          </div>
+
+        </div>
+        <!-- END RESOURCES TAB -->
 
       </div>
 

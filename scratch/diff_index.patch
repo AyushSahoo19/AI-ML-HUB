@@ -1,0 +1,59 @@
+﻿diff --git a/src/pages/lectures/index.astro b/src/pages/lectures/index.astro
+index 6320da5..8d517d3 100644
+--- a/src/pages/lectures/index.astro
++++ b/src/pages/lectures/index.astro
+@@ -69,8 +69,8 @@ const sortedModuleKeys = Object.keys(modules).sort((a, b) => {
+         if (moduleName.includes('GenAI')) { accentColor = '#fef08a'; filterTag = 'GenAI'; }
+ 
+         return (
+-          <div class="module-group" data-phase={filterTag} style="display: grid; grid-template-columns: 1fr 3fr; gap: 2rem; align-items: start; border-bottom: 3px solid #000; padding-bottom: 3rem;">
+-            <div style="position: sticky; top: 1.5rem;">
++          <div class="module-group" data-phase={filterTag}>
++            <div class="sticky-header">
+               <h2 style="font-size: 1.4rem; font-weight: 900; text-transform: uppercase; color: #000; margin: 0 0 0.75rem 0; line-height: 1.2;">{moduleName}</h2>
+               <div style={`width: 60px; height: 8px; background-color: ${accentColor}; border: 2px solid #000;`}></div>
+               <p style="font-size: 0.8rem; font-weight: bold; color: #4b5563; margin-top: 1rem;">
+@@ -137,9 +137,9 @@ const sortedModuleKeys = Object.keys(modules).sort((a, b) => {
+ 
+       // Show/hide group based on if any child matches
+       if (visibleCardsInGroup > 0) {
+-        group.style.display = 'grid';
++        group.classList.remove('hidden-group');
+       } else {
+-        group.style.display = 'none';
++        group.classList.add('hidden-group');
+       }
+     });
+ 
+@@ -184,4 +184,31 @@ const sortedModuleKeys = Object.keys(modules).sort((a, b) => {
+     transform: translate(-1px, -1px);
+     box-shadow: 2px 2px 0px #000;
+   }
++
++  .module-group {
++    display: grid;
++    grid-template-columns: 1fr;
++    gap: 2rem;
++    align-items: start;
++    border-bottom: 3px solid #000;
++    padding-bottom: 3rem;
++  }
++
++  .hidden-group {
++    display: none !important;
++  }
++
++  .sticky-header {
++    position: static;
++  }
++
++  @media (min-width: 768px) {
++    .module-group {
++      grid-template-columns: 1fr 3fr;
++    }
++    .sticky-header {
++      position: sticky;
++      top: 1.5rem;
++    }
++  }
+ </style>

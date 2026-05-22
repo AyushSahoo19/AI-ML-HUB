@@ -1,0 +1,187 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const lectures = await getCollection('lectures');
+
+// Group lectures by module
+const modules = lectures.reduce((acc, lecture) => {
+  const mod = lecture.data.module || 'Uncategorized';
+  if (!acc[mod]) {
+    acc[mod] = [];
+  }
+  acc[mod].push(lecture);
+  return acc;
+}, {} as Record<string, typeof lectures>);
+
+// Standard order of modules
+const moduleOrder = ['Foundations', 'Machine Learning', 'Deep Learning', 'GenAI & MLOps'];
+const sortedModuleKeys = Object.keys(modules).sort((a, b) => {
+  const indexA = moduleOrder.findIndex(m => a.includes(m));
+  const indexB = moduleOrder.findIndex(m => b.includes(m));
+  return indexA - indexB;
+});
+---
+
+<BaseLayout title="Lecture Vault - AI/ML IIT Mandi">
+  <div style="max-width: 1000px; margin: 0 auto;">
+    
+    <!-- Header banner -->
+    <section class="neo-border neo-shadow bg-green" style="padding: 2.5rem 2rem; margin-bottom: 3rem; background-color: #bbf7d0;">
+      <h1 style="font-size: 2.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem; color: #000;">Lecture Vault</h1>
+      <p style="font-size: 1.1rem; font-weight: bold; margin: 0; color: #1f2937;">
+        A comprehensive library of all course notes, mathematical derivations, custom models, and practical references.
+      </p>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <div class="neo-border" style="padding: 1.5rem; background-color: #fff; margin-bottom: 2.5rem; box-shadow: 4px 4px 0px #000; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+      <div style="flex-grow: 1; min-width: 250px;">
+        <label for="search-input" style="display: block; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 0.5rem;">Instant Search</label>
+        <input 
+          id="search-input" 
+          type="text" 
+          placeholder="Search by topic, keyword, or day (e.g. Backpropagation, Day 3)..." 
+          style="width: 100%; padding: 0.75rem; border: 3px solid #000; font-family: inherit; font-weight: bold; box-sizing: border-box; font-size: 0.95rem; outline: none; border-radius: 0;"
+        />
+      </div>
+      <div>
+        <label style="display: block; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 0.5rem;">Filter by Phase</label>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; font-weight: 900; border: 2px solid #000; background: #fff; cursor: pointer;">All</button>
+          <button class="filter-btn" data-filter="Foundations" style="padding: 0.5rem 1rem; font-weight: 900; border: 2px solid #000; background: #a8d5ff; cursor: pointer;">Foundations</button>
+          <button class="filter-btn" data-filter="Machine" style="padding: 0.5rem 1rem; font-weight: 900; border: 2px solid #000; background: #bbf7d0; cursor: pointer;">ML</button>
+          <button class="filter-btn" data-filter="Deep" style="padding: 0.5rem 1rem; font-weight: 900; border: 2px solid #000; background: #e9d5ff; cursor: pointer;">DL</button>
+          <button class="filter-btn" data-filter="GenAI" style="padding: 0.5rem 1rem; font-weight: 900; border: 2px solid #000; background: #fef08a; cursor: pointer;">GenAI</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modules Container -->
+    <div id="modules-container" style="display: flex; flex-direction: column; gap: 3rem;">
+      {sortedModuleKeys.map((moduleName) => {
+        const moduleLectures = modules[moduleName];
+        let accentColor = '#e5e7eb';
+        let filterTag = 'other';
+        if (moduleName.includes('Foundations')) { accentColor = '#a8d5ff'; filterTag = 'Foundations'; }
+        if (moduleName.includes('Machine Learning')) { accentColor = '#bbf7d0'; filterTag = 'Machine'; }
+        if (moduleName.includes('Deep Learning')) { accentColor = '#e9d5ff'; filterTag = 'Deep'; }
+        if (moduleName.includes('GenAI')) { accentColor = '#fef08a'; filterTag = 'GenAI'; }
+
+        return (
+          <div class="module-group" data-phase={filterTag} style="display: grid; grid-template-columns: 1fr 3fr; gap: 2rem; align-items: start; border-bottom: 3px solid #000; padding-bottom: 3rem;">
+            <div style="position: sticky; top: 1.5rem;">
+              <h2 style="font-size: 1.4rem; font-weight: 900; text-transform: uppercase; color: #000; margin: 0 0 0.75rem 0; line-height: 1.2;">{moduleName}</h2>
+              <div style={`width: 60px; height: 8px; background-color: ${accentColor}; border: 2px solid #000;`}></div>
+              <p style="font-size: 0.8rem; font-weight: bold; color: #4b5563; margin-top: 1rem;">
+                {moduleLectures.length} Lecture{moduleLectures.length !== 1 ? 's' : ''} Published
+              </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem;">
+              {moduleLectures.sort((a, b) => a.data.day - b.data.day).map((lecture) => (
+                <div class="lecture-card" data-title={lecture.data.title.toLowerCase()} style="display: block;">
+                  <a href={`/lectures/${lecture.id}`} class="neo-border neo-hover-raise" style={`text-decoration: none; color: inherit; padding: 1.25rem; display: block; border-width: 3px; background-color: ${accentColor}; box-shadow: 4px 4px 0px #000;`}>
+                    <p style="font-size: 0.7rem; font-weight: 900; color: #374151; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">Day {lecture.data.day} &bull; {lecture.data.date}</p>
+                    <h3 style="font-size: 1.1rem; font-weight: 900; margin: 0; line-height: 1.3; color: #000;">
+                      {lecture.data.title}
+                    </h3>
+                    <p style="font-size: 0.8rem; font-weight: bold; color: #374151; margin-top: 0.75rem; margin-bottom: 0; text-decoration: underline;">Read Notes &rarr;</p>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+
+    <!-- No results banner -->
+    <div id="no-results" style="display: none; text-align: center; padding: 3rem; background: #fff;" class="neo-border">
+      <h3 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem;">No Lectures Found</h3>
+      <p style="font-weight: bold; color: #4b5563; margin: 0;">Try adjusting your keywords or clearing the search input.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const searchInput = document.getElementById('search-input');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const moduleGroups = document.querySelectorAll('.module-group');
+  const noResults = document.getElementById('no-results');
+
+  let activeFilter = 'all';
+  let searchQuery = '';
+
+  function filterLectures() {
+    let matchesCount = 0;
+
+    moduleGroups.forEach(group => {
+      const phase = group.getAttribute('data-phase');
+      const cards = group.querySelectorAll('.lecture-card');
+      let visibleCardsInGroup = 0;
+
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title');
+        const matchesSearch = title.includes(searchQuery);
+        const matchesPhase = activeFilter === 'all' || phase === activeFilter;
+
+        if (matchesSearch && matchesPhase) {
+          card.style.display = 'block';
+          visibleCardsInGroup++;
+          matchesCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show/hide group based on if any child matches
+      if (visibleCardsInGroup > 0) {
+        group.style.display = 'grid';
+      } else {
+        group.style.display = 'none';
+      }
+    });
+
+    if (matchesCount === 0) {
+      noResults.style.display = 'block';
+    } else {
+      noResults.style.display = 'none';
+    }
+  }
+
+  // Bind search event
+  searchInput?.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    filterLectures();
+  });
+
+  // Bind filter buttons
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.style.transform = 'none';
+        b.style.boxShadow = 'none';
+      });
+      
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-filter') || 'all';
+      
+      filterLectures();
+    });
+  });
+</script>
+
+<style>
+  .filter-btn.active {
+    background-color: #000 !important;
+    color: #fff !important;
+    box-shadow: 2px 2px 0px #000;
+  }
+  
+  .filter-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0px #000;
+  }
+</style>
