@@ -8,6 +8,9 @@ const lecturesCollection = defineCollection({
     day: z.number(),
     date: z.string(),
     module: z.string().optional(),
+    pdfUrl: z.string().optional(),
+    material: z.string().optional(),
+    topics: z.array(z.string()).optional(),
   }),
 });
 

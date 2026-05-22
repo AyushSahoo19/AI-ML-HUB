@@ -243,12 +243,12 @@ for (let w = 0; w < contributionWeeks; w++) {
           <!-- Pinned Repos Grid -->
           <div class="gh-pinned-repos-grid" id="pinned-repos-grid">
             {repositories.slice(0, 2).map(repo => (
-              <div class="neo-border neo-hover-raise" style="background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="neo-border neo-hover-raise repo-card-clickable" data-repo={repo.name} style="background: #fff; padding: 1.25rem; box-shadow: 4px 4px 0px #000; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;">
                 <div>
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                     <div style="display: flex; align-items: center; gap: 0.35rem;">
                       <span>📁</span>
-                      <strong style="color: #0969da; font-size: 0.95rem; cursor: pointer;" class="repo-switch-btn" data-repo={repo.name}>{repo.name}</strong>
+                      <strong style="color: #0969da; font-size: 0.95rem;" class="repo-switch-btn" data-repo={repo.name}>{repo.name}</strong>
                     </div>
                     <span style="font-size: 0.7rem; font-weight: bold; border: 2px solid #000; padding: 0.05rem 0.3rem; background: #fafafa;">Public</span>
                   </div>
@@ -322,7 +322,7 @@ for (let w = 0; w < contributionWeeks; w++) {
         <div id="tab-repositories" class="tab-panel-content">
           <div style="display: flex; flex-direction: column; gap: 1.5rem;">
             {repositories.map(repo => (
-              <div class="neo-border" style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; border-width: 3px;">
+              <div class="neo-border repo-card-clickable" data-repo={repo.name} style="background: #fff; padding: 1.5rem; box-shadow: 4px 4px 0px #000; border-width: 3px; cursor: pointer;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
                   <div>
                     <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
@@ -338,7 +338,7 @@ for (let w = 0; w < contributionWeeks; w++) {
                   <div style="display: flex; gap: 0.5rem;">
                     <!-- Interactive Action button -->
                     <button class="explore-local-btn neo-border neo-hover-raise bg-yellow" data-repo={repo.name} style="padding: 0.4rem 0.8rem; font-weight: bold; font-size: 0.75rem; cursor: pointer; text-transform: uppercase;">
-                      📂 Explore Files ({repo.files.length})
+                      📂 Explore Repository ({repo.files.length})
                     </button>
                   </div>
                 </div>
@@ -356,38 +356,6 @@ for (let w = 0; w < contributionWeeks; w++) {
                     Local Path: <strong style="color: #000;">{repo.localPath}</strong>
                   </span>
                 </div>
-
-                <!-- Foldout File Explorer Widget -->
-                <div class="explorer-foldout neo-border" id={`explorer-foldout-${repo.name}`} style="display: none; margin-top: 1.25rem; background: #fafafa; border-width: 2.5px;">
-                  <div style="background: #e5e7eb; border-bottom: 2.5px solid #000; padding: 0.5rem 1rem; font-weight: bold; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-                    <span>📂 Directory Tree Explorer: {repo.name}/</span>
-                    <span style="font-size: 0.75rem; color: #57606a;">Click on any file to open real-time reader preview</span>
-                  </div>
-                  <div class="explorer-grid">
-                    <!-- File list side -->
-                    <div class="explorer-sidebar" style="background: #fff; padding: 0.5rem 0; max-height: 350px; overflow-y: auto;">
-                      {repo.files.map(file => (
-                        <div 
-                          class="explorer-file-item" 
-                          data-repo={repo.name} 
-                          data-file={file}
-                          style="padding: 0.5rem 1rem; font-weight: bold; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.1s;"
-                        >
-                          <span>📄</span>
-                          <span>{file}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <!-- File contents viewer side -->
-                    <div style="background: #1e1e1e; color: #d4d4d4; padding: 1rem; max-height: 350px; overflow: auto; font-family: monospace; font-size: 0.8rem; line-height: 1.4; position: relative;">
-                      <div class="file-viewer-placeholder" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #1e1e1e; color: #888; font-weight: bold;">
-                        Select a file to inspect its localized codebase contents.
-                      </div>
-                      <pre style="margin: 0; display: none;" class="file-viewer-pre"><code class="file-viewer-code"></code></pre>
-                    </div>
-                  </div>
-                </div>
-
               </div>
             ))}
           </div>
@@ -484,6 +452,232 @@ for (let w = 0; w < contributionWeeks; w++) {
       </div>
 
     </div>
+
+    <!-- ================= PREMIUM GITHUB REPO DASHBOARD (SPA SECTION) ================= -->
+    <div id="github-repo-dashboard" style="display: none; width: 100%; margin-bottom: 3rem;">
+      
+      <!-- GitHub Top bar branding & Title -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000; padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <svg aria-hidden="true" height="20" viewBox="0 0 16 16" version="1.1" width="20" style="fill: #57606a;">
+            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+          </svg>
+          <span style="font-size: 1.25rem; font-weight: 600; color: #0969da;">
+            <span style="text-decoration: none; color: inherit;">iit-mandi-ai-ml</span>
+          </span>
+          <span style="font-size: 1.25rem; color: #57606a;">/</span>
+          <span style="font-size: 1.25rem; font-weight: bold; color: #000; text-transform: uppercase;" id="dashboard-repo-name">
+            Models
+          </span>
+          <span style="font-size: 0.7rem; font-weight: bold; border: 2px solid #000; padding: 0.1rem 0.4rem; background-color: #f3f4f6; text-transform: uppercase; margin-left: 0.25rem;">Public</span>
+        </div>
+
+        <!-- Action badges (Stars/Forks count) & Back button -->
+        <div style="display: flex; align-items: center; gap: 0.75rem; font-weight: bold; font-size: 0.8rem; flex-wrap: wrap;">
+          <span class="github-badge-custom">
+            <span style="border-right: 2px solid #000; padding: 0.25rem 0.5rem; background: #f3f4f6; display: flex; align-items: center; gap: 0.25rem;">
+              ★ Star
+            </span>
+            <span id="dashboard-stars" style="padding: 0.25rem 0.5rem; background: #fff; color: #000;">
+              48
+            </span>
+          </span>
+          <span class="github-badge-custom">
+            <span style="border-right: 2px solid #000; padding: 0.25rem 0.5rem; background: #f3f4f6; display: flex; align-items: center; gap: 0.25rem;">
+              ⌥ Fork
+            </span>
+            <span id="dashboard-forks" style="padding: 0.25rem 0.5rem; background: #fff; color: #000;">
+              14
+            </span>
+          </span>
+          
+          <button id="dashboard-back-btn" class="neo-border bg-yellow neo-hover-raise" style="padding: 0.4rem 0.8rem; font-weight: 900; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; margin-left: 0.5rem;">
+            ⬅ Back to Profile
+          </button>
+        </div>
+      </div>
+
+      <!-- Repository Navigation Tabs -->
+      <div style="display: flex; gap: 0.5rem; border-bottom: 3px solid #000; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 2px;">
+        <button class="repo-tab-btn active" data-tab="code" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background-color: #fde047; cursor: pointer; border-radius: 0;">
+          🖥️ Code
+        </button>
+        <button class="repo-tab-btn" data-tab="issues" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background-color: #fff; cursor: pointer; border-radius: 0;">
+          ⚠️ Issues
+          <span id="dashboard-issues-count" style="font-size: 0.75rem; background-color: #e5e7eb; border: 1.5px solid #000; padding: 0.05rem 0.3rem; margin-left: 2px;">3</span>
+        </button>
+        <button class="repo-tab-btn" data-tab="prs" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background-color: #fff; cursor: pointer; border-radius: 0;">
+          ⌥ Pull Requests
+          <span id="dashboard-prs-count" style="font-size: 0.75rem; background-color: #e5e7eb; border: 1.5px solid #000; padding: 0.05rem 0.3rem; margin-left: 2px;">1</span>
+        </button>
+        <button class="repo-tab-btn" data-tab="actions" style="display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: bold; border: 3px solid #000; border-bottom: none; background-color: #fff; cursor: pointer; border-radius: 0;">
+          ⚙️ Actions
+        </button>
+      </div>
+
+      <!-- Active Tab Window View (Two columns: main view & repo sidebar) -->
+      <div class="dashboard-grid-layout" id="dashboard-main-content">
+        
+        <!-- LEFT CONTAINER (Main repository views) -->
+        <div class="dashboard-left-panel">
+          
+          <!-- ============= CODE TAB VIEW ============= -->
+          <div id="repo-tab-code-view" class="repo-tab-content-panel active-panel">
+            
+            <!-- Branch Selector & Top actions -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; gap: 1rem; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <!-- Branch select button -->
+                <div style="position: relative; display: inline-block;">
+                  <button id="dashboard-branch-btn" class="neo-border" style="background: #f3f4f6; padding: 0.4rem 0.8rem; font-weight: 900; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 0.25rem;">
+                    🔀 branch: <strong id="dashboard-current-branch">main</strong> ▼
+                  </button>
+                  <div id="dashboard-branch-dropdown" class="neo-border" style="display: none; position: absolute; z-index: 10; top: 100%; left: 0; background: white; min-width: 150px; box-shadow: 4px 4px 0px #000; margin-top: 2px;">
+                    <button class="dash-branch-option" data-branch="main" style="display:block; width:100%; text-align:left; padding: 0.5rem; font-weight:bold; border:none; background:none; cursor:pointer;">main</button>
+                    <button class="dash-branch-option" data-branch="development" style="display:block; width:100%; text-align:left; padding: 0.5rem; font-weight:bold; border:none; border-top:1px solid #000; background:none; cursor:pointer;">development</button>
+                  </div>
+                </div>
+                <span style="font-size: 0.85rem; font-weight: bold; color: #4b5563;">
+                  Updated 2 hours ago
+                </span>
+              </div>
+
+              <div style="display: flex; gap: 0.5rem; font-size: 0.8rem; font-weight: bold;">
+                <span class="neo-border" style="padding: 0.4rem 0.8rem; background-color: #fafafa;">📂 <strong>0</strong> directories</span>
+                <span class="neo-border" style="padding: 0.4rem 0.8rem; background-color: #fafafa;">📄 <strong id="dashboard-files-count-badge">2</strong> files</span>
+              </div>
+            </div>
+
+            <!-- Fully Interactive Code Explorer Widget -->
+            <div class="neo-border" style="background-color: #fff; margin-bottom: 2rem; box-shadow: 4px 4px 0px #000; border-width: 3px;">
+              <!-- Explorer Top Nav / Breadcrumbs -->
+              <div style="background-color: #fafafa; border-bottom: 3px solid #000; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: bold; font-size: 0.9rem;">
+                  <span style="color: #0969da; cursor: pointer;" id="dashboard-explorer-root">Models</span>
+                  <span id="dashboard-explorer-divider" style="display: none; color: #57606a;">/</span>
+                  <span style="color: #000;" id="dashboard-explorer-active-folder"></span>
+                </div>
+                <button id="dashboard-explorer-back-btn" class="neo-border" style="display: none; font-size: 0.75rem; font-weight: 900; background: #fff; padding: 0.2rem 0.5rem; cursor: pointer;">
+                  ↑ Up one level
+                </button>
+              </div>
+
+              <!-- Explorer Content Table -->
+              <div style="max-height: 450px; overflow-y: auto;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+                  <thead>
+                    <tr style="border-bottom: 2px solid #000; background-color: #f3f4f6; font-weight: bold;">
+                      <th style="padding: 0.6rem 1rem; width: 40%;">Name</th>
+                      <th style="padding: 0.6rem 1rem; width: 40%;">Last Commit Message</th>
+                      <th style="padding: 0.6rem 1rem; width: 20%; text-align: right;">Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboard-explorer-tbody">
+                    <!-- Generated dynamically via script -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Code Preview Frame (hidden by default, shown when code is clicked) -->
+            <div id="dashboard-code-preview" class="neo-border" style="display: none; background-color: #1e1e1e; color: #d4d4d4; margin-bottom: 2.5rem; box-shadow: 4px 4px 0px #000; border-width: 3px;">
+              <div style="background-color: #2d2d2d; border-bottom: 3px solid #000; padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; color: #fff;">
+                <span id="dashboard-preview-filename" style="font-family: monospace; font-weight: bold; font-size: 0.85rem;"></span>
+                <div style="display: flex; gap: 0.5rem;">
+                  <button id="dashboard-copy-code-btn" class="neo-border" style="background-color: #fff; color: #000; border-width: 2px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: bold; cursor: pointer;">Copy</button>
+                  <button id="dashboard-close-preview-btn" class="neo-border" style="background-color: #ef4444; color: #fff; border-width: 2px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: bold; cursor: pointer;">Close</button>
+                </div>
+              </div>
+              <pre style="margin: 0; padding: 1.25rem; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; line-height: 1.5; max-height: 400px; overflow-y: auto;"><code id="dashboard-preview-code-block"></code></pre>
+            </div>
+
+            <!-- Compiled README Section -->
+            <div class="neo-border" style="background: #fff; padding: 2rem; box-shadow: 4px 4px 0px #000; margin-bottom: 2rem; border-width: 3px;">
+              <div style="border-bottom: 2px dashed #000; padding-bottom: 0.75rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>📖</span>
+                <h2 style="font-size: 1.25rem; font-weight: 900; text-transform: uppercase; margin: 0;">README.md</h2>
+              </div>
+              <article class="markdown-body" id="dashboard-readme-body">
+                <!-- Loaded dynamically on repo select -->
+              </article>
+            </div>
+          </div>
+
+          <!-- ============= ISSUES TAB VIEW ============= -->
+          <div id="repo-tab-issues-view" class="repo-tab-content-panel">
+            <div class="neo-border" style="background: white; box-shadow: 4px 4px 0px #000; padding: 1.5rem; margin-bottom: 2rem; border-width: 3px;">
+              <h2 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 1rem; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">Active Repository Issues</h2>
+              <div style="display: flex; flex-direction: column; gap: 1rem;" id="dashboard-issues-list">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ============= PRs TAB VIEW ============= -->
+          <div id="repo-tab-prs-view" class="repo-tab-content-panel">
+            <div class="neo-border" style="background: white; box-shadow: 4px 4px 0px #000; padding: 1.5rem; margin-bottom: 2rem; border-width: 3px;">
+              <h2 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 1rem; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">Open Pull Requests</h2>
+              <div style="display: flex; flex-direction: column; gap: 1rem;" id="dashboard-prs-list">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ============= ACTIONS TAB VIEW ============= -->
+          <div id="repo-tab-actions-view" class="repo-tab-content-panel">
+            <div class="neo-border" style="background: white; box-shadow: 4px 4px 0px #000; padding: 1.5rem; margin-bottom: 2rem; border-width: 3px;">
+              <h2 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-top: 0; margin-bottom: 1rem; border-bottom: 3px solid #000; padding-bottom: 0.25rem;">CI/CD Build Workflows</h2>
+              <div style="display: flex; flex-direction: column; gap: 1rem;" id="dashboard-actions-list">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT CONTAINER (GitHub-style Sidebar) -->
+        <div class="dashboard-right-sidebar">
+          <div style="display: flex; flex-direction: column; gap: 2rem;">
+            
+            <!-- About -->
+            <div>
+              <h3 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 0.25rem; margin-top: 0; margin-bottom: 0.75rem;">About</h3>
+              <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin: 0;" id="dashboard-about-desc">
+                Repository description goes here.
+              </p>
+              <div style="margin-top: 1rem; font-size: 0.85rem; font-weight: bold; display: flex; flex-direction: column; gap: 0.5rem;">
+                <span id="dashboard-stars-sidebar">⭐ 48 Stars</span>
+                <span id="dashboard-forks-sidebar">🍴 14 Forks</span>
+              </div>
+            </div>
+
+            <!-- Languages Bar -->
+            <div>
+              <h3 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 0.25rem; margin-top: 0; margin-bottom: 0.75rem;">Languages</h3>
+              <!-- Breakdown bar -->
+              <div style="width: 100%; height: 12px; border: 2px solid #000; background-color: #e5e7eb; display: flex; overflow: hidden; margin-bottom: 1rem;" id="dashboard-lang-bar">
+                <!-- Populated dynamically -->
+              </div>
+              <!-- Labels -->
+              <div style="font-size: 0.8rem; font-weight: bold; display: flex; flex-direction: column; gap: 0.4rem;" id="dashboard-lang-labels">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+            <!-- Contributors -->
+            <div>
+              <h3 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 0.25rem; margin-top: 0; margin-bottom: 0.75rem;">Contributors</h3>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem; font-weight: bold;" id="dashboard-contributors-list">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
   <!-- Interactive Terminal Overlay Widget for Repository Sync Logs -->
@@ -499,17 +693,26 @@ for (let w = 0; w < contributionWeeks; w++) {
     </div>
   </div>
 
-  <!-- Store serialized dynamic file content map in the DOM -->
+  <!-- Store files lists and serializations in the DOM -->
+  <div id="repo-files-index" 
+       data-models={JSON.stringify(modelsFiles)} 
+       data-references={JSON.stringify(referencesFiles)} 
+       data-tools={JSON.stringify(toolsFiles)} 
+       style="display: none;"></div>
+  
   <div id="serialized-files-content" data-content={JSON.stringify(filesContent)} style="display: none;"></div>
 </BaseLayout>
 
 <script is:inline>
-  // Tab Navigation switching
+  // Tab Navigation switching (Overview, Repositories, etc.)
   const tabs = document.querySelectorAll('.nav-tab');
   const panels = document.querySelectorAll('.tab-panel-content');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
+      // Close repository dashboard if open and return to standard tabs list
+      closeRepositoryDashboard();
+
       // Reset tabs
       tabs.forEach(t => {
         t.classList.remove('active');
@@ -532,76 +735,693 @@ for (let w = 0; w < contributionWeeks; w++) {
 
   // Link repo names inside Overview to switch directly to the Repositories Tab and scroll
   document.querySelectorAll('.repo-switch-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const repoName = btn.getAttribute('data-repo');
-      
-      // Trigger Tab Change
-      const repoTab = document.querySelector('[data-target="repositories"]');
-      if (repoTab) repoTab.click();
-
-      // Trigger Foldout Expand of that repository
-      setTimeout(() => {
-        const foldoutBtn = document.querySelector(`.explore-local-btn[data-repo="${repoName}"]`);
-        if (foldoutBtn) {
-          foldoutBtn.click();
-          // Scroll smoothly
-          foldoutBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 100);
-    });
-  });
-
-  // ================= REPOSITORY FILE EXPLORER FOLDOUT SCRIPT =================
-  const exploreBtns = document.querySelectorAll('.explore-local-btn');
-  
-  exploreBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent card trigger
       const repoName = btn.getAttribute('data-repo');
-      const foldout = document.getElementById(`explorer-foldout-${repoName}`);
+      openRepositoryDashboard(repoName);
+    });
+  });
+
+  document.querySelectorAll('.explore-local-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent card trigger
+      const repoName = btn.getAttribute('data-repo');
+      openRepositoryDashboard(repoName);
+    });
+  });
+
+  // Add click handlers to the cards to open repository dashboards directly
+  document.querySelectorAll('.repo-card-clickable').forEach(card => {
+    card.addEventListener('click', () => {
+      const repoName = card.getAttribute('data-repo');
+      openRepositoryDashboard(repoName);
+    });
+  });
+
+  // ================= PREMIUM GITHUB REPOSITORIES INTERACTIVE CONTROLLERS =================
+  const filesContentMap = JSON.parse(document.getElementById('serialized-files-content')?.getAttribute('data-content') || '{}');
+  
+  const repoFilesIndex = {
+    Models: JSON.parse(document.getElementById('repo-files-index')?.getAttribute('data-models') || '[]'),
+    References: JSON.parse(document.getElementById('repo-files-index')?.getAttribute('data-references') || '[]'),
+    Tools: JSON.parse(document.getElementById('repo-files-index')?.getAttribute('data-tools') || '[]')
+  };
+
+  const reposMetaData = {
+    Models: {
+      description: "Curated repository containing high-performance models and custom implementations of classical ML and Deep Learning algorithms.",
+      language: "Python",
+      langColor: "#3572A5",
+      stars: 48,
+      forks: 14,
+      languages: [
+        { name: "Python", percentage: "92.4%", color: "#3572A5" },
+        { name: "Shell / Setup", percentage: "7.6%", color: "#f1e05a" }
+      ],
+      contributors: [
+        { name: "ayush-developer", role: "Main Maintainer", icon: "👤" },
+        { name: "iit-mandi-ml-bot", role: "Automated Checker", icon: "🤖" }
+      ]
+    },
+    References: {
+      description: "Comprehensive documentation, reference textbook materials, formulas, and course curriculum guides.",
+      language: "Markdown",
+      langColor: "#083344",
+      stars: 12,
+      forks: 2,
+      languages: [
+        { name: "Markdown", percentage: "100.0%", color: "#083344" }
+      ],
+      contributors: [
+        { name: "ayush-developer", role: "Author", icon: "👤" },
+        { name: "instructor-iit", role: "Curator", icon: "👤" }
+      ]
+    },
+    Tools: {
+      description: "Development environment setup scripts, packages installs trackers, and automated validation code tools.",
+      language: "Shell",
+      langColor: "#89e051",
+      stars: 8,
+      forks: 1,
+      languages: [
+        { name: "Shell", percentage: "85.3%", color: "#89e051" },
+        { name: "Python", percentage: "14.7%", color: "#3572A5" }
+      ],
+      contributors: [
+        { name: "ayush-developer", role: "Main Maintainer", icon: "👤" }
+      ]
+    }
+  };
+
+  const repoIssues = {
+    Models: [
+      { id: 3, title: "Vanishing gradients in deep neural layers", author: "ayush-developer", time: "2 days ago", type: "Bug", labelColor: "#fee2e2", border: "#ef4444", txtColor: "#ef4444", desc: "When expanding the layers size to 5+ hidden layers, gradients vanish near the input layer. Changing activations from Sigmoid to ReLU might fix the issue.", comments: [
+        { author: "iit-mandi-ml-bot", text: "Sigmoid derivative caps at 0.25, leading to exponential decay. Relu activation is highly recommended!" },
+        { author: "ayush-developer", text: "Perfect, let me test the ReLU gradient updates today." }
+      ] },
+      { id: 2, title: "Add support for Adam / Momentum optimizers", author: "iit-mandi-ml-bot", time: "4 days ago", type: "Enhancement", labelColor: "#dbeafe", border: "#3b82f6", txtColor: "#3b82f6", desc: "Vanilla Gradient Descent converges slowly on high curvature valleys. Implementing momentum, RMSprop, or Adam optimization will enhance training speeds." },
+      { id: 1, title: "Feature: Automated unit testing for gradients", author: "instructor-iit", time: "1 week ago", type: "Good First Issue", labelColor: "#fef08a", border: "#eab308", txtColor: "#ca8a04", desc: "Write a numerical checker comparing analytical derivatives against computed gradients to confirm correctness of self-derived weights." }
+    ],
+    References: [
+      { id: 2, title: "Documentation: Add reference formulas for backpropagation chain rule", author: "instructor-iit", time: "3 days ago", type: "Documentation", labelColor: "#fef08a", border: "#eab308", txtColor: "#ca8a04", desc: "Add full derivative step breakdowns for standard activation functions (Sigmoid, Tanh, ReLU) inside MATH_FOUNDATIONS.md to assist students with homework calculations." },
+      { id: 1, title: "Enhancement: Links to Stanford CS231n / CS224n reading lists", author: "ayush-developer", time: "5 days ago", type: "Resource", labelColor: "#dbeafe", border: "#3b82f6", txtColor: "#3b82f6", desc: "Embed links and reading sections for Stanford's ML course guides under the recommended reading section of references." }
+    ],
+    Tools: [
+      { id: 2, title: "Setup: Add support for Apple Silicon MPS GPU backend", author: "ayush-developer", time: "1 day ago", type: "Feature", labelColor: "#dbeafe", border: "#3b82f6", txtColor: "#3b82f6", desc: "Verify torch.backends.mps is available inside python checks inside setup_env.sh for students using Apple M1/M2/M3 laptops." },
+      { id: 1, title: "Bug: Conda environment fails to resolve on older Ubuntu builds", author: "iit-mandi-ml-bot", time: "6 days ago", type: "Bug", labelColor: "#fee2e2", border: "#ef4444", txtColor: "#ef4444", desc: "Some older Ubuntu packages fail to resolve numpy dependencies inside conda-forge channels. Specifying explicit sub-channel priority resolves this." }
+    ]
+  };
+
+  const repoPRs = {
+    Models: [
+      { id: 4, title: "Feature: Adam Optimizer Implementation", author: "ayush-developer", branch: "feature/adam", time: "1 day ago", status: "Build Passing", desc: "Adds `Adam` class inside `src/optimizers/gd.py` tracking exponential moving averages of gradients and squared gradients." }
+    ],
+    References: [
+      { id: 3, title: "Add backpropagation chain rule mathematical guide", author: "instructor-iit", branch: "patch-backprop", time: "2 days ago", status: "Build Passing", desc: "Adds rigorous partial derivatives chain rule definitions inside MATH_FOUNDATIONS.md." }
+    ],
+    Tools: [
+      { id: 2, title: "Add Apple Silicon MPS platform detection", author: "ayush-developer", branch: "patch-mps", time: "12 hours ago", status: "Build Passing", desc: "Adds automated PyTorch MPS support checking inside local setup scripts." }
+    ]
+  };
+
+  const repoActions = {
+    Models: [
+      { name: "Linter and Unit Testing suite", commit: "e92b8d1", desc: "Add evaluation accuracy metrics", file: "python-test.yml", status: "success", time: "2 hours ago", duration: "45s" },
+      { name: "Linter and Unit Testing suite", commit: "8a12d42", desc: "Add mini-batch updater gd", file: "python-test.yml", status: "success", time: "5 hours ago", duration: "41s" }
+    ],
+    References: [
+      { name: "Markdown links checker and formatter", commit: "f2910a2", desc: "Format recommended reading section", file: "md-format.yml", status: "success", time: "1 day ago", duration: "12s" }
+    ],
+    Tools: [
+      { name: "Shell linter validation checker", commit: "d3981ac", desc: "Add CUDA compatibility setup script checks", file: "shellcheck.yml", status: "success", time: "3 hours ago", duration: "18s" }
+    ]
+  };
+
+  let activeRepo = "Models";
+  let activePath = "";
+  let activeCodeText = "";
+
+  // Custom, lightweight, fast markdown to brutalist HTML parser
+  function formatMarkdown(text) {
+    if (!text) return "";
+    
+    let html = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    
+    // Fenced code blocks
+    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
+      return `<pre style="background-color: #1e1e1e; color: #d4d4d4; padding: 1rem; border: 3px solid #000; overflow-x: auto; font-family: monospace; margin-bottom: 1.5rem; box-shadow: 3px 3px 0px #000;"><code style="background: none; border: none; padding: 0; color: inherit;">${code}</code></pre>`;
+    });
+    
+    // Inline code block
+    html = html.replace(/`([^`]+)`/g, '<code style="background-color: #f3f4f6; padding: 0.2rem 0.4rem; border: 1px solid #000; font-family: monospace; font-size: 0.85em;">$1</code>');
+    
+    // Tables formatting (telemetry tables)
+    const lines = html.split('\n');
+    let inTable = false;
+    let tableRows = [];
+    let finalLines = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (line.startsWith('|') && line.endsWith('|')) {
+        if (!inTable) {
+          inTable = true;
+          tableRows = [];
+        }
+        tableRows.push(line);
+      } else {
+        if (inTable) {
+          let tableHtml = '<table style="width: 100%; border-collapse: collapse; border: 3px solid #000; margin-bottom: 1.5rem; font-size: 0.85rem; font-weight: bold; background-color: #fff; box-shadow: 4px 4px 0 #000;">';
+          const filteredRows = tableRows.filter(r => !r.includes('---|') && !r.includes(':---|'));
+          
+          filteredRows.forEach((row, rIdx) => {
+            const cells = row.split('|').slice(1, -1).map(c => c.trim());
+            tableHtml += `<tr style="border-bottom: 2px solid #000; ${rIdx === 0 ? 'background-color: #fde047;' : ''}">`;
+            cells.forEach(cell => {
+              const tag = rIdx === 0 ? 'th' : 'td';
+              tableHtml += `<${tag} style="padding: 0.6rem 1rem; border-right: 2px solid #000; text-align: left;">${cell}</${tag}>`;
+            });
+            tableHtml += '</tr>';
+          });
+          tableHtml += '</table>';
+          finalLines.push(tableHtml);
+          inTable = false;
+        }
+        finalLines.push(lines[i]);
+      }
+    }
+    if (inTable) {
+      let tableHtml = '<table style="width: 100%; border-collapse: collapse; border: 3px solid #000; margin-bottom: 1.5rem; font-size: 0.85rem; font-weight: bold; background-color: #fff; box-shadow: 4px 4px 0 #000;">';
+      const filteredRows = tableRows.filter(r => !r.includes('---|') && !r.includes(':---|'));
+      filteredRows.forEach((row, rIdx) => {
+        const cells = row.split('|').slice(1, -1).map(c => c.trim());
+        tableHtml += `<tr style="border-bottom: 2px solid #000; ${rIdx === 0 ? 'background-color: #fde047;' : ''}">`;
+        cells.forEach(cell => {
+          const tag = rIdx === 0 ? 'th' : 'td';
+          tableHtml += `<${tag} style="padding: 0.6rem 1rem; border-right: 2px solid #000; text-align: left;">${cell}</${tag}>`;
+        });
+        tableHtml += '</tr>';
+      });
+      tableHtml += '</table>';
+      finalLines.push(tableHtml);
+    }
+    
+    html = finalLines.join('\n');
+
+    // Headers
+    html = html.replace(/^#\s+(.+)$/gm, '<h1 style="font-size: 1.6rem; font-weight: 900; border-bottom: 3px solid #000; padding-bottom: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem; text-transform: uppercase;">$1</h1>');
+    html = html.replace(/^##\s+(.+)$/gm, '<h2 style="font-size: 1.25rem; font-weight: 900; border-bottom: 2px dashed #000; padding-bottom: 0.4rem; margin-top: 1.5rem; margin-bottom: 0.75rem; text-transform: uppercase;">$1</h2>');
+    html = html.replace(/^###\s+(.+)$/gm, '<h3 style="font-size: 1.05rem; font-weight: 900; margin-top: 1.25rem; margin-bottom: 0.5rem; text-transform: uppercase;">$1</h3>');
+    
+    // Lists
+    html = html.replace(/^\-\s+(.+)$/gm, '<li style="margin-bottom: 0.35rem; font-weight: bold; color: #374151;">$1</li>');
+    html = html.replace(/(<li[\s\S]*?<\/li>)+/g, (match) => {
+      return `<ul style="list-style-type: square; padding-left: 1.5rem; margin-bottom: 1.25rem;">${match}</ul>`;
+    });
+    
+    // Bold
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    
+    // Horizontal Rule
+    html = html.replace(/^---$/gm, '<hr style="border: none; border-top: 2px dashed #000; margin: 1.5rem 0;" />');
+    
+    // Paragraphs
+    const blockTags = ['h1', 'h2', 'h3', 'ul', 'li', 'pre', 'table', 'hr', 'div'];
+    const formattedLines = html.split('\n').map(line => {
+      const trimmed = line.trim();
+      if (!trimmed) return "";
       
-      if (foldout) {
-        const showing = foldout.style.display === 'block';
-        foldout.style.display = showing ? 'none' : 'block';
-        btn.textContent = showing ? `📂 Explore Files` : `❌ Close Explorer`;
+      const isBlock = blockTags.some(tag => trimmed.startsWith(`<${tag}`) || trimmed.startsWith(`</${tag}`));
+      if (isBlock) return line;
+      
+      return `<p style="margin-bottom: 1rem; font-weight: bold; color: #374151; line-height: 1.6;">${line}</p>`;
+    });
+    
+    return formattedLines.filter(l => l !== "").join('\n');
+  }
+
+  // Render Explorer directory tree
+  function renderExplorerTable() {
+    const tbody = document.getElementById('dashboard-explorer-tbody');
+    const rootBreadcrumb = document.getElementById('dashboard-explorer-root');
+    const activeFolderBreadcrumb = document.getElementById('dashboard-explorer-active-folder');
+    const divider = document.getElementById('dashboard-explorer-divider');
+    const backBtn = document.getElementById('dashboard-explorer-back-btn');
+    const codePreview = document.getElementById('dashboard-code-preview');
+    
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    
+    if (rootBreadcrumb) rootBreadcrumb.textContent = activeRepo;
+    
+    if (activePath === "") {
+      if (activeFolderBreadcrumb) activeFolderBreadcrumb.textContent = "";
+      if (divider) divider.style.display = "none";
+      if (backBtn) backBtn.style.display = "none";
+    } else {
+      if (activeFolderBreadcrumb) activeFolderBreadcrumb.textContent = activePath;
+      if (divider) divider.style.display = "inline";
+      if (backBtn) backBtn.style.display = "block";
+    }
+
+    const files = repoFilesIndex[activeRepo] || [];
+    
+    if (files.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="3" style="padding: 1rem; text-align: center; font-weight: bold; color: #6b7280;">Empty Repository</td></tr>`;
+      return;
+    }
+    
+    files.forEach(fileName => {
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = "1px solid #e5e7eb";
+      tr.style.cursor = "pointer";
+      
+      tr.onmouseover = () => tr.style.backgroundColor = "#f9fafb";
+      tr.onmouseout = () => tr.style.backgroundColor = "transparent";
+      
+      let mockCommit = "Add modules implementations";
+      if (fileName.includes("regression")) mockCommit = "Implement ordinary least squares regression class";
+      if (fileName.includes("setup_env")) mockCommit = "Automated conda env and hardware configure script";
+      if (fileName.includes("MATH_FOUNDATION")) mockCommit = "Add course linear algebra and vector formulas list";
+      if (fileName.includes("README")) mockCommit = `Update comprehensive README.md for ${activeRepo} repository`;
+
+      tr.innerHTML = `
+        <td style="padding: 0.75rem 1rem; color: #000;"><span style="margin-right: 0.5rem;">📄</span>${fileName}</td>
+        <td style="padding: 0.75rem 1rem; color: #57606a;">${mockCommit}</td>
+        <td style="padding: 0.75rem 1rem; color: #57606a; text-align: right;">2 hours ago</td>
+      `;
+      
+      tr.addEventListener('click', () => {
+        // Open file code block preview
+        const fileKey = `${activeRepo}/${fileName}`;
+        const content = filesContentMap[fileKey] || '# No content available in this file.';
+        
+        const previewFilename = document.getElementById('dashboard-preview-filename');
+        const previewCodeBlock = document.getElementById('dashboard-preview-code-block');
+        
+        if (codePreview && previewFilename && previewCodeBlock) {
+          previewFilename.textContent = fileKey;
+          previewCodeBlock.textContent = content;
+          activeCodeText = content;
+          codePreview.style.display = "block";
+          codePreview.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      });
+      
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Open Repository detail dashboard SPA
+  window.openRepositoryDashboard = function(repoName) {
+    activeRepo = repoName;
+    activePath = "";
+    
+    // Hide main profile views
+    const ghSidebar = document.querySelector('.gh-sidebar');
+    const ghTabsNav = document.querySelector('.gh-tabs-nav');
+    const ghContentWrapper = document.querySelector('.gh-content-wrapper');
+    const ghGrid = document.getElementById('github-grid');
+    
+    if (ghSidebar) ghSidebar.style.display = 'none';
+    if (ghTabsNav) ghTabsNav.style.display = 'none';
+    if (ghContentWrapper) ghContentWrapper.style.display = 'none';
+    if (ghGrid) {
+      ghGrid.style.display = 'block'; // Make grid take full width
+    }
+    
+    // Show repo dashboard
+    const dashboard = document.getElementById('github-repo-dashboard');
+    if (dashboard) {
+      dashboard.style.display = 'block';
+      dashboard.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Update dashboard labels
+    const repoTitleEl = document.getElementById('dashboard-repo-name');
+    if (repoTitleEl) repoTitleEl.textContent = repoName;
+    
+    const meta = reposMetaData[repoName] || {};
+    
+    const starsEl = document.getElementById('dashboard-stars');
+    const forksEl = document.getElementById('dashboard-forks');
+    if (starsEl) starsEl.textContent = meta.stars || 0;
+    if (forksEl) forksEl.textContent = meta.forks || 0;
+    
+    const starsSidebar = document.getElementById('dashboard-stars-sidebar');
+    const forksSidebar = document.getElementById('dashboard-forks-sidebar');
+    if (starsSidebar) starsSidebar.textContent = `⭐ ${meta.stars || 0} Stars`;
+    if (forksSidebar) forksSidebar.textContent = `🍴 ${meta.forks || 0} Forks`;
+    
+    const aboutEl = document.getElementById('dashboard-about-desc');
+    if (aboutEl) aboutEl.textContent = meta.description || "";
+    
+    // Update files stats
+    const filesList = repoFilesIndex[repoName] || [];
+    const countBadge = document.getElementById('dashboard-files-count-badge');
+    if (countBadge) countBadge.textContent = filesList.length;
+    
+    // Reset Code preview
+    const codePreview = document.getElementById('dashboard-code-preview');
+    if (codePreview) codePreview.style.display = 'none';
+    
+    // Render explorer table
+    renderExplorerTable();
+    
+    // Parse and render README.md content
+    const readmeKey = `${repoName}/README.md`;
+    const readmeContent = filesContentMap[readmeKey] || '# README.md not found.';
+    const readmeBody = document.getElementById('dashboard-readme-body');
+    if (readmeBody) readmeBody.innerHTML = formatMarkdown(readmeContent);
+    
+    // Populate Issues
+    const issuesContainer = document.getElementById('dashboard-issues-list');
+    if (issuesContainer) {
+      issuesContainer.innerHTML = "";
+      const issues = repoIssues[repoName] || [];
+      const issuesCount = document.getElementById('dashboard-issues-count');
+      if (issuesCount) issuesCount.textContent = issues.length;
+      
+      if (issues.length === 0) {
+        issuesContainer.innerHTML = `<div style="text-align: center; font-weight: bold; color: #6b7280; padding: 1.5rem;">No active issues.</div>`;
+      } else {
+        issues.forEach(issue => {
+          const div = document.createElement('div');
+          div.className = "neo-border";
+          div.style.padding = "1rem";
+          div.style.backgroundColor = "#fff";
+          div.style.borderWidth = "2.5px";
+          
+          let commentsHtml = "";
+          if (issue.comments) {
+            commentsHtml = `
+              <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af; display: flex; gap: 1rem; margin-top: 0.5rem;">
+                <span>Opened ${issue.time} by 👤 ${issue.author}</span>
+                <span style="color: #0969da; cursor: pointer;" class="comment-trigger-btn" data-issue-id="${issue.id}">💬 ${issue.comments.length} Comments</span>
+              </div>
+              <div id="dash-comments-issue-${issue.id}" style="display: none; border-top: 2px dashed #000; margin-top: 0.75rem; padding-top: 0.75rem; font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                ${issue.comments.map(c => `
+                  <div style="background-color: #fafafa; padding: 0.5rem; border-left: 3px solid #000;">
+                    <strong>👤 ${c.author}:</strong> ${c.text}
+                  </div>
+                `).join('')}
+              </div>
+            `;
+          } else {
+            commentsHtml = `
+              <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af; display: flex; gap: 1rem; margin-top: 0.5rem;">
+                <span>Opened ${issue.time} by 👤 ${issue.author}</span>
+              </div>
+            `;
+          }
+          
+          div.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.1rem; font-weight: bold; margin: 0; color: #000;">
+                🟢 #${issue.id} ${issue.title}
+              </h3>
+              <span style="font-size: 0.7rem; font-weight: bold; background: ${issue.labelColor}; border: 2px solid ${issue.border}; color: ${issue.txtColor}; padding: 0.1rem 0.4rem; text-transform: uppercase;">${issue.type}</span>
+            </div>
+            <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0.5rem 0;">
+              ${issue.desc}
+            </p>
+            ${commentsHtml}
+          `;
+          
+          issuesContainer.appendChild(div);
+        });
+
+        // Add comments expand listeners
+        issuesContainer.querySelectorAll('.comment-trigger-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const issueId = btn.getAttribute('data-issue-id');
+            const targetEl = document.getElementById(`dash-comments-issue-${issueId}`);
+            if (targetEl) {
+              const hidden = targetEl.style.display === 'none';
+              targetEl.style.display = hidden ? 'flex' : 'none';
+            }
+          });
+        });
+      }
+    }
+    
+    // Populate PRs
+    const prsContainer = document.getElementById('dashboard-prs-list');
+    if (prsContainer) {
+      prsContainer.innerHTML = "";
+      const prs = repoPRs[repoName] || [];
+      const prsCount = document.getElementById('dashboard-prs-count');
+      if (prsCount) prsCount.textContent = prs.length;
+      
+      if (prs.length === 0) {
+        prsContainer.innerHTML = `<div style="text-align: center; font-weight: bold; color: #6b7280; padding: 1.5rem;">No open pull requests.</div>`;
+      } else {
+        prs.forEach(pr => {
+          const div = document.createElement('div');
+          div.className = "neo-border";
+          div.style.padding = "1.25rem";
+          div.style.backgroundColor = "#fff";
+          div.style.borderWidth = "2.5px";
+          div.style.display = "flex";
+          div.style.justifyContent = "space-between";
+          div.style.alignItems = "center";
+          div.style.gap = "1rem";
+          div.style.flexWrap = "wrap";
+          
+          div.innerHTML = `
+            <div>
+              <h3 style="font-size: 1.1rem; font-weight: bold; margin: 0;">
+                ⌥ #${pr.id} ${pr.title}
+              </h3>
+              <p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; margin: 0.25rem 0;">
+                ${pr.desc}
+              </p>
+              <div style="font-size: 0.75rem; font-weight: bold; color: #9ca3af; display: flex; gap: 1rem; margin-top: 0.5rem;">
+                <span>branch: \`${pr.branch}\` &rarr; \`main\`</span>
+                <span>Created ${pr.time} by 👤 ${pr.author}</span>
+              </div>
+            </div>
+            <div>
+              <span style="font-size: 0.75rem; font-weight: 900; border: 2px solid #22c55e; color: #22c55e; background-color: #f0fdf4; padding: 0.25rem 0.75rem; text-transform: uppercase;">${pr.status}</span>
+            </div>
+          `;
+          
+          prsContainer.appendChild(div);
+        });
+      }
+    }
+    
+    // Populate Actions
+    const actionsContainer = document.getElementById('dashboard-actions-list');
+    if (actionsContainer) {
+      actionsContainer.innerHTML = "";
+      const actions = repoActions[repoName] || [];
+      
+      if (actions.length === 0) {
+        actionsContainer.innerHTML = `<div style="text-align: center; font-weight: bold; color: #6b7280; padding: 1.5rem;">No action history.</div>`;
+      } else {
+        actions.forEach(action => {
+          const div = document.createElement('div');
+          div.style.display = "flex";
+          div.style.justifyContent = "space-between";
+          div.style.alignItems = "center";
+          div.style.padding = "1rem";
+          div.style.backgroundColor = "#fafafa";
+          div.style.border = "2px solid #000";
+          div.style.flexWrap = "wrap";
+          div.style.gap = "1rem";
+          
+          div.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span style="font-size: 1.5rem; color: #22c55e;">✅</span>
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: bold; margin: 0;">${action.name}</h3>
+                <p style="font-size: 0.75rem; font-weight: bold; color: #4b5563; margin: 0.1rem 0;">Commit \`${action.commit}\` - ${action.desc}</p>
+              </div>
+            </div>
+            <div style="text-align: right; font-size: 0.75rem; font-weight: bold; color: #4b5563;">
+              <div>Workflow: \`${action.file}\`</div>
+              <div>Success in ${action.duration} &bull; ${action.time}</div>
+            </div>
+          `;
+          
+          actionsContainer.appendChild(div);
+        });
+      }
+    }
+    
+    // Populate Languages breakdown bar & labels
+    const langBar = document.getElementById('dashboard-lang-bar');
+    const langLabels = document.getElementById('dashboard-lang-labels');
+    if (langBar && langLabels) {
+      langBar.innerHTML = "";
+      langLabels.innerHTML = "";
+      
+      const langs = meta.languages || [];
+      langs.forEach(lang => {
+        // Bar fraction
+        const block = document.createElement('div');
+        block.style.width = lang.percentage;
+        block.style.backgroundColor = lang.color;
+        block.title = `${lang.name}: ${lang.percentage}`;
+        langBar.appendChild(block);
+        
+        // Label item
+        const label = document.createElement('div');
+        label.style.display = "flex";
+        label.style.alignItems = "center";
+        label.style.justifyContent = "space-between";
+        label.innerHTML = `
+          <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${lang.color}; border:1px solid #000; margin-right:4px;"></span> ${lang.name}</span>
+          <span>${lang.percentage}</span>
+        `;
+        langLabels.appendChild(label);
+      });
+    }
+    
+    // Populate Contributors list
+    const contribContainer = document.getElementById('dashboard-contributors-list');
+    if (contribContainer) {
+      contribContainer.innerHTML = "";
+      const contributors = meta.contributors || [];
+      contributors.forEach(c => {
+        const div = document.createElement('div');
+        div.style.display = "flex";
+        div.style.alignItems = "center";
+        div.style.gap = "0.5rem";
+        div.innerHTML = `
+          <span style="font-size: 1.25rem;">${c.icon}</span>
+          <div>
+            <div style="color: #0969da;">${c.name}</div>
+            <div style="font-size: 0.7rem; color: #4b5563;">${c.role}</div>
+          </div>
+        `;
+        contribContainer.appendChild(div);
+      });
+    }
+    
+    // Reset repository navigation tabs to 'Code' as default
+    document.querySelectorAll('.repo-tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+      btn.style.backgroundColor = '#fff';
+    });
+    
+    const codeTabBtn = document.querySelector('.repo-tab-btn[data-tab="code"]');
+    if (codeTabBtn) {
+      codeTabBtn.classList.add('active');
+      codeTabBtn.style.backgroundColor = '#fde047';
+    }
+    
+    document.querySelectorAll('.repo-tab-content-panel').forEach(p => p.classList.remove('active-panel'));
+    document.getElementById('repo-tab-code-view')?.classList.add('active-panel');
+    
+    // Restore sidebar layout
+    const rightSidebar = document.querySelector('.dashboard-right-sidebar');
+    const mainContent = document.getElementById('dashboard-main-content');
+    if (rightSidebar) rightSidebar.style.display = 'block';
+    if (mainContent) mainContent.style.gridTemplateColumns = '';
+  };
+
+  // Close Repository detail dashboard SPA and return back to profile overview
+  window.closeRepositoryDashboard = function() {
+    // Hide dashboard
+    const dashboard = document.getElementById('github-repo-dashboard');
+    if (dashboard) dashboard.style.display = 'none';
+    
+    // Restore standard profile panels
+    const ghSidebar = document.querySelector('.gh-sidebar');
+    const ghTabsNav = document.querySelector('.gh-tabs-nav');
+    const ghContentWrapper = document.querySelector('.gh-content-wrapper');
+    const ghGrid = document.getElementById('github-grid');
+    
+    if (ghSidebar) ghSidebar.style.display = 'block';
+    if (ghTabsNav) ghTabsNav.style.display = 'flex';
+    if (ghContentWrapper) ghContentWrapper.style.display = 'block';
+    if (ghGrid) {
+      ghGrid.style.display = ''; // Restore dual column grid
+    }
+  };
+
+  // Bind back button
+  document.getElementById('dashboard-back-btn')?.addEventListener('click', () => {
+    closeRepositoryDashboard();
+  });
+
+  // Repository Tab Buttons Click logic
+  const repoTabBtns = document.querySelectorAll('.repo-tab-btn');
+  const repoPanels = document.querySelectorAll('.repo-tab-content-panel');
+  const repoMainLayout = document.getElementById('dashboard-main-content');
+
+  repoTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      repoTabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.style.backgroundColor = '#fff';
+      });
+      repoPanels.forEach(p => p.classList.remove('active-panel'));
+
+      btn.classList.add('active');
+      btn.style.backgroundColor = '#fde047';
+      
+      const targetPanel = document.getElementById(`repo-tab-${btn.getAttribute('data-tab')}-view`);
+      if (targetPanel) {
+        targetPanel.classList.add('active-panel');
+      }
+
+      // Toggle right sidebar visibility on tabs other than Code tab
+      const isCode = btn.getAttribute('data-tab') === 'code';
+      const side = document.querySelector('.dashboard-right-sidebar');
+      if (isCode) {
+        if (repoMainLayout) repoMainLayout.style.gridTemplateColumns = '';
+        if (side) side.style.display = 'block';
+      } else {
+        if (repoMainLayout) repoMainLayout.style.gridTemplateColumns = '1fr';
+        if (side) side.style.display = 'none';
       }
     });
   });
 
-  // Interactive Local File Reader
-  const filesContentMap = JSON.parse(document.getElementById('serialized-files-content')?.getAttribute('data-content') || '{}');
-  const fileItems = document.querySelectorAll('.explorer-file-item');
+  // Repository Branch Selector toggling
+  const dashBranchBtn = document.getElementById('dashboard-branch-btn');
+  const dashBranchDropdown = document.getElementById('dashboard-branch-dropdown');
+  const dashBranchName = document.getElementById('dashboard-current-branch');
 
-  fileItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const repoName = item.getAttribute('data-repo');
-      const fileName = item.getAttribute('data-file');
-      
-      // Deactivate all sibling file entries in that specific repository explore panel
-      const parentExplorer = item.closest('.explorer-foldout');
-      parentExplorer.querySelectorAll('.explorer-file-item').forEach(el => {
-        el.style.backgroundColor = 'transparent';
-        el.style.color = '#24292f';
-      });
+  dashBranchBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const showing = dashBranchDropdown.style.display === 'block';
+    dashBranchDropdown.style.display = showing ? 'none' : 'block';
+  });
 
-      // Highlight active clicked file
-      item.style.backgroundColor = '#000';
-      item.style.color = '#fff';
-
-      // Load contents from serialized map
-      const fileKey = `${repoName}/${fileName}`;
-      const content = filesContentMap[fileKey] || '# No content available in this file.';
-      
-      // Select output areas
-      const placeholder = parentExplorer.querySelector('.file-viewer-placeholder');
-      const pre = parentExplorer.querySelector('.file-viewer-pre');
-      const code = parentExplorer.querySelector('.file-viewer-code');
-
-      if (placeholder && pre && code) {
-        placeholder.style.display = 'none';
-        pre.style.display = 'block';
-        code.textContent = content;
-      }
+  document.querySelectorAll('.dash-branch-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const selected = opt.getAttribute('data-branch') || 'main';
+      if (dashBranchName) dashBranchName.textContent = selected;
+      if (dashBranchDropdown) dashBranchDropdown.style.display = 'none';
     });
+  });
+
+  document.addEventListener('click', () => {
+    if (dashBranchDropdown) dashBranchDropdown.style.display = 'none';
+  });
+
+  // Copier & Close actions for dashboard file reader preview
+  const dashCopyBtn = document.getElementById('dashboard-copy-code-btn');
+  const dashCloseBtn = document.getElementById('dashboard-close-preview-btn');
+  
+  dashCloseBtn?.addEventListener('click', () => {
+    const codePreview = document.getElementById('dashboard-code-preview');
+    if (codePreview) codePreview.style.display = 'none';
+  });
+
+  dashCopyBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText(activeCodeText);
+    dashCopyBtn.textContent = "Copied!";
+    setTimeout(() => {
+      dashCopyBtn.textContent = "Copy";
+    }, 1500);
   });
 
   // ================= INTERACTIVE SYNC CONSOLE ANIMATION SCRIPT =================
@@ -732,10 +1552,6 @@ for (let w = 0; w < contributionWeeks; w++) {
   .active-panel {
     display: block;
   }
-  
-  .explorer-file-item:hover {
-    background-color: #f3f4f6;
-  }
 
   #github-grid {
     display: grid;
@@ -782,7 +1598,7 @@ for (let w = 0; w < contributionWeeks; w++) {
 
   .gh-pinned-repos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 1rem;
     margin-bottom: 2.5rem;
   }
@@ -812,37 +1628,60 @@ for (let w = 0; w < contributionWeeks; w++) {
     gap: 0.5rem;
   }
 
-  .explorer-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    min-height: 250px;
-  }
-
-  .explorer-sidebar {
-    border-right: none;
-    border-bottom: 2.5px solid #000;
-  }
-
   .starred-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
     gap: 1rem;
   }
 
-  @media (min-width: 768px) {
-    .gh-banner {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+  /* PREMIUM REPOSITORY DASHBOARD SPECIFIC CLASSES */
+  .github-badge-custom {
+    border: 2px solid #000;
+    display: inline-flex;
+    box-shadow: 2px 2px 0px #000;
+    overflow: hidden;
+  }
+  
+  .repo-tab-btn.active {
+    background-color: #fde047 !important;
+    border-bottom: 3px solid #fde047 !important;
+    transform: translateY(2px);
+  }
+
+  .repo-tab-content-panel {
+    display: none;
+  }
+
+  .repo-tab-content-panel.active-panel {
+    display: block;
+  }
+
+  .dashboard-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 992px) {
+    .dashboard-grid-layout {
+      grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr);
+      gap: 2rem;
     }
-    .explorer-grid {
-      grid-template-columns: 1fr 2fr;
-    }
-    .explorer-sidebar {
-      border-right: 2.5px solid #000;
-      border-bottom: none;
-    }
+  }
+
+  .dashboard-left-panel {
+    min-width: 0;
+  }
+
+  .dashboard-right-sidebar {
+    min-width: 0;
+  }
+
+  /* Custom markdown overrides for clean typography */
+  .markdown-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #24292f;
   }
 
   @media (max-width: 768px) {

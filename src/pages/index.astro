@@ -6,7 +6,19 @@ import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects');
 const lectures = await getCollection('lectures');
-const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0, 3);
+
+// Select core representative lectures across key domains for the homepage showcase
+const dsaLecture = lectures.find(l => l.data.day === 3);
+const mlLecture = lectures.find(l => l.data.day === 9);
+const dlLecture = lectures.find(l => l.data.day === 11);
+const devLecture = lectures.find(l => l.data.day === 15);
+
+const featuredLectures = [
+  { lecture: dsaLecture, label: 'Data Structures', color: '#fef08a', icon: '💻' },
+  { lecture: mlLecture, label: 'Machine Learning', color: '#bbf7d0', icon: '📊' },
+  { lecture: dlLecture, label: 'Deep Learning', color: '#e9d5ff', icon: '🧠' },
+  { lecture: devLecture, label: 'Software Dev', color: '#a8d5ff', icon: '⚡' }
+].filter(item => item.lecture !== undefined);
 ---
 
 <BaseLayout title="AI & ML IIT Mandi">
@@ -27,21 +39,21 @@ const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0,
   <!-- 2. How to Use / Guidance Index -->
   <section id="guidance" style="margin-bottom: 4rem;">
     <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 4px solid #000; padding-bottom: 0.5rem;">How to Use This Hub</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: stretch;">
-      <a href="/how-to-use/learn" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
-        <NeoCard color="#fef08a" class="neo-hover-raise" style="border-width: 3px; height: 100%; display: flex; flex-direction: column; flex-grow: 1;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 2rem; align-items: stretch;">
+      <a href="/how-to-use/learn" style="text-decoration: none; color: inherit; display: flex;">
+        <NeoCard color="#fef08a" class="neo-hover-raise" style="border-width: 3px; width: 100%; display: flex; flex-direction: column; flex-grow: 1;">
           <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">01. Learn &rarr;</h3>
           <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4; margin: 0; flex-grow: 1;">Follow the chronological syllabus. Read the detailed notes, study the diagrams, and master the theory step-by-step.</p>
         </NeoCard>
       </a>
-      <a href="/how-to-use/code" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
-        <NeoCard color="#e9d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%; display: flex; flex-direction: column; flex-grow: 1;">
+      <a href="/how-to-use/code" style="text-decoration: none; color: inherit; display: flex;">
+        <NeoCard color="#e9d5ff" class="neo-hover-raise" style="border-width: 3px; width: 100%; display: flex; flex-direction: column; flex-grow: 1;">
           <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">02. Code &rarr;</h3>
           <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4; margin: 0; flex-grow: 1;">Copy the embedded Python snippets into your local Jupyter Notebooks and run the models to truly understand the math.</p>
         </NeoCard>
       </a>
-      <a href="/how-to-use/build" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
-        <NeoCard color="#a8d5ff" class="neo-hover-raise" style="border-width: 3px; height: 100%; display: flex; flex-direction: column; flex-grow: 1;">
+      <a href="/how-to-use/build" style="text-decoration: none; color: inherit; display: flex;">
+        <NeoCard color="#a8d5ff" class="neo-hover-raise" style="border-width: 3px; width: 100%; display: flex; flex-direction: column; flex-grow: 1;">
           <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">03. Build &rarr;</h3>
           <p style="font-weight: bold; font-size: 0.9rem; color: #374151; line-height: 1.4; margin: 0; flex-grow: 1;">Check the Projects Lab to see how theory is applied to real-world, open-source repositories.</p>
         </NeoCard>
@@ -55,7 +67,7 @@ const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0,
       <h2 style="font-size: 2rem; font-weight: 900; text-transform: uppercase; margin: 0;">Curriculum Index</h2>
       <a href="/syllabus" style="color: #fef08a; font-weight: bold; text-decoration: none; font-size: 1rem;">View Master Syllabus &rarr;</a>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 2rem;">
       <div>
         <h3 style="color: #a8d5ff; font-weight: 900; font-size: 1.2rem; margin-bottom: 0.5rem;">Phase 1: Foundations</h3>
         <ul style="list-style-type: square; padding-left: 1.5rem; font-size: 0.9rem; line-height: 1.6; font-weight: bold;">
@@ -100,30 +112,36 @@ const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0,
       <!-- A. Lecture Vault Preview -->
       <section id="notes">
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; border-bottom: 3.5px solid #000; padding-bottom: 0.5rem; gap: 1rem; flex-wrap: wrap;">
-          <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin: 0;">Recent Lectures</h2>
-          <a href="/lectures" style="font-weight: 900; font-size: 0.9rem; color: #0969da; text-decoration: none;">View Full Vault &rarr;</a>
+          <h2 style="font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin: 0;">Featured Lectures Showcase</h2>
+          <a href="/lectures" style="font-weight: 900; font-size: 0.9rem; color: #0969da; text-decoration: none;">View All 17 Days &rarr;</a>
         </div>
         
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-          {latestLectures.map((lecture) => {
-            let accentColor = '#a8d5ff';
-            const mod = lecture.data.module || '';
-            if (mod.includes('Machine')) accentColor = '#bbf7d0';
-            if (mod.includes('Deep')) accentColor = '#e9d5ff';
-            if (mod.includes('GenAI')) accentColor = '#fef08a';
-
-            return (
-              <a href={`/lectures/${lecture.id}`} class="neo-border neo-hover-raise" style={`text-decoration: none; color: inherit; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; border-width: 3px; background-color: ${accentColor}; box-shadow: 4px 4px 0px #000; flex-wrap: wrap; gap: 1rem;`}>
-                <div>
-                  <p style="font-size: 0.7rem; font-weight: 900; color: #374151; text-transform: uppercase; margin: 0 0 0.25rem 0;">Day {lecture.data.day} &bull; {lecture.data.date}</p>
-                  <h3 style="font-size: 1.15rem; font-weight: 900; margin: 0; color: #000;">{lecture.data.title}</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.5rem;">
+          {featuredLectures.map(({ lecture, label, color, icon }) => (
+            <a href={`/lectures/${lecture.id}`} class="neo-border neo-hover-raise" style={`text-decoration: none; color: inherit; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; border-width: 3px; background-color: ${color}; box-shadow: 4px 4px 0px #000; min-height: 220px;`}>
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                  <span style="font-size: 0.7rem; font-weight: 900; border: 1.5px solid #000; padding: 0.15rem 0.4rem; background: #fff; text-transform: uppercase; border-radius: 0; box-shadow: 1px 1px 0px #000;">
+                    {label}
+                  </span>
+                  <span style="font-size: 1.2rem;">{icon}</span>
                 </div>
-                <span style="font-size: 0.75rem; font-weight: 900; border: 2px solid #000; padding: 0.2rem 0.5rem; background: #fff; text-transform: uppercase; border-radius: 0;">
-                  {lecture.data.module?.split(':')[1] || lecture.data.module}
-                </span>
-              </a>
-            );
-          })}
+                <p style="font-size: 0.7rem; font-weight: 900; color: #374151; text-transform: uppercase; margin: 0 0 0.25rem 0;">Day {lecture.data.day} &bull; {lecture.data.date}</p>
+                <h3 style="font-size: 1.1rem; font-weight: 900; margin: 0 0 0.5rem 0; color: #000; line-height: 1.2;">{lecture.data.title}</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-bottom: 0.75rem;">
+                  {lecture.data.topics?.slice(0, 3).map((topic) => (
+                    <span style="font-size: 0.65rem; font-weight: bold; background: rgba(255,255,255,0.55); border: 1px solid #000; padding: 0.05rem 0.25rem;">
+                      #{topic}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1.5px dashed #000; padding-top: 0.5rem; margin-top: auto; font-size: 0.75rem; font-weight: 900; text-transform: uppercase;">
+                <span>Read Notes &rarr;</span>
+                <span style="font-size: 0.65rem; font-weight: 800; color: #4b5563;">Vault: D{lecture.data.day}</span>
+              </div>
+            </a>
+          ))}
         </div>
       </section>
 
@@ -134,7 +152,7 @@ const latestLectures = lectures.sort((a, b) => b.data.day - a.data.day).slice(0,
           <a href="/projects" style="font-weight: 900; font-size: 0.9rem; color: #0969da; text-decoration: none;">View Portfolio &rarr;</a>
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.5rem;">
           {projects.slice(0, 2).map((project) => (
             <GitHubRepoCard 
               title={project.data.title} 

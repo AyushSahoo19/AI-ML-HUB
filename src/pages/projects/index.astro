@@ -18,18 +18,18 @@ const projects = await getCollection('projects');
     </section>
 
     <!-- Grid Layout of GitHub Projects -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(285px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 285px), 1fr)); gap: 2rem; margin-bottom: 4rem;">
       {projects.map((project) => (
-        <div style="background-color: #fff; display: flex; flex-direction: column; justify-content: space-between;" class="neo-border neo-shadow">
+        <a href={`/projects/${project.id}`} style="background-color: #fff; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; color: inherit;" class="neo-border neo-shadow project-card-link">
           <div style="padding: 1.5rem;">
             <!-- Repo Header Mimic -->
             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
               <svg aria-hidden="true" height="18" viewBox="0 0 16 16" version="1.1" width="18" style="fill: #000;">
                 <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
               </svg>
-              <a href={`/projects/${project.id}`} style="font-size: 1.4rem; font-weight: 900; text-decoration: none; color: #0969da; line-height: 1;">
+              <span style="font-size: 1.4rem; font-weight: 900; color: #0969da; line-height: 1;" class="project-card-title">
                 {project.data.title}
-              </a>
+              </span>
               <span style="font-size: 0.7rem; font-weight: bold; border: 2px solid #000; padding: 0.1rem 0.4rem; background-color: #f3f4f6; text-transform: uppercase;">Public</span>
             </div>
 
@@ -86,12 +86,30 @@ const projects = await getCollection('projects');
               </span>
             </div>
             
-            <a href={`/projects/${project.id}`} class="neo-border" style="background-color: #fff; text-decoration: none; color: #000; padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 900; box-shadow: 2px 2px 0px #000; transition: all 0.1s;" onmouseover="this.style.transform='translate(-1px,-1px)'; this.style.boxShadow='3px 3px 0px #000';" onmouseout="this.style.transform='none'; this.style.boxShadow='2px 2px 0px #000';">
+            <span class="neo-border project-card-btn" style="background-color: #fff; color: #000; padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 900; box-shadow: 2px 2px 0px #000; transition: all 0.1s;">
               Explore Codebase &rarr;
-            </a>
+            </span>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .project-card-link {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .project-card-link:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0px #000 !important;
+  }
+  .project-card-link:hover .project-card-title {
+    text-decoration: underline;
+  }
+  .project-card-link:hover .project-card-btn {
+    background-color: #fde047 !important;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000 !important;
+  }
+</style>

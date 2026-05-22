@@ -35,8 +35,11 @@ const { title = 'Neo-Brutalist Site' } = Astro.props;
 	</head>
 	<body>
 		<header class="neo-border neo-shadow bg-violet site-header">
-			<div class="header-logo">
-				<a href="/" style="text-decoration: none; color: inherit;">AI/ML Hub</a>
+			<div class="header-logo" style="display: flex; align-items: center; gap: 0.4rem;">
+				<a href="/" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.4rem;">
+					<img src="/icons/icon-192.png" alt="AI/ML Hub Logo" class="nav-logo-img" />
+					<span class="nav-title-text">AI/ML Hub</span>
+				</a>
 			</div>
 			<nav class="nav-container">
 				<a href="/" style="text-decoration: none; color: inherit; padding: 0.25rem 0.75rem;" class="neo-border bg-yellow neo-hover-raise">Home</a>
@@ -52,16 +55,66 @@ const { title = 'Neo-Brutalist Site' } = Astro.props;
 			<slot />
 		</main>
 
-		<footer class="neo-border bg-white site-footer">
-			<div class="footer-title-block">
-				<h3 style="font-size: 1.25rem; font-weight: 900; text-transform: uppercase; margin: 0;">AI/ML IIT Mandi Hub</h3>
-				<p style="font-size: 0.9rem; font-weight: bold; color: #4b5563; margin-top: 0.25rem;">Open-Source Learning Ecosystem</p>
+		<footer class="neo-border bg-white site-footer" style="box-shadow: 6px 6px 0px #000;">
+			<div class="footer-grid">
+				
+				<!-- Column 1: Brand & Logo -->
+				<div class="footer-col brand-col">
+					<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+						<img src="/icons/icon-192.png" alt="AI/ML Hub Logo" class="footer-logo-img" />
+						<div>
+							<h3 style="font-size: 1.35rem; font-weight: 900; text-transform: uppercase; margin: 0; line-height: 1.1; letter-spacing: -0.5px;">AI/ML IIT Mandi</h3>
+							<span class="version-badge neo-border">SYS ACTIVE v1.2.0</span>
+						</div>
+					</div>
+					<p style="font-size: 0.85rem; font-weight: bold; color: #4b5563; line-height: 1.5; margin: 0 0 1.25rem 0;">
+						An elite open-source learning & engineering ecosystem enabling students to master state-of-the-art AI, ML, DL, and modern full-stack development.
+					</p>
+					<div class="social-links-row" style="display: flex; gap: 0.5rem;">
+						<a href="/github" class="social-badge neo-border neo-hover-raise bg-yellow">★ STAR ON GITHUB</a>
+					</div>
+				</div>
+
+				<!-- Column 2: Curriculum -->
+				<div class="footer-col">
+					<h4 class="footer-col-title">Curriculum</h4>
+					<div class="footer-links-list">
+						<a href="/syllabus">Syllabus Guide</a>
+						<a href="/lectures">Lecture Vault</a>
+						<a href="/experiments">ML Lab Experiments</a>
+					</div>
+				</div>
+
+				<!-- Column 3: Engineering -->
+				<div class="footer-col">
+					<h4 class="footer-col-title">Engineering</h4>
+					<div class="footer-links-list">
+						<a href="/projects">Projects Showcase</a>
+						<a href="/github">GitHub Workspace</a>
+						<a href="/guidance">Methodology Guides</a>
+					</div>
+				</div>
+
+				<!-- Column 4: Platform -->
+				<div class="footer-col">
+					<h4 class="footer-col-title">Credits</h4>
+					<p style="font-size: 0.8rem; font-weight: 800; color: #374151; margin: 0 0 0.75rem 0; line-height: 1.4;">
+						Created by AI ML IIT Mandi Community for peer-to-peer mentoring.
+					</p>
+					<span class="credits-badge neo-border">🇮🇳 OPEN SOURCE</span>
+				</div>
+
 			</div>
-			<div class="footer-nav-block">
-				<a href="/lectures" style="color: inherit; text-decoration: none; border-bottom: 2px solid transparent;" onmouseover="this.style.borderBottom='2px solid #000'" onmouseout="this.style.borderBottom='2px solid transparent'">Lecture Vault</a>
-				<a href="/projects" style="color: inherit; text-decoration: none; border-bottom: 2px solid transparent;" onmouseover="this.style.borderBottom='2px solid #000'" onmouseout="this.style.borderBottom='2px solid transparent'">Projects</a>
-				<a href="/github" style="color: inherit; text-decoration: none; border-bottom: 2px solid transparent;" onmouseover="this.style.borderBottom='2px solid #000'" onmouseout="this.style.borderBottom='2px solid transparent'">GitHub Code Hub</a>
-				<a href="/guidance" style="color: inherit; text-decoration: none; border-bottom: 2px solid transparent;" onmouseover="this.style.borderBottom='2px solid #000'" onmouseout="this.style.borderBottom='2px solid transparent'">Guidance</a>
+
+			<!-- Bottom Copyright Bar -->
+			<div class="footer-bottom-bar">
+				<p style="margin: 0; font-size: 0.8rem; font-weight: 900; text-transform: uppercase;">
+					&copy; {new Date().getFullYear()} AI/ML IIT Mandi Hub. Released under the MIT License.
+				</p>
+				<div class="credits-signature">
+					<span style="font-size: 0.8rem; font-weight: bold; color: #4b5563; text-transform: uppercase;">Developed &amp; Created By</span>
+					<span class="signature-badge neo-border">Ayush Kumar Sahoo</span>
+				</div>
 			</div>
 		</footer>
 
@@ -89,10 +142,23 @@ const { title = 'Neo-Brutalist Site' } = Astro.props;
 				margin-bottom: 2rem;
 				border-width: 3px;
 			}
-			.header-logo {
-				font-size: 1.25rem;
+			.nav-logo-img {
+				width: 14px;
+				height: 14px;
+				border: 1px solid #000;
+				border-radius: 3px;
+				box-shadow: 1px 1px 0px #000;
+				background-color: #fff;
+				transition: transform 0.15s ease;
+			}
+			.nav-logo-img:hover {
+				transform: rotate(5deg) scale(1.05);
+			}
+			.nav-title-text {
+				font-size: 1.35rem;
 				font-weight: 900;
 				text-transform: uppercase;
+				letter-spacing: -0.5px;
 			}
 			.nav-container {
 				display: flex;
@@ -107,26 +173,135 @@ const { title = 'Neo-Brutalist Site' } = Astro.props;
 				margin: 0 auto;
 				padding: 2rem;
 			}
+			
+			/* Enhanced Footer Styles */
 			.site-footer {
 				max-width: 1200px;
 				margin: 4rem auto 2rem;
-				padding: 2rem;
+				padding: 2.5rem;
 				border-width: 3px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 2rem;
+			}
+			.footer-grid {
+				display: grid;
+				grid-template-columns: 2fr 1fr 1fr 1fr;
+				gap: 2.5rem;
+				width: 100%;
+			}
+			.footer-col {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+			}
+			.brand-col {
+				max-width: 380px;
+			}
+			.footer-logo-img {
+				width: 18px;
+				height: 18px;
+				border: 1px solid #000;
+				border-radius: 3px;
+				box-shadow: 1px 1px 0px #000;
+				background-color: #fff;
+			}
+			.version-badge {
+				background-color: #bbf7d0; /* Soft green */
+				color: #000;
+				font-size: 0.7rem;
+				font-weight: 900;
+				padding: 0.15rem 0.4rem;
+				display: inline-block;
+				margin-top: 0.25rem;
+				border-width: 1.5px;
+			}
+			.social-badge {
+				text-decoration: none;
+				color: #000;
+				font-size: 0.75rem;
+				font-weight: 900;
+				padding: 0.35rem 0.7rem;
+				border-width: 2px;
+				box-shadow: 2px 2px 0px #000;
+			}
+			.footer-col-title {
+				font-size: 0.95rem;
+				font-weight: 900;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				margin: 0 0 1rem 0;
+				border-bottom: 2.5px solid #000;
+				padding-bottom: 0.25rem;
+				width: 100%;
+			}
+			.footer-links-list {
+				display: flex;
+				flex-direction: column;
+				gap: 0.6rem;
+				width: 100%;
+			}
+			.footer-links-list a {
+				color: #374151;
+				text-decoration: none;
+				font-size: 0.85rem;
+				font-weight: bold;
+				transition: color 0.15s ease, transform 0.15s ease;
+				display: inline-block;
+				border-bottom: 2px solid transparent;
+				align-self: flex-start;
+			}
+			.footer-links-list a:hover {
+				color: #000;
+				transform: translateX(2px);
+				border-bottom-color: #000;
+			}
+			.credits-badge {
+				background-color: #fde047; /* Yellow */
+				color: #000;
+				font-size: 0.75rem;
+				font-weight: 900;
+				padding: 0.2rem 0.5rem;
+				border-width: 1.5px;
+			}
+			.footer-bottom-bar {
+				border-top: 2.5px dashed #000;
+				width: 100%;
+				padding-top: 1.5rem;
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				flex-wrap: wrap;
 				gap: 1rem;
 			}
-			.footer-title-block {
-				text-align: left;
-			}
-			.footer-nav-block {
+			.credits-signature {
 				display: flex;
-				gap: 1.5rem;
-				font-size: 0.9rem;
-				font-weight: bold;
-				flex-wrap: wrap;
+				align-items: center;
+				gap: 0.5rem;
+			}
+			.signature-badge {
+				background-color: #e3a8ff; /* Premium light purple brutalist badge */
+				color: #000;
+				font-size: 0.8rem;
+				font-weight: 900;
+				padding: 0.25rem 0.6rem;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				display: inline-block;
+				border-width: 1.5px;
+				box-shadow: 2px 2px 0px #000;
+				border-radius: 4px;
+			}
+
+			@media (max-width: 992px) {
+				.footer-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+				.brand-col {
+					max-width: 100%;
+					grid-column: span 2;
+				}
 			}
 
 			@media (max-width: 768px) {
@@ -147,18 +322,26 @@ const { title = 'Neo-Brutalist Site' } = Astro.props;
 					padding: 1rem 0.75rem;
 				}
 				.site-footer {
-					flex-direction: column;
-					text-align: center;
 					padding: 1.5rem;
 					margin: 2rem 0.5rem 1rem;
 					gap: 1.5rem;
 				}
-				.footer-title-block {
+				.footer-bottom-bar {
+					flex-direction: column;
 					text-align: center;
+					gap: 0.5rem;
 				}
-				.footer-nav-block {
+				.credits-signature {
 					justify-content: center;
-					gap: 1rem;
+				}
+			}
+
+			@media (max-width: 576px) {
+				.footer-grid {
+					grid-template-columns: 1fr;
+				}
+				.brand-col {
+					grid-column: span 1;
 				}
 			}
 		</style>
